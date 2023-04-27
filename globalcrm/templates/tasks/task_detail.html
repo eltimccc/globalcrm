@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="card mt-5">
+    <div class="card-header">
+      <h2>{{ task.content }}</h2>
+    </div>
+    <div class="card-body">
+      <p>Работник: {{ task.worker }}</p>
+      <p>Дата создания: {{ task.created_at|date:"Y-m-d H:i:s" }}</p>
+      <p>Описание: {{ task.content }}</p>
+      <p>Статус: {{ task.completed }}</p>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+        <a href="{% url 'tasks:index' %}" class="btn btn-secondary">Вернуться на главную</a>
+        <div>
+        <form method="get" action="{% url 'tasks:update_task' task.pk %}">
+        <button type="submit" class="btn btn-info mr-2">Редактировать задачу</button>
+        </form>
+        </div>
+        <div>
+        {% if task.created_by == user %}
+        <form method="get" action="{% url 'tasks:delete_task' task.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+        {% endif %}
+        </div>
+        </div>
+  </div>
+</div>
+
+
+{% endblock content %}
