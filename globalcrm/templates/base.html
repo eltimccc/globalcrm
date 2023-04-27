@@ -1,21 +1,10 @@
 <!DOCTYPE html>
-{% load static %}
-{% include 'includes/header.html' %}
-<title>
-  {% block title %}
-    Задачи
-  {% endblock %}
-</title>
-{% block header %}
-
-{% endblock %}
+{% load static %} {% include 'includes/header.html' %}
+<title>{% block title %} Задачи {% endblock %}</title>
+{% block header %} {% endblock %}
 <body>
   <div class="container">
-    <div class="row my-5">
-      {% block content %}
-
-      {% endblock %}
-    </div>
+    <div class="row my-5">{% block content %} {% endblock %}</div>
   </div>
   {% include 'includes/footer.html' %}
 </body>

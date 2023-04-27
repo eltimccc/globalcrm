@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="container">
   <div class="card mt-5">
     <div class="card-header">
@@ -13,23 +11,36 @@
       <p>Статус: {{ task.completed }}</p>
     </div>
     <div class="card-footer d-flex justify-content-between">
-        <a href="{% url 'tasks:index' %}" class="btn btn-secondary">Вернуться на главную</a>
-        <div>
+      <form method="post" action="{% url 'tasks:task_detail' task.pk %}">
+        {% csrf_token %}
+        <button
+          type="submit"
+          class="btn btn-primary{% if task.completed %} completed{% endif %}"
+        >
+          {% if task.completed %}Отметить как невыполненное{% else %}Отметить
+          как выполненное{% endif %}
+        </button>
+      </form>
+      <a href="{% url 'tasks:index' %}" class="btn btn-secondary"
+        >Вернуться на главную</a
+      >
+      <div>
         <form method="get" action="{% url 'tasks:update_task' task.pk %}">
-        <button type="submit" class="btn btn-info mr-2">Редактировать задачу</button>
+          <button type="submit" class="btn btn-info mr-2">
+            Редактировать задачу
+          </button>
         </form>
-        </div>
-        <div>
+      </div>
+      <div>
         {% if task.created_by == user %}
         <form method="get" action="{% url 'tasks:delete_task' task.id %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Удалить</button>
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Удалить</button>
         </form>
         {% endif %}
-        </div>
-        </div>
+      </div>
+    </div>
   </div>
 </div>
-
 
 {% endblock content %}

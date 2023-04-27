@@ -1,5 +1,5 @@
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, DetailView
@@ -21,10 +21,21 @@ class TaskDetailView(DetailView):
     model = Task
     template_name = 'tasks/task_detail.html'
 
-class CreateTaskView(CreateView):
+    def post(self, request, *args, **kwargs):
+        task = self.get_object()
+        task.completed = not task.completed
+        task.save()
+        return redirect('tasks:task_detail', pk=task.pk)
+
+
+class CreateTaskView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = 'tasks/task_form.html'
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('tasks:index')
