@@ -1,46 +1,58 @@
-{% extends 'base.html' %} {% block content %}
+
+
+
+{% extends 'base.html' %}
+
+{% block content %}
 <div class="container">
   <div class="card mt-5">
     <div class="card-header">
-      <h2>{{ task.content }}</h2>
+      <h2>{{ task.title }}</h2>
     </div>
     <div class="card-body">
-      <p>Работник: {{ task.worker }}</p>
-      <p>Дата создания: {{ task.created_at|date:"Y-m-d H:i:s" }}</p>
-      <p>Описание: {{ task.content }}</p>
-      <p>Статус: {{ task.completed }}</p>
+      <div class="row">
+        <div class="col-md-3"><strong>Создано:</strong></div>
+        <div class="col-md-9">{{ task.created_at|date:"d.m.Y H:i" }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"><strong>Работник:</strong></div>
+        <div class="col-md-9">{{ task.worker }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"><strong>Описание задачи:</strong></div>
+        <div class="col-md-9">{{ task.description }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"><strong>Крайний срок выполнения:</strong></div>
+        <div class="col-md-9">{{ task.deadline|date:"d.m.Y H:i" }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"><strong>Статус:</strong></div>
+        <div class="col-md-9">{{ task.completed }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"><strong>Дата завершения:</strong></div>
+        <div class="col-md-9">{{ task.completed_at|date:"d.m.Y H:i" }}</div>
+      </div>
+      
     </div>
     <div class="card-footer d-flex justify-content-between">
       <form method="post" action="{% url 'tasks:task_detail' task.pk %}">
         {% csrf_token %}
-        <button
-          type="submit"
-          class="btn btn-primary{% if task.completed %} completed{% endif %}"
-        >
-          {% if task.completed %}Отметить как невыполненное{% else %}Отметить
-          как выполненное{% endif %}
-        </button>
-      </form>
-      <a href="{% url 'tasks:index' %}" class="btn btn-secondary"
-        >Вернуться на главную</a
-      >
-      <div>
-        <form method="get" action="{% url 'tasks:update_task' task.pk %}">
-          <button type="submit" class="btn btn-info mr-2">
-            Редактировать задачу
-          </button>
-        </form>
-      </div>
-      <div>
-        {% if task.created_by == user %}
-        <form method="get" action="{% url 'tasks:delete_task' task.id %}">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-danger">Удалить</button>
-        </form>
+        {% if task.completed %}
+          <button type="submit" class="btn btn-danger">Отменить выполнение</button>
+        {% else %}
+          <button type="submit" class="btn btn-success">Завершить задачу</button>
         {% endif %}
-      </div>
+      </form>
+      <a href="{% url 'tasks:update_task' task.pk %}" class="btn btn-primary">Редактировать</a>
+      {% if task.created_by == user %}
+      <form method="GET" action="{% url 'tasks:delete_task' task.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger ml-2">Удалить</button>
+      </form>
+      {% endif %}
     </div>
   </div>
 </div>
-
-{% endblock content %}
+{% endblock %}

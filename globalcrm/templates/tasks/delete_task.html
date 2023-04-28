@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 <h2>Удаление задачи</h2>
-<h2>Вы уверены, что хотите удалить задачу "{{ task.content }}"?</h2>
+<h2>Вы уверены, что хотите удалить задачу "{{ task.title }}"?</h2>
 
 <form action="{% url 'tasks:delete_task' task.pk %}" method="post">
   {% csrf_token %}

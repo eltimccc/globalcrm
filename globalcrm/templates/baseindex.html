@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{% endblock %}</title>
-
+    <!-- Подключение стилей Bootstrap -->
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -13,31 +13,17 @@
     />
   </head>
   <body>
-
-    {% load static %} {% include 'includes/nav.html' %}
-    {% comment %} <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-1 bg-white">
-          {% block sidebar %}
-    <ul class="list-group">
-      <li class="list-group-item"><a href="#">Ссылка 1</a></li>
-      <li class="list-group-item"><a href="#">Ссылка 2</a></li>
-      <li class="list-group-item"><a href="#">Ссылка 3</a></li>
-    </ul>
-          {% endblock %}
-        </div>
-        <div class="col-md-9">
-          {% block content %}
-          {% endblock %}
-        </div>
-      </div>
-    </div> {% endcomment %}
-
+    <!-- Навигационное меню -->
+    {% load static %}
+	{% include 'includes/nav.html' %}
+	{% block header %} 
+	{% include 'includes/head.html' %} {% endblock %}
+    <!-- Основной контент страницы -->
     <div class="container">{% block content %}{% endblock %}</div>
 
-
+    <!-- Подвал страницы -->
     {% include 'includes/footer.html' %}
-
+    <!-- Подключение скриптов Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
