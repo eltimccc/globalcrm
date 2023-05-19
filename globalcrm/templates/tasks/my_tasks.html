@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Мои задачи</h1>
+  <h1>Задачи для меня</h1>
   <form action="" method="get">
     <div class="form-group">
       <label for="sort_by">Сортировать по:</label>
@@ -25,6 +25,7 @@
         </tr>
       </thead>
       <tbody>
+        
         {% for task in tasks %}
           <tr class="{% if task.completed %}table-success{% endif %}">
             <td><a href="{% url 'tasks:task_detail' task.pk %}">{{ task.title }}</a></td>

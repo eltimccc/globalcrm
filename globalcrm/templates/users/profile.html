@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="profile-container">
+        <h1>Профиль пользователя</h1>
+        <p><strong>Имя:</strong> {{ profile.name }}</p>
+        <p><strong>Фамилия:</strong> {{ profile.surname }}</p>
+        <!-- Добавьте остальные поля профиля, которые вы хотите отобразить -->
+    </div>
+{% endblock %}

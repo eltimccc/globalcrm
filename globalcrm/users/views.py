@@ -1,6 +1,11 @@
+from .models import Profile
 from .forms import CreationForm, RegisterUserForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.views import View
+
 
 
 class RegisterUser(CreateView):
@@ -24,4 +29,16 @@ class SignUp(CreateView):
     template_name = 'users/login.html'
 
 
+# @login_required
+# def profile(request):
+#     user = request.user
+#     profile = Profile.objects.get(user=user)
+#     return render(request, 'profile.html', {'profile': profile})
 
+class ProfileView(View):
+    template_name = 'users/profile.html'
+
+    def get(self, request):
+        profile = Profile.objects.get(user=request.user)
+        context = {'profile': profile}
+        return render(request, self.template_name, context)

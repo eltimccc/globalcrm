@@ -15,7 +15,11 @@
         <div class="col-md-9">{{ task.created_at|date:"d.m.Y H:i" }}</div>
       </div>
       <div class="row">
-        <div class="col-md-3"><strong>Работник:</strong></div>
+        <div class="col-md-3"><strong>Задачу предоставил:</strong></div>
+        <div class="col-md-9">{{ task.created_by }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"><strong>Работнику:</strong></div>
         <div class="col-md-9">{{ task.worker }}</div>
       </div>
       <div class="row">

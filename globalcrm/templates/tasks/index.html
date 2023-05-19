@@ -40,33 +40,3 @@
   </div>
 
 {% endblock %}
-
-
-{% comment %} {% extends 'base.html' %}
-
-{% block content%}
-
-<h1> {{ greeting }} <br> </h1>
-
-{% for task in tasks %}
-<div class="card mb-3">
-  <div class="card-body">
-    <h5 class="card-title"><a href="{% url 'tasks:task_detail' task.pk %}">{{ task.content }}</a></h5></p> 
-    Создал {{ task.created_by }}
-    <p class="card-text">Работник: {{ task.worker }}</p>
-    <p class="card-text">Дата создания: {{ task.created_at|date:"Y-m-d H:i:s" }}</p>
-    <div class="d-flex justify-content-end">
-      <form method="GET" action="{% url 'tasks:update_task' task.pk %}">
-        <button type="submit" class="btn btn-info">Редактировать задачу</button>
-      </form>
-      {% if task.created_by == user %}
-      <form method="GET" action="{% url 'tasks:delete_task' task.id %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger ml-2">Удалить</button>
-      </form>
-      {% endif %}
-    </div>
-</div>
-</div>
-{% endfor %}
-{% endblock content%} {% endcomment %}

@@ -2,12 +2,6 @@ from django.urls import path
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
-    PasswordChangeDoneView,
-    PasswordChangeView,
-    PasswordResetCompleteView,
-    PasswordResetConfirmView,
-    PasswordResetDoneView,
-    PasswordResetView,
 )
 from . import views
 
@@ -28,4 +22,5 @@ urlpatterns = [
         LogoutView.as_view(template_name="users/logout.html"),
         name="logout",
     ),
+    path('profile/', views.ProfileView.as_view(), name='profile'),
 ]

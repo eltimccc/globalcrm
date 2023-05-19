@@ -8,8 +8,8 @@ from django.utils import timezone
 class Task(models.Model):
     worker = models.ForeignKey(User,
                                on_delete=models.PROTECT,
-                               default='Имя исполнителя',
-                               related_name="worker_tasks")
+                               default=None,
+                               related_name="worker")
     created_by = models.ForeignKey(User,
                                    on_delete=models.PROTECT,
                                    default=1,

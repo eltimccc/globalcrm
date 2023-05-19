@@ -9,9 +9,6 @@ from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from .models import Task
 from .forms import TaskForm, UpdateTaskForm
-from django.utils import timezone
-from django.utils.timezone import make_aware
-
 
 
 class IndexView(TemplateView):
@@ -70,17 +67,15 @@ class DeleteTaskView(DeleteView):
         return reverse_lazy('tasks:index')
 
 
-
-
-
-class Profile(LoginRequiredMixin, ListView):
+class FromMeTasks(LoginRequiredMixin, ListView):
     model = Task
-    template_name = 'tasks/profile.html'
+    template_name = 'tasks/from_me_tasks.html'
     context_object_name = 'tasks'
 
     def get_queryset(self):
         return Task.objects.filter(created_by=self.request.user)
 
+    # Сортировка задач в профиле
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         sort_by = self.request.GET.get('sort_by')
@@ -88,5 +83,26 @@ class Profile(LoginRequiredMixin, ListView):
             context['tasks'] = sorted(context['tasks'], key=lambda x: x.completed)
         elif sort_by == 'created':
             context['tasks'] = sorted(context['tasks'], key=lambda x: x.created_at )
+
+        return context
+
+
+class MyTasks(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = 'tasks/my_tasks.html'
+    context_object_name = 'tasks'
+
+    def get_queryset(self):
+        return Task.objects.filter(worker=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        sort_by = self.request.GET.get('sort_by')
+
+        # Сортировка задач
+        if sort_by == 'completed':
+            context['tasks'] = context['tasks'].order_by('completed')
+        elif sort_by == 'created':
+            context['tasks'] = context['tasks'].order_by('created_at')
 
         return context

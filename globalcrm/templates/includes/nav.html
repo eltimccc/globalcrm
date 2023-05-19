@@ -24,39 +24,11 @@
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      {% if user.is_authenticated %}
-      <li class="nav-item">
-        <span class="navbar-text">Здравствуйте, {{ user.username }}!</span>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'tasks:create_task' %}"
-          >Создать задачу</a
-        >
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'tasks:profile' %}">Мой профиль</a>
-      </li>
-      <li class="nav-item">
-        <form method="post" action="{% url 'users:logout' %}">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-link nav-link">Выйти</button>
-        </form>
-      </li>
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'users:register' %}"
-          >Зарегистрироваться</a
-        >
-      </li>
-      {% endif %}
-    </ul>
+
   </div>
   {% if user.is_authenticated %}
   <div class="collapse navbar-collapse" id="navbarNav2">
-    <ul class="navbar-nav mx-auto">
+    <ul class="navbar-nav mx-center">
       <li class="nav-item">
         <a class="nav-link" href="#">Ссылка 4</a>
       </li>
@@ -69,4 +41,40 @@
     </ul>
   </div>
   {% endif %}
+
+  <ul class="navbar-nav ml-auto">
+    {% if user.is_authenticated %}
+    <li class="nav-item">
+      <span class="navbar-text">Здравствуйте, {{ user.username }}!</span>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'tasks:my_tasks' %}"
+        >Задачи мне</a
+      >
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'tasks:create_task' %}"
+        >Создать задачу</a
+      >
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'tasks:from_me_tasks' %}">Мои задачи</a>
+    </li>
+    <li class="nav-item">
+      <form method="post" action="{% url 'users:logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-link nav-link">Выйти</button>
+      </form>
+    </li>
+    {% else %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'users:register' %}"
+        >Зарегистрироваться</a
+      >
+    </li>
+    {% endif %}
+  </ul>
 </nav>
