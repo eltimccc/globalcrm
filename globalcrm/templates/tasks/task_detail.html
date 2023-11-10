@@ -38,33 +38,30 @@
       <div class="row">
         <div class="col-md-3"><strong>История выполнения:</strong></div>
         <div class="col-md-9">
-          {% if task.subtasks.all %}
+          {% if task.executions.all %}
             <ul>
-              {% for subtask in task.subtasks.all %}
-                <li><a href="{% url 'tasks:task_detail' subtask.pk %}">{{ subtask.title }}</a></li>
+              {% for task_execution in task.executions.all %}
+                <li><a href="{% url 'tasks:task_execution_detail' task_execution.pk %}">{{ task_execution.description }}</a></li>
               {% endfor %}
             </ul>
           {% else %}
-            <p>У этой задачи нет истории.</p>
+            <p>У этой задачи нет истории выполнения.</p>
           {% endif %}
         </div>
       </div>
-      {% for subtask in task.subtasks.all %}
-      <div class="row">
-        <div class="col-md-3"><strong>{{ subtask.title }}:</strong></div>
-        <div class="col-md-9">
-          <!-- Вывод информации о подзадаче -->
-          <div><strong>Создано:</strong> {{ subtask.created_at|date:"d.m.Y H:i" }}</div>
-          <div><strong>Задачу предоставил:</strong> {{ subtask.created_by }}</div>
-          <div><strong>Работнику:</strong> {{ subtask.worker }}</div>
-          <div><strong>Описание задачи:</strong> {{ subtask.description }}</div>
-          <div><strong>Крайний срок выполнения:</strong> {{ subtask.deadline|date:"d.m.Y H:i" }}</div>
-          <div><strong>Статус:</strong> {{ subtask.completed }}</div>
-          <div><strong>Дата завершения:</strong> {{ subtask.completed_at|date:"d.m.Y H:i" }}</div>
+
+      {% for task_execution in task.executions.all %}
+        <div class="row">
+          <div class="col-md-3"><strong>{{ task_execution.description }}:</strong></div>
+          <div class="col-md-9">
+            <!-- Вывод информации о выполнении задачи -->
+            <div><strong>Создано:</strong> {{ task_execution.created_at|date:"d.m.Y H:i" }}</div>
+            <!-- Добавьте другие поля, если это необходимо -->
+          </div>
         </div>
-      </div>
       {% endfor %}
     </div>
+
     <div class="card-footer d-flex justify-content-between">
       <form method="post" action="{% url 'tasks:task_detail' task.pk %}">
         {% csrf_token %}

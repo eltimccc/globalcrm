@@ -7,8 +7,8 @@ from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
-from .models import Task
-from .forms import TaskForm, UpdateTaskForm
+from .models import Task, TaskExecution
+from .forms import TaskExecutionForm, TaskForm, UpdateTaskForm
 
 
 class IndexView(TemplateView):
@@ -17,7 +17,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['greeting'] = 'Привет!'
-        context['tasks'] = Task.objects.filter(parent_task__isnull=True)
+        context['tasks'] = Task.objects.all()
         return context
     
 class TaskDetailView(DetailView):
@@ -38,9 +38,6 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
-        parent_task_id = self.request.POST.get('parent_task', None)
-        if parent_task_id:
-            form.instance.parent_task = Task.objects.get(pk=parent_task_id)
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -108,3 +105,22 @@ class MyTasks(LoginRequiredMixin, ListView):
             context['tasks'] = context['tasks'].order_by('created_at')
 
         return context
+    
+
+class TaskExecutionCreateView(LoginRequiredMixin, CreateView):
+    model = TaskExecution
+    form_class = TaskExecutionForm
+    template_name = 'tasks/task_ex_create.html'
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+        
+    def get_success_url(self):
+        return reverse('tasks:index')
+    
+
+class TaskExecutionDetailView(DetailView):
+    model = TaskExecution
+    template_name = 'tasks/task_execution_detail.html'
+    context_object_name = 'task_execution'
