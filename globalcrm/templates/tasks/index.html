@@ -1,42 +1,41 @@
 {% extends 'baseindex.html' %}
 
-
 {% block content %}
-
 
 <h1>{{ greeting }}</h1>
 
-  <div class="card mb-3">
-    <div class="card-body">
-      <h5 class="card-title">Список задач</h5>
-      <table class="table table-striped">
-        
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Исполнитель</th>
-            <th scope="col">Задача</th>
-            <th scope="col">Дата создания</th>
-            <th scope="col">Крайний срок</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for task in tasks %}
-          <tr class="{% if task.completed %}table-success{% endif %}">
-            <th scope="row">{{ task.id }}</th>
-            <td>{{ task.worker }}</td>
-            <td><a href="{% url 'tasks:task_detail' task.pk %}">{{ task.title }}</a></td>
-            <td>{{ task.created_at|date:"Y-m-d H:i" }}</td>
-            <td> {{ task.deadline|date:"Y-m-d H:i" }}</td></td>
-          </tr>
-          {% empty %}
+<div class="card mb-3">
+  <div class="card-body">
+    <h5 class="card-title">Список задач</h5>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Исполнитель</th>
+          <th scope="col">Задача</th>
+          <th scope="col">Дата создания</th>
+          <th scope="col">Крайний срок</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in tasks %}
+          {% if not task.parent_task %}
+            <tr class="{% if task.completed %}table-success{% endif %}">
+              <th scope="row">{{ task.id }}</th>
+              <td>{{ task.worker }}</td>
+              <td><a href="{% url 'tasks:task_detail' task.pk %}">{{ task.title }}</a></td>
+              <td>{{ task.created_at|date:"Y-m-d H:i" }}</td>
+              <td>{{ task.deadline|date:"Y-m-d H:i" }}</td>
+            </tr>
+          {% endif %}
+        {% empty %}
           <tr>
             <td colspan="5">Нет задач.</td>
           </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
+</div>
 
 {% endblock %}

@@ -21,6 +21,7 @@ class Task(models.Model):
     completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     completed_at = models.DateTimeField(null=True, blank=True)
+    parent_task = models.ForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='subtasks')
 
     def __str__(self):
         return self.title

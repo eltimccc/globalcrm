@@ -17,7 +17,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['greeting'] = 'Привет!'
-        context['tasks'] = Task.objects.all()
+        context['tasks'] = Task.objects.filter(parent_task__isnull=True)
         return context
     
 class TaskDetailView(DetailView):
@@ -38,11 +38,13 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
+        parent_task_id = self.request.POST.get('parent_task', None)
+        if parent_task_id:
+            form.instance.parent_task = Task.objects.get(pk=parent_task_id)
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('tasks:index')
-    
+        return reverse('tasks:index')    
 
 class UpdateTaskView(UpdateView):
     model = Task
