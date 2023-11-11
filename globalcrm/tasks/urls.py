@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (DeleteTaskView,
                     IndexView,
                     CreateTaskView, MyTasks,
-                    TaskDetailView, TaskExecutionDetailView,
+                    TaskDetailView, TaskExecutionDetailView, UpdateTaskExecution,
                     UpdateTaskView,
                     FromMeTasks,
                     TaskExecutionCreateView)
@@ -20,4 +20,7 @@ urlpatterns = [
     path('my_tasks/', MyTasks.as_view(), name='my_tasks'),
     path('task_execution/create/', TaskExecutionCreateView.as_view(), name='task_execution_create'),
     path('task_execution/<int:pk>/', TaskExecutionDetailView.as_view(), name='task_execution_detail'),
+    path('update-task-executon/<int:pk>/', UpdateTaskExecution.as_view(), name='update_task_execution'),
+    path('task/<int:task_id>/execution/create/', TaskExecutionCreateView.as_view(), name='task_execution_create'),
+    
 ]

@@ -38,33 +38,22 @@
       <div class="row">
         <div class="col-md-3"><strong>История выполнения:</strong></div>
         <div class="col-md-9">
-          {% if task.executions.all %}
-            <ul>
-              {% for task_execution in task.executions.all %}
-                <li><a href="{% url 'tasks:task_execution_detail' task_execution.pk %}">{{ task_execution.description }}</a></li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            <p>У этой задачи нет истории выполнения.</p>
-          {% endif %}
+            {% if task.taskexecution_set.all %}
+                <ul>
+                    {% for task_execution in task.taskexecution_set.all %}
+                        <li><a href="{% url 'tasks:task_execution_detail' pk=task_execution.pk %}">{{ task_execution.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>У этой задачи нет истории выполнения.</p>
+            {% endif %}
         </div>
       </div>
-
-      {% for task_execution in task.executions.all %}
-        <div class="row">
-          <div class="col-md-3"><strong>{{ task_execution.description }}:</strong></div>
-          <div class="col-md-9">
-            <!-- Вывод информации о выполнении задачи -->
-            <div><strong>Создано:</strong> {{ task_execution.created_at|date:"d.m.Y H:i" }}</div>
-            <!-- Добавьте другие поля, если это необходимо -->
-          </div>
-        </div>
-      {% endfor %}
     </div>
-
     <div class="card-footer d-flex justify-content-between">
-      <form method="post" action="{% url 'tasks:task_detail' task.pk %}">
+      <form method="post" action="{% url 'tasks:task_detail' task.id %}">
         {% csrf_token %}
+        <a href="{% url 'tasks:task_execution_create' task.id %}" class="btn btn-primary">Добавить этап выполнения</a>
         {% if task.completed %}
           <button type="submit" class="btn btn-danger">Отменить выполнение</button>
         {% else %}
@@ -81,4 +70,24 @@
     </div>
   </div>
 </div>
+
+<div class="container mt-3">
+  {% for task_execution in task.taskexecution_set.all %}
+    <div class="card mt-3">
+      <div class="card-header">
+        <h4>{{ task_execution.title }}</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">{{ task_execution.description }}</div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-3">Создано:</div>
+          <div class="col-md-9">{{ task_execution.created_at|date:"d.m.Y H:i" }}</div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
 {% endblock %}

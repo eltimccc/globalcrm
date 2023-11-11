@@ -1,6 +1,6 @@
 import datetime
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, DetailView
@@ -8,7 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from .models import Task, TaskExecution
-from .forms import TaskExecutionForm, TaskForm, UpdateTaskForm
+from .forms import TaskExecutionForm, TaskForm, UpdateTaskExecutionForm, UpdateTaskForm
 
 
 class IndexView(TemplateView):
@@ -112,15 +112,28 @@ class TaskExecutionCreateView(LoginRequiredMixin, CreateView):
     form_class = TaskExecutionForm
     template_name = 'tasks/task_ex_create.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['task'] = get_object_or_404(Task, pk=self.kwargs['task_id'])
+        return context
+
     def form_valid(self, form):
-        form.instance.created_by = self.request.user
+        form.instance.task = self.get_context_data()['task']
         return super().form_valid(form)
-        
+    
     def get_success_url(self):
         return reverse('tasks:index')
-    
 
 class TaskExecutionDetailView(DetailView):
     model = TaskExecution
     template_name = 'tasks/task_execution_detail.html'
     context_object_name = 'task_execution'
+
+
+class UpdateTaskExecution(UpdateView):
+    model = TaskExecution
+    form_class = UpdateTaskExecutionForm
+    template_name = 'tasks/task_form.html'
+
+    def get_success_url(self):
+        return reverse('tasks:index')

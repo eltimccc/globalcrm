@@ -22,14 +22,14 @@ class Task(models.Model):
         super().save(*args, **kwargs)
 
 class TaskExecution(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='executions')
-    description = models.TextField(default='Описание выполнения задачи')
-    deadline = models.DateTimeField(null=True, blank=True)
-    completed = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, default="Default Title")
+    description = models.TextField()
+    deadline = models.DateTimeField()
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f'История выполнения для задачи "{self.task.title}"'
+        return f"{self.title} - {self.task.title}"
 
 @receiver(pre_save, sender=Task)
 def set_completed_at(sender, instance, **kwargs):

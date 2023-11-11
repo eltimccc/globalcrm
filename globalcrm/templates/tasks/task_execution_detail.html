@@ -4,11 +4,13 @@
 <div class="container">
   <div class="card mt-5">
     <div class="card-header">
-      <h2>{{ task_execution.description }}</h2>
+      <h2>{{ task_execution.title }}</h2>
     </div>
     <div class="card-body">
       <!-- Вывод информации о выполнении задачи -->
       <div><strong>Создано:</strong> {{ task_execution.created_at|date:"d.m.Y H:i" }}</div>
+      <div><strong>Работы:</strong> {{ task_execution.description }}</div>
+      <a href="{% url 'tasks:update_task_execution' task_execution.pk %}" class="btn btn-primary">Редактировать</a>
       <!-- Добавьте другие поля, если это необходимо -->
     </div>
   </div>
