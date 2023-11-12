@@ -119,10 +119,15 @@ class TaskExecutionCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.task = self.get_context_data()['task']
-        return super().form_valid(form)
-    
+        response = super().form_valid(form)
+        task = self.get_context_data()['task']
+        task.deadline = form.instance.deadline
+        task.save()
+        return response
+
     def get_success_url(self):
-        return reverse('tasks:index')
+        return reverse('tasks:task_detail', kwargs={'pk': self.get_context_data()['task'].pk})
+
 
 class TaskExecutionDetailView(DetailView):
     model = TaskExecution

@@ -82,6 +82,8 @@
           <div class="col-md-12">{{ task_execution.description }}</div>
         </div>
         <div class="row mt-2">
+          <div class="col-md-3">Крайний срок выполнения</div>
+          <div class="col-md-9">{{ task_execution.deadline|date:"d.m.Y H:i" }}</div>
           <div class="col-md-3">Создано:</div>
           <div class="col-md-9">{{ task_execution.created_at|date:"d.m.Y H:i" }}</div>
         </div>

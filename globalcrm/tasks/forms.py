@@ -34,10 +34,5 @@ class TaskExecutionForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['task'].widget = forms.HiddenInput()
 
-class UpdateTaskExecutionForm(TaskForm):
-    class Meta:
-        model = TaskExecution
-        fields = ['title', 'description', 'deadline']
-        widgets = {
-            'deadline': forms.DateTimeInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
-        }
+class UpdateTaskExecutionForm(TaskExecutionForm):
+    pass
