@@ -112,21 +112,26 @@ class TaskExecutionCreateView(LoginRequiredMixin, CreateView):
     form_class = TaskExecutionForm
     template_name = 'tasks/task_ex_create.html'
 
+    def get_task(self):
+        return get_object_or_404(Task, pk=self.kwargs['task_id'])
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['task'] = get_object_or_404(Task, pk=self.kwargs['task_id'])
+        context['task'] = self.get_task()
+        if context['task'].deadline:
+            context['form'].fields['deadline'].initial = context['task'].deadline.strftime('%Y-%m-%dT%H:%M')
         return context
 
     def form_valid(self, form):
-        form.instance.task = self.get_context_data()['task']
+        form.instance.task = self.get_task()
         response = super().form_valid(form)
-        task = self.get_context_data()['task']
+        task = self.get_task()
         task.deadline = form.instance.deadline
         task.save()
         return response
 
     def get_success_url(self):
-        return reverse('tasks:task_detail', kwargs={'pk': self.get_context_data()['task'].pk})
+        return reverse('tasks:task_detail', kwargs={'pk': self.get_task().pk})
 
 
 class TaskExecutionDetailView(DetailView):
@@ -139,6 +144,15 @@ class UpdateTaskExecution(UpdateView):
     model = TaskExecution
     form_class = UpdateTaskExecutionForm
     template_name = 'tasks/task_form.html'
+
+    def form_valid(self, form):
+        task_execution = form.instance
+        task = task_execution.task
+
+        task.deadline = task_execution.deadline
+        task.save()
+
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('tasks:index')
