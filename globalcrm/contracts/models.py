@@ -12,9 +12,7 @@ class Contract(models.Model):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     rental_days = models.IntegerField()
-    amount = models.DecimalField(max_digits=6,
-                                 decimal_places=2,
-                                 blank=True, null=True)
+    amount = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
         return f"{self.start_date} {self.client} {self.car}"
@@ -22,5 +20,3 @@ class Contract(models.Model):
     def save(self, *args, **kwargs):
         self.rental_days = (self.end_date - self.start_date).days + 1
         super().save(*args, **kwargs)
-
-    

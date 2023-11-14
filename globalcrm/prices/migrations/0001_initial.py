@@ -4,24 +4,36 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Tariff',
+            name="Tariff",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tarif_name', models.CharField(max_length=100)),
-                ('price_per_day', models.DecimalField(decimal_places=2, max_digits=6)),
-                ('price_2_3_days', models.DecimalField(decimal_places=2, max_digits=6)),
-                ('price_4_7_days', models.DecimalField(decimal_places=2, max_digits=6)),
-                ('price_8_14_days', models.DecimalField(decimal_places=2, max_digits=6)),
-                ('price_15_30_days', models.DecimalField(decimal_places=2, max_digits=6)),
-                ('deposit', models.DecimalField(decimal_places=2, max_digits=6)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("tarif_name", models.CharField(max_length=100)),
+                ("price_per_day", models.DecimalField(decimal_places=2, max_digits=6)),
+                ("price_2_3_days", models.DecimalField(decimal_places=2, max_digits=6)),
+                ("price_4_7_days", models.DecimalField(decimal_places=2, max_digits=6)),
+                (
+                    "price_8_14_days",
+                    models.DecimalField(decimal_places=2, max_digits=6),
+                ),
+                (
+                    "price_15_30_days",
+                    models.DecimalField(decimal_places=2, max_digits=6),
+                ),
+                ("deposit", models.DecimalField(decimal_places=2, max_digits=6)),
             ],
         ),
     ]

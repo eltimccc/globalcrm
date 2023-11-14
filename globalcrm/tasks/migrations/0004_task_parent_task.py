@@ -5,15 +5,20 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('tasks', '0003_alter_task_worker'),
+        ("tasks", "0003_alter_task_worker"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='task',
-            name='parent_task',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='subtasks', to='tasks.task'),
+            model_name="task",
+            name="parent_task",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="subtasks",
+                to="tasks.task",
+            ),
         ),
     ]

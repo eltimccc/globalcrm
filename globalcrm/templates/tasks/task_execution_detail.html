@@ -11,6 +11,7 @@
       <div><strong>Создано:</strong> {{ task_execution.created_at|date:"d.m.Y H:i" }}</div>
       <div><strong>Работы:</strong> {{ task_execution.description }}</div>
       <a href="{% url 'tasks:update_task_execution' task_execution.pk %}" class="btn btn-primary">Редактировать</a>
+      <a href="{% url 'tasks:delete_task_execution' task_execution.pk %}" class="btn btn-danger">Удалить</a>
       <!-- Добавьте другие поля, если это необходимо -->
     </div>
   </div>

@@ -10,7 +10,7 @@ class Client(models.Model):
     passport_issue_date = models.DateField()
     passport_issued_by = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    driving_number = models.CharField(max_length=20) 
+    driving_number = models.CharField(max_length=20)
     driver_license_issue_date = models.DateField()
     driver_license_valid_until = models.DateField()
     email = models.EmailField()

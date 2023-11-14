@@ -5,25 +5,40 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('prices', '0001_initial'),
+        ("prices", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Car',
+            name="Car",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('model', models.CharField(max_length=50)),
-                ('license_plate', models.CharField(max_length=10)),
-                ('year', models.PositiveSmallIntegerField()),
-                ('color', models.CharField(max_length=20)),
-                ('registration_number', models.CharField(max_length=20)),
-                ('registration_date', models.DateField()),
-                ('tariff', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='prices.tariff')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("model", models.CharField(max_length=50)),
+                ("license_plate", models.CharField(max_length=10)),
+                ("year", models.PositiveSmallIntegerField()),
+                ("color", models.CharField(max_length=20)),
+                ("registration_number", models.CharField(max_length=20)),
+                ("registration_date", models.DateField()),
+                (
+                    "tariff",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="prices.tariff",
+                    ),
+                ),
             ],
         ),
     ]

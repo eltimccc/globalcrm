@@ -14,12 +14,10 @@ from django.utils import timezone
 from django.utils.timezone import make_aware
 
 
-
 class IndexView(TemplateView):
-    template_name = 'clients/index.html'
+    template_name = "clients/index.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['client'] = Client.objects.all()
+        context["client"] = Client.objects.all()
         return context
-    

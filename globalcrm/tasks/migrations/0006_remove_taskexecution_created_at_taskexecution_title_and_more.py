@@ -5,34 +5,35 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('tasks', '0005_remove_task_parent_task_taskexecution'),
+        ("tasks", "0005_remove_task_parent_task_taskexecution"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='taskexecution',
-            name='created_at',
+            model_name="taskexecution",
+            name="created_at",
         ),
         migrations.AddField(
-            model_name='taskexecution',
-            name='title',
-            field=models.CharField(default='Default Title', max_length=255),
+            model_name="taskexecution",
+            name="title",
+            field=models.CharField(default="Default Title", max_length=255),
         ),
         migrations.AlterField(
-            model_name='taskexecution',
-            name='deadline',
+            model_name="taskexecution",
+            name="deadline",
             field=models.DateTimeField(),
         ),
         migrations.AlterField(
-            model_name='taskexecution',
-            name='description',
+            model_name="taskexecution",
+            name="description",
             field=models.TextField(),
         ),
         migrations.AlterField(
-            model_name='taskexecution',
-            name='task',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tasks.task'),
+            model_name="taskexecution",
+            name="task",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="tasks.task"
+            ),
         ),
     ]

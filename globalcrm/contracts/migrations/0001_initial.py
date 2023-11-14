@@ -5,27 +5,54 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('clients', '0001_initial'),
-        ('prices', '0001_initial'),
-        ('cars', '0001_initial'),
+        ("clients", "0001_initial"),
+        ("prices", "0001_initial"),
+        ("cars", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Contract',
+            name="Contract",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('start_date', models.DateTimeField()),
-                ('end_date', models.DateTimeField()),
-                ('rental_days', models.IntegerField()),
-                ('amount', models.DecimalField(blank=True, decimal_places=2, max_digits=6, null=True)),
-                ('car', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cars.car')),
-                ('client', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='clients.client')),
-                ('tariff', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='prices.tariff')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("start_date", models.DateTimeField()),
+                ("end_date", models.DateTimeField()),
+                ("rental_days", models.IntegerField()),
+                (
+                    "amount",
+                    models.DecimalField(
+                        blank=True, decimal_places=2, max_digits=6, null=True
+                    ),
+                ),
+                (
+                    "car",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="cars.car"
+                    ),
+                ),
+                (
+                    "client",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="clients.client"
+                    ),
+                ),
+                (
+                    "tariff",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="prices.tariff"
+                    ),
+                ),
             ],
         ),
     ]

@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,17 +14,41 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Task',
+            name="Task",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(default='Название задачи', max_length=200)),
-                ('description', models.TextField(default='Описание задачи')),
-                ('deadline', models.DateTimeField(blank=True, null=True)),
-                ('completed', models.BooleanField(default=False)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('completed_at', models.DateTimeField(blank=True, null=True)),
-                ('created_by', models.ForeignKey(default=1, on_delete=django.db.models.deletion.PROTECT, related_name='created_by', to=settings.AUTH_USER_MODEL)),
-                ('worker', models.ForeignKey(default='Имя исполнителя', on_delete=django.db.models.deletion.PROTECT, related_name='worker_tasks', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(default="Название задачи", max_length=200)),
+                ("description", models.TextField(default="Описание задачи")),
+                ("deadline", models.DateTimeField(blank=True, null=True)),
+                ("completed", models.BooleanField(default=False)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("completed_at", models.DateTimeField(blank=True, null=True)),
+                (
+                    "created_by",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="created_by",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "worker",
+                    models.ForeignKey(
+                        default="Имя исполнителя",
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="worker_tasks",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]
