@@ -9,7 +9,19 @@
   <div class="card mb-3">
     <div class="card-body">
       <h5 class="card-title">Список задач</h5>
-      <table class="table table-striped">
+      <form action="" method="get">
+        <div class="form-group">
+          <label for="sort_by">Сортировать по:</label>
+          <select name="sort_by" id="sort_by" class="form-control">
+            <option value="created_at">Дате создания</option>
+            <option value="completed">Статусу</option>
+            <option value="worker">Исполнитель</option>
+            <option value="created_by">Заказчик</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Применить</button>
+      </form>
+      <table class="table">
         
         <thead>
           <tr>

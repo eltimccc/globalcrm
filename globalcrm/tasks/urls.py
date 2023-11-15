@@ -4,7 +4,7 @@ from .views import (
     DeleteTaskView,
     IndexView,
     CreateTaskView,
-    MyTasks,
+    ForMeTasks,
     TaskDetailView,
     TaskExecutionDetailView,
     UpdateTaskExecution,
@@ -23,7 +23,7 @@ urlpatterns = [
     path("update-task/<int:pk>/", UpdateTaskView.as_view(), name="update_task"),
     path("delete-task/<int:pk>/", DeleteTaskView.as_view(), name="delete_task"),
     path("from_me_tasks/", FromMeTasks.as_view(), name="from_me_tasks"),
-    path("my_tasks/", MyTasks.as_view(), name="my_tasks"),
+    path("for_me_tasks/", ForMeTasks.as_view(), name="for_me_tasks"),
     path(
         "task_execution/create/",
         TaskExecutionCreateView.as_view(),
