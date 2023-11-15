@@ -45,8 +45,10 @@
   <ul class="navbar-nav ml-auto">
     {% if user.is_authenticated %}
     <li class="nav-item">
-      <span class="navbar-text">Здравствуйте, {{ user.username }}!</span>
-    </li>
+      <a class="nav-link" href="{% url 'users:profile' %}">
+          Здравствуйте, {{ user.username }}!
+      </a>
+  </li>
     <li class="nav-item">
       <a class="nav-link" href="{% url 'tasks:my_tasks' %}"
         >Задачи мне</a
