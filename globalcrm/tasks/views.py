@@ -28,6 +28,8 @@ class IndexView(TemplateView):
             context["tasks"] = Task.objects.all().order_by("worker")
         elif sort_by == "created_by":
             context["tasks"] = Task.objects.all().order_by("created_by")
+        elif sort_by == "deadline":
+            context["tasks"] = Task.objects.all().order_by("deadline")
 
         return context
 
