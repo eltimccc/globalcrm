@@ -1,10 +1,15 @@
 from .models import Profile
 from .forms import CreationForm, RegisterUserForm
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from schedule.models import Calendar
+from tasks.models import Task
+from tasks.forms import TaskForm
+from django.views.generic import DetailView
 
 
 class RegisterUser(CreateView):
@@ -35,10 +40,32 @@ class SignUp(CreateView):
 #     return render(request, 'profile.html', {'profile': profile})
 
 
-class ProfileView(View):
+class ProfileView(LoginRequiredMixin, View):
     template_name = "users/profile.html"
+
+    def get_absolute_url(self, task):
+        return reverse("tasks:task_detail", kwargs={"pk": task.pk})
 
     def get(self, request):
         profile = Profile.objects.get(user=request.user)
-        context = {"profile": profile}
+        tasks = Task.objects.filter(worker=request.user)
+        form = TaskForm()
+        context = {"profile": profile, "tasks": tasks, "form": form}
         return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.worker = request.user
+            task.save()
+            return redirect("profile")
+        return render(request, self.template_name, {"form": form})
+
+
+class CalendarView(LoginRequiredMixin, View):
+    template_name = "users/calendar.html"
+
+    def get(self, request, *args, **kwargs):
+        tasks = Task.objects.filter(worker=request.user)
+        return render(request, self.template_name, {"tasks": tasks})

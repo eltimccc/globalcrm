@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from django.utils import timezone
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
@@ -25,6 +26,9 @@ class Task(models.Model):
     def save(self, *args, **kwargs):
         timezone.activate("Europe/Moscow")
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("tasks:task_detail", kwargs={"pk": self.pk})
 
 
 class TaskExecution(models.Model):

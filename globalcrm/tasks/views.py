@@ -18,7 +18,9 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["greeting"] = "Привет!"
 
-        sort_by = self.request.GET.get("sort_by", "created_at")  # По умолчанию сортировка по дате создания
+        sort_by = self.request.GET.get(
+            "sort_by", "created_at"
+        )  # По умолчанию сортировка по дате создания
 
         if sort_by == "completed":
             context["tasks"] = Task.objects.all().order_by("-completed", "created_at")
@@ -100,6 +102,7 @@ class DeleteTaskView(DeleteView):
 #         elif sort_by == "worker":
 #             context["tasks"] = context["tasks"].order_by("worker")
 
+
 #         return context
 class FromMeTasks(LoginRequiredMixin, ListView):
     model = Task
@@ -112,7 +115,9 @@ class FromMeTasks(LoginRequiredMixin, ListView):
     # Сортировка задач в профиле
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        sort_by = self.request.GET.get("sort_by", "created_at")  # По умолчанию сортировка по дате создания
+        sort_by = self.request.GET.get(
+            "sort_by", "created_at"
+        )  # По умолчанию сортировка по дате создания
 
         if sort_by == "completed":
             context["tasks"] = context["tasks"].order_by("-completed", "created_at")
@@ -138,7 +143,9 @@ class ForMeTasks(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        sort_by = self.request.GET.get("sort_by", "created_at")  # По умолчанию сортировка по дате создания
+        sort_by = self.request.GET.get(
+            "sort_by", "created_at"
+        )  # По умолчанию сортировка по дате создания
 
         if sort_by == "completed":
             context["tasks"] = context["tasks"].order_by("-completed", "created_at")
@@ -150,7 +157,6 @@ class ForMeTasks(LoginRequiredMixin, ListView):
             context["tasks"] = context["tasks"].order_by("created_by")
         elif sort_by == "deadline":
             context["tasks"] = context["tasks"].order_by("deadline")
-            
 
         return context
 

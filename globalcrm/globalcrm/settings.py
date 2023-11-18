@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "schedule",
     "django.contrib.staticfiles",
     "tasks",
     "users",

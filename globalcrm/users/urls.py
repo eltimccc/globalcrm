@@ -21,4 +21,5 @@ urlpatterns = [
         name="logout",
     ),
     path("profile/", views.ProfileView.as_view(), name="profile"),
+    path("calendar/", views.CalendarView.as_view(), name="calendar"),
 ]
