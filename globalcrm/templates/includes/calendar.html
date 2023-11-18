@@ -1,36 +1,36 @@
 <!-- calendar.html -->
 
-<meta charset='utf-8' />
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+<meta charset="utf-8" />
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            height: 650,
-            initialView: 'dayGridMonth',
-            headerToolbar: {
-                left: 'prev,next',
-                center: 'title',
-                right: 'dayGridWeek,dayGridDay' // user can switch between the two
-            },
-            events: [
-                {% for task in tasks %}
-                    {
-                        title: '{{ task.title }}',
-                        start: '{{ task.deadline|date:"Y-m-d" }}T{{ task.deadline|date:"H:i:s" }}',
-                        url: '{{ task.get_absolute_url }}'
-                    },
-                {% endfor %}
-            ],
-            eventClick: function(info) {
-                if (info.event.url) {
-                    window.location = info.event.url;
-                    return false;
-                }
-            }
-        });
-        calendar.render();
-    });
+  document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+          height: 650,
+          initialView: 'dayGridMonth',
+          headerToolbar: {
+              left: 'prev,next',
+              center: 'title',
+              right: 'dayGridWeek,dayGridDay' // user can switch between the two
+          },
+          events: [
+              {% for task in tasks %}
+                  {
+                      title: '{{ task.title }}',
+                      start: '{{ task.deadline|date:"Y-m-d" }}T{{ task.deadline|date:"H:i:s" }}',
+                      url: '{{ task.get_absolute_url }}'
+                  },
+              {% endfor %}
+          ],
+          eventClick: function(info) {
+              if (info.event.url) {
+                  window.location = info.event.url;
+                  return false;
+              }
+          }
+      });
+      calendar.render();
+  });
 </script>
 <h2><a href="{% url 'users:calendar' %}">Календарь моих задач</a></h2>
 <div id="calendar"></div>
