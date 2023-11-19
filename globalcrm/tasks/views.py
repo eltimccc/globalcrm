@@ -9,8 +9,10 @@ from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from .models import Task, TaskExecution
 from .forms import TaskExecutionForm, TaskForm, UpdateTaskExecutionForm, UpdateTaskForm
+from django.utils.decorators import method_decorator
 
 
+@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class IndexView(TemplateView):
     template_name = "tasks/index.html"
 
@@ -35,6 +37,7 @@ class IndexView(TemplateView):
         return context
 
 
+@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class TaskDetailView(DetailView):
     model = Task
     template_name = "tasks/task_detail.html"
@@ -46,6 +49,7 @@ class TaskDetailView(DetailView):
         return redirect("tasks:task_detail", pk=task.pk)
 
 
+@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class CreateTaskView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
@@ -59,6 +63,7 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
         return reverse("tasks:index")
 
 
+@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class UpdateTaskView(UpdateView):
     model = Task
     form_class = UpdateTaskForm
@@ -68,6 +73,7 @@ class UpdateTaskView(UpdateView):
         return reverse("tasks:index")
 
 
+@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class DeleteTaskView(DeleteView):
     model = Task
     template_name = "tasks/delete_task.html"
@@ -82,27 +88,7 @@ class DeleteTaskView(DeleteView):
         return reverse_lazy("tasks:index")
 
 
-# class FromMeTasks(LoginRequiredMixin, ListView):
-#     model = Task
-#     template_name = "tasks/from_me_tasks.html"
-#     context_object_name = "tasks"
-
-#     def get_queryset(self):
-#         return Task.objects.filter(created_by=self.request.user)
-
-#     # Сортировка задач в профиле
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         sort_by = self.request.GET.get("sort_by")
-#         if sort_by == "completed":
-#             context["tasks"] = sorted(context["tasks"], key=lambda x: x.completed)
-#         elif sort_by == "created":
-#             context["tasks"] = sorted(context["tasks"], key=lambda x: x.created_at)
-#         elif sort_by == "worker":
-#             context["tasks"] = context["tasks"].order_by("worker")
-
-
-#         return context
+@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class FromMeTasks(LoginRequiredMixin, ListView):
     model = Task
     template_name = "tasks/from_me_tasks.html"
@@ -132,6 +118,7 @@ class FromMeTasks(LoginRequiredMixin, ListView):
         return context
 
 
+@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class ForMeTasks(LoginRequiredMixin, ListView):
     model = Task
     template_name = "tasks/for_me_tasks.html"
@@ -160,6 +147,7 @@ class ForMeTasks(LoginRequiredMixin, ListView):
         return context
 
 
+@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class TaskExecutionCreateView(LoginRequiredMixin, CreateView):
     model = TaskExecution
     form_class = TaskExecutionForm
@@ -189,12 +177,14 @@ class TaskExecutionCreateView(LoginRequiredMixin, CreateView):
         return reverse("tasks:task_detail", kwargs={"pk": self.get_task().pk})
 
 
+@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class TaskExecutionDetailView(DetailView):
     model = TaskExecution
     template_name = "tasks/task_execution_detail.html"
     context_object_name = "task_execution"
 
 
+@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class UpdateTaskExecution(UpdateView):
     model = TaskExecution
     form_class = UpdateTaskExecutionForm
@@ -213,6 +203,7 @@ class UpdateTaskExecution(UpdateView):
         return reverse("tasks:index")
 
 
+@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class DeleteTaskExecutionView(DeleteView):
     model = TaskExecution
     template_name = "tasks/delete_task_execution.html"

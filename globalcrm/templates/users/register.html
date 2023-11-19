@@ -1,25 +1,114 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-{% block content %}
-  <h2>Регистрация</h2>
-  <form method="post">
-    {% csrf_token %}
-    <div class="form-group">
-      <label for="username">Имя пользователя:</label>
-      <input type="text" name="username" class="form-control" required>
-    </div>
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" name="email" class="form-control" required>
-    </div>
-    <div class="form-group">
-      <label for="password1">Пароль:</label>
-      <input type="password" name="password1" class="form-control" required>
-    </div>
-    <div class="form-group">
-      <label for="password2">Подтверждение пароля:</label>
-      <input type="password" name="password2" class="form-control" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-  </form>
-{% endblock %}
+        form {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+        }
+
+        input {
+            width: 300px;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #444;
+            color: #fff;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .messages {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .messages li {
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .error {
+            background-color: #ff6666;
+        }
+
+        .success {
+            background-color: #66ff66;
+        }
+
+        .login-link {
+            margin-top: 16px;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <h2>Регистрация</h2>
+        <div>
+            <label for="username">Имя пользователя:</label>
+            <input type="text" name="username" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" required>
+        </div>
+        <div>
+            <label for="password1">Пароль:</label>
+            <input type="password" name="password1" required>
+        </div>
+        <div>
+            <label for="password2">Подтверждение пароля:</label>
+            <input type="password" name="password2" required>
+        </div>
+        <button type="submit" style="background-color: #27ae60; color: white;">Зарегистрироваться</button>
+        <a class="login-link" href="{% url 'users:login' %}">Уже зарегистрированы? Войдите</a>
+    </form>
+</body>
+</html>
+
