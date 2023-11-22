@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
@@ -10,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Task, TaskExecution
 from .forms import TaskExecutionForm, TaskForm, UpdateTaskExecutionForm, UpdateTaskForm
 from django.utils.decorators import method_decorator
+from django.http import JsonResponse
 
 
 @method_decorator(login_required(login_url='/users/login/'), name='dispatch')
@@ -37,11 +39,16 @@ class IndexView(TemplateView):
         return context
 
 
-@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
+# @method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class TaskDetailView(DetailView):
     model = Task
     template_name = "tasks/task_detail.html"
-
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['task_execution_form'] = TaskExecutionForm()
+        return context
+    
     def post(self, request, *args, **kwargs):
         task = self.get_object()
         task.completed = not task.completed
@@ -147,7 +154,7 @@ class ForMeTasks(LoginRequiredMixin, ListView):
         return context
 
 
-@method_decorator(login_required(login_url='/users/login/'), name='dispatch')
+# @method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class TaskExecutionCreateView(LoginRequiredMixin, CreateView):
     model = TaskExecution
     form_class = TaskExecutionForm
