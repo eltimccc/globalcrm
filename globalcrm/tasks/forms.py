@@ -1,22 +1,7 @@
 from django import forms
 
-from uploads.models import UploadedFile
 from .models import Task, TaskExecution
-from django.forms import ClearableFileInput
-from uploads.forms import FileUploadForm
 
-
-# class TaskForm(forms.ModelForm):
-#     class Meta:
-#         model = Task
-#         fields = ("worker", "title", "description", "deadline", "completed")
-#         widgets = {
-#             "deadline": forms.DateTimeInput(
-#                 attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"
-#             ),
-#         }
-
-#     success_url = "/"
 
 class TaskForm(forms.ModelForm):
     uploaded_file = forms.FileField(
@@ -45,6 +30,7 @@ class TaskForm(forms.ModelForm):
             task.save()
 
         return task
+
 
 class UpdateTaskForm(TaskForm):
     class Meta:

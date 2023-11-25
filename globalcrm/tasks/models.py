@@ -31,7 +31,6 @@ class Task(models.Model):
     def get_absolute_url(self):
         return reverse("tasks:task_detail", kwargs={"pk": self.pk})
 
-
 class TaskExecution(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, default="Default Title")

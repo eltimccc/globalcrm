@@ -1,5 +1,4 @@
-import datetime
-from django.http import Http404, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,14 +7,10 @@ from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
-from uploads.forms import FileUploadForm
 
-from uploads.models import UploadedFile
 from .models import Task, TaskExecution
 from .forms import TaskExecutionForm, TaskForm, UpdateTaskExecutionForm, UpdateTaskForm
 from django.utils.decorators import method_decorator
-from django.http import JsonResponse
-from django.forms import inlineformset_factory
 
 
 @method_decorator(login_required(login_url='/users/login/'), name='dispatch')
@@ -59,19 +54,6 @@ class TaskDetailView(DetailView):
         task.save()
         return redirect("tasks:task_detail", pk=task.pk)
 
-
-# @method_decorator(login_required(login_url='/users/login/'), name='dispatch')
-# class CreateTaskView(LoginRequiredMixin, CreateView):
-#     model = Task
-#     form_class = TaskForm
-#     template_name = "tasks/task_form.html"
-
-#     def form_valid(self, form):
-#         form.instance.created_by = self.request.user
-#         return super().form_valid(form)
-
-#     def get_success_url(self):
-#         return reverse("tasks:index")
 
 class CreateTaskView(LoginRequiredMixin, CreateView):
     model = Task
