@@ -37,7 +37,13 @@
       </div>
       <div class="row">
         <div class="col-md-3"><strong>Файл:</strong></div>
-        <div class="col-md-9">{{ task.uploaded_file }}</div>
+        <div class="col-md-9">
+          {% if task.uploaded_file %}
+            <a href="{{ task.uploaded_file.url }}" target="_blank">{{ task.uploaded_file.name }}</a>
+          {% else %}
+            Нет загруженного файла
+          {% endif %}
+        </div>
       </div>
 
       <div class="row">
