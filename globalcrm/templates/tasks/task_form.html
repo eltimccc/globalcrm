@@ -1,11 +1,15 @@
 {% extends 'base.html' %} {% block content %}
-<h1>{% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} новую задачу</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if form.instance.pk %}
-    <input type="hidden" name="id" value="{{ form.instance.pk }}" />
+<h1>
+  {% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} новую
+  задачу
+</h1>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %} {{ form.as_p }} {% if form.instance.pk %}
+  <input type="hidden" name="id" value="{{ form.instance.pk }}" />
   {% endif %}
-  <input type="submit" value="{% if form.instance.pk %}Сохранить{% else %}Создать{% endif %}" />
+  <input
+    type="submit"
+    value="{% if form.instance.pk %}Сохранить{% else %}Создать{% endif %}"
+  />
 </form>
 {% endblock %}
