@@ -9,7 +9,9 @@ class LogoutRedirectMiddleware:
     def __call__(self, request):
         response = self.get_response(request)
 
-        if not request.user.is_authenticated and request.path == reverse('users:logout'):
-            return redirect('tasks:index')
+        if not request.user.is_authenticated and request.path == reverse(
+            "users:logout"
+        ):
+            return redirect("tasks:index")
 
         return response

@@ -19,17 +19,22 @@ from .forms import FileUploadForm
 #             return HttpResponseRedirect(reverse('tasks:index'))
 #         return render(request, self.template_name, {'form': form})
 
+
 class FileUploadView(View):
     form_class = FileUploadForm
-    template_name = 'uploads/upload.html'
+    template_name = "uploads/upload.html"
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {"form": form})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
             uploaded_file = form.save()
-            return render(request, self.template_name, {'form': form, 'uploaded_file': uploaded_file})
-        return render(request, self.template_name, {'form': form})
+            return render(
+                request,
+                self.template_name,
+                {"form": form, "uploaded_file": uploaded_file},
+            )
+        return render(request, self.template_name, {"form": form})

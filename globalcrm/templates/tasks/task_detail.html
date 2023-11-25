@@ -36,15 +36,19 @@
         <div class="col-md-9">{{ task.completed_at|date:"d.m.Y H:i" }}</div>
       </div>
       <div class="row">
-        <div class="col-md-3"><strong>Файл:</strong></div>
+        <div class="col-md-3"><strong>Файлы:</strong></div>
         <div class="col-md-9">
-          {% if task.uploaded_file %}
-            <a href="{{ task.uploaded_file.url }}" target="_blank">{{ task.uploaded_file.name }}</a>
+          {% if task.files.all %}
+            <ul>
+              {% for file in task.files.all %}
+                <li><a href="{{ file.file.url }}" target="_blank">{{ file.file.name }}</a></li>
+              {% endfor %}
+            </ul>
           {% else %}
-            Нет загруженного файла
+            Нет загруженных файлов
           {% endif %}
         </div>
-      </div>
+    </div>
 
       <div class="row">
         <div class="col-md-3"><strong>История выполнения:</strong></div>

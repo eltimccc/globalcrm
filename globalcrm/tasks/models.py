@@ -6,6 +6,11 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
 
+class TaskFile(models.Model):
+    task = models.ForeignKey("Task", related_name="files", on_delete=models.CASCADE)
+    file = models.FileField(upload_to="uploads/")
+
+
 class Task(models.Model):
     worker = models.ForeignKey(
         User, on_delete=models.PROTECT, default=None, related_name="worker"
@@ -19,7 +24,6 @@ class Task(models.Model):
     completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     completed_at = models.DateTimeField(null=True, blank=True)
-    uploaded_file = models.FileField(upload_to='uploads/', blank=True)
 
     def __str__(self):
         return self.title
@@ -30,6 +34,11 @@ class Task(models.Model):
 
     def get_absolute_url(self):
         return reverse("tasks:task_detail", kwargs={"pk": self.pk})
+
+    @property
+    def files(self):
+        return TaskFile.objects.filter(task=self)
+
 
 class TaskExecution(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)

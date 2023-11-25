@@ -1,17 +1,22 @@
 from django import forms
 
-from .models import Task, TaskExecution
+from .models import Task, TaskExecution, TaskFile
+from multiupload.fields import MultiFileField
 
 
 class TaskForm(forms.ModelForm):
-    uploaded_file = forms.FileField(
-        required=False,
-        widget=forms.ClearableFileInput()
-    )
+    uploaded_file = MultiFileField(required=False)
 
     class Meta:
         model = Task
-        fields = ["worker", "title", "description", "deadline", "completed", 'uploaded_file']
+        fields = [
+            "worker",
+            "title",
+            "description",
+            "deadline",
+            "completed",
+            "uploaded_file",
+        ]
 
         widgets = {
             "deadline": forms.DateTimeInput(
@@ -24,10 +29,8 @@ class TaskForm(forms.ModelForm):
         if commit:
             task.save()
 
-        uploaded_file = self.cleaned_data.get("uploaded_file")
-        if uploaded_file:
-            task.uploaded_file = uploaded_file
-            task.save()
+        for uploaded_file in self.cleaned_data.get("uploaded_file", []):
+            TaskFile.objects.create(task=task, file=uploaded_file)
 
         return task
 

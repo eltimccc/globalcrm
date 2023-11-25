@@ -1,15 +1,27 @@
-{% extends 'base.html' %} {% block content %}
-<h1>
-  {% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} новую
-  задачу
-</h1>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %} {{ form.as_p }} {% if form.instance.pk %}
-  <input type="hidden" name="id" value="{{ form.instance.pk }}" />
-  {% endif %}
-  <input
-    type="submit"
-    value="{% if form.instance.pk %}Сохранить{% else %}Создать{% endif %}"
-  />
-</form>
+<!-- templates/tasks/task_form.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Create Task</h1>
+  <form method="post" enctype="multipart/form-data" id="taskForm">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div id="fileInputs">
+      <!-- Здесь будут добавляться дополнительные поля для файлов -->
+    </div>
+    <button type="button" id="addFileInput">Добавить файл</button>
+    <button type="submit">Create</button>
+  </form>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var fileIndex = 1;
+      $("#addFileInput").click(function() {
+        var newInput = $("<input type='file' name='uploaded_file' id='id_uploaded_file_" + fileIndex + "'/>");
+        $("#fileInputs").append(newInput);
+        fileIndex++;
+      });
+    });
+  </script>
 {% endblock %}
