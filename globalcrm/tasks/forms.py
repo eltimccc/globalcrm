@@ -46,6 +46,23 @@ class UpdateTaskForm(TaskForm):
         }
 
 
+# class TaskExecutionForm(forms.ModelForm):
+#     class Meta:
+#         model = TaskExecution
+#         fields = ["task", "title", "description", "deadline", "created_at"]
+#         widgets = {
+#             "deadline": forms.DateTimeInput(
+#                 attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"
+#             ),
+#         }
+
+#     xfiles = MultiFileField(min_num=0, max_num=5, max_file_size=1024*1024*5, required=False)
+
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields["task"].widget = forms.HiddenInput()
+
+# Ваша форма TaskExecutionForm
 class TaskExecutionForm(forms.ModelForm):
     class Meta:
         model = TaskExecution
@@ -55,6 +72,8 @@ class TaskExecutionForm(forms.ModelForm):
                 attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"
             ),
         }
+
+    xfiles = MultiFileField(required=False, min_num=1, max_num=5, max_file_size=1024*1024*5)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -40,6 +40,10 @@ class Task(models.Model):
         return TaskFile.objects.filter(task=self)
 
 
+class TaskExecutionFile(models.Model):
+    task_execution = models.ForeignKey('TaskExecution', related_name='xfiles', on_delete=models.CASCADE)
+    file = models.FileField(upload_to='uploads/')
+
 class TaskExecution(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, default="Default Title")
@@ -49,6 +53,10 @@ class TaskExecution(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.task.title}"
+
+    @property
+    def files(self):
+        return TaskExecutionFile.objects.filter(task_execution=self)
 
 
 @receiver(pre_save, sender=Task)

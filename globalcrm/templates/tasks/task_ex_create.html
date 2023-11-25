@@ -2,10 +2,24 @@
 
 {% block content %}
   <h2>Create Task Execution</h2>
-  <form method="post" action="{% url 'tasks:task_execution_create' task.id %}">
+  <form method="post" action="{% url 'tasks:task_execution_create' task.id %}" enctype="multipart/form-data" id="taskExecutionForm">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="hidden" name="task" value="{{ task.id }}">
+    {{ form.xfiles }}
     <button type="submit">Create</button>
   </form>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var fileIndex = 1;
+      $("#addFileInput").click(function() {
+        var newInput = $("<input type='file' name='files' id='id_files_" + fileIndex + "'/>");
+        $("#fileInputs").append(newInput);
+        fileIndex++;
+      });
+    });
+  </script>
 {% endblock %}
+

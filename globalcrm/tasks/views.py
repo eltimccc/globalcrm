@@ -8,7 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 
-from .models import Task, TaskExecution
+from .models import Task, TaskExecution, TaskExecutionFile
 from .forms import TaskExecutionForm, TaskForm, UpdateTaskExecutionForm, UpdateTaskForm
 from django.utils.decorators import method_decorator
 
@@ -164,10 +164,9 @@ class TaskExecutionCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["task"] = self.get_task()
+        context["xfiles"] = context["task"].files.all()
         if context["task"].deadline:
-            context["form"].fields["deadline"].initial = context[
-                "task"
-            ].deadline.strftime("%Y-%m-%dT%H:%M")
+            context["form"].fields["deadline"].initial = context["task"].deadline.strftime("%Y-%m-%dT%H:%M")
         return context
 
     def form_valid(self, form):
@@ -176,10 +175,15 @@ class TaskExecutionCreateView(LoginRequiredMixin, CreateView):
         task = self.get_task()
         task.deadline = form.instance.deadline
         task.save()
+
+        for each in self.request.FILES.getlist('xfiles'):
+            TaskExecutionFile.objects.create(task_execution=self.object, file=each)
+
         return response
 
     def get_success_url(self):
         return reverse("tasks:task_detail", kwargs={"pk": self.get_task().pk})
+    
 
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")

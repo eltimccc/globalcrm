@@ -10,8 +10,23 @@
       <!-- Вывод информации о выполнении задачи -->
       <div><strong>Создано:</strong> {{ task_execution.created_at|date:"d.m.Y H:i" }}</div>
       <div><strong>Работы:</strong> {{ task_execution.description }}</div>
-      <a href="{% url 'tasks:update_task_execution' task_execution.pk %}" class="btn btn-primary">Редактировать</a>
-      <a href="{% url 'tasks:delete_task_execution' task_execution.pk %}" class="btn btn-danger">Удалить</a>
+
+      <!-- Отображение файлов -->
+      <div class="row mt-3">
+        <div class="col-md-3"><strong>Файлы:</strong></div>
+        <div class="col-md-9">
+          {% if task_execution.files %}
+            <ul>
+              {% for file in task_execution.files %}
+                <li><a href="{{ file.file.url }}" target="_blank">{{ file.file.name }}</a></li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            Нет загруженных файлов
+          {% endif %}
+        </div>
+      </div>
+      
       <!-- Добавьте другие поля, если это необходимо -->
     </div>
   </div>
