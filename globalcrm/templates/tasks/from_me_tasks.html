@@ -1,21 +1,24 @@
 {% extends 'base.html' %}
-
 {% block content %}
-  <h1>На контроле</h1>
-  <form action="" method="get">
-    <div class="form-group">
-      <label for="sort_by">Сортировать по:</label>
-      <select name="sort_by" id="sort_by" class="form-control">
-        <option value="created_at">Дате создания</option>
-        <option value="completed">Статусу</option>
-        <option value="worker">Исполнитель</option>
-        <option value="created_by">Заказчик</option>
-        <option value="deadline">Дедлайн</option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Применить</button>
-  </form>
-  {% if tasks %}
+
+<div class="card mb-3">
+  <div class="card-body">
+    <h1>На контроле</h1>
+    <form action="" method="get">
+      <div class="form-group">
+        <label for="sort_by">Сортировать по:</label>
+        <select name="sort_by" id="sort_by" class="form-control">
+          <option value="created_at">Дате создания</option>
+          <option value="completed">Статусу</option>
+          <option value="worker">Исполнитель</option>
+          <option value="created_by">Заказчик</option>
+          <option value="deadline">Дедлайн</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Применить</button>
+    </form>
+
+    {% if tasks %}
     <table class="table">
       <thead>
         <tr>
@@ -29,18 +32,24 @@
       </thead>
       <tbody>
         {% for task in tasks %}
-          <tr class="{% if task.completed %}table-success{% endif %}">
-            <td><a href="{% url 'tasks:task_detail' task.pk %}">{{ task.title }}</a></td>
-            <td>{{ task.description }}</td>
-            <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
-            <td>{{ task.deadline|date:"d.m.Y H:i" }}</td>
-            <td>{{ task.completed }}</td>
-            <td>{{ task.completed_at|date:"d.m.Y H:i" }}</td>
-          </tr>
+        <tr class="{% if task.completed %}table-success{% endif %}">
+          <td>
+            <a href="{% url 'tasks:task_detail' task.pk %}">{{ task.title }}</a>
+          </td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
+          <td>{{ task.deadline|date:"d.m.Y H:i" }}</td>
+          <td>{{ task.completed }}</td>
+          <td>{{ task.completed_at|date:"d.m.Y H:i" }}</td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
-  {% else %}
+    {% else %}
     <p>У вас нет задач.</p>
-  {% endif %}
+    {% endif %}
+  </div>
+</div>
+
 {% endblock %}
+

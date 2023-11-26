@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="container">
   <div class="card mt-5">
     <div class="card-header">
@@ -39,34 +37,50 @@
         <div class="col-md-3"><strong>Файлы:</strong></div>
         <div class="col-md-9">
           {% if task.files.all %}
-            <ul>
-              {% for file in task.files.all %}
-                <li><a href="{{ file.file.url }}" target="_blank">{{ file.file.name }}</a></li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            Нет загруженных файлов
-          {% endif %}
+          <ul>
+            {% for file in task.files.all %}
+            <li>
+              <a href="{{ file.file.url }}" target="_blank"
+                >{{ file.file.name }}</a
+              >
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %} Нет загруженных файлов {% endif %}
         </div>
-    </div>
+      </div>
 
       <div class="row">
         <div class="col-md-3"><strong>История выполнения:</strong></div>
         <div class="col-md-9">
           <ul id="task-execution-list">
-              {% for task_execution in task.taskexecution_set.all %}
-                  <li><a href="{% url 'tasks:task_execution_detail' pk=task_execution.pk %}">{{ task_execution.title }}</a></li>
-              {% endfor %}
+            {% for task_execution in task.taskexecution_set.all %}
+            <li>
+              <a
+                href="{% url 'tasks:task_execution_detail' pk=task_execution.pk %}"
+                >{{ task_execution.title }}</a
+              >
+            </li>
+            {% endfor %}
           </ul>
-          <p id="no-history-msg" {% if task.taskexecution_set.all %}style="display: none;"{% endif %}>У этой задачи нет истории выполнения.</p>
-      </div>
+          <p
+            id="no-history-msg"
+            {%
+            if
+            task.taskexecution_set.all
+            %}style="display: none;"
+            {%
+            endif
+            %}
+          >
+            У этой задачи нет истории выполнения.
+          </p>
+        </div>
       </div>
     </div>
     <div class="card-footer d-flex justify-content-between">
       <form method="post" action="{% url 'tasks:task_detail' task.id %}">
-        {% csrf_token %}
-        
-        {% if task.completed %}
+        {% csrf_token %} {% if task.completed %}
         <button type="submit" class="btn btn-danger">
           Отменить выполнение
         </button>
@@ -85,57 +99,73 @@
       {% endif %}
     </div>
   </div>
-  
 
   <div class="container mt-3">
     {% for task_execution in task.taskexecution_set.all %}
-      <div class="card mt-3">
+    <div class="card mt-3">
+      <div class="card-header">
+        <h4>
+          <a href="{% url 'tasks:task_execution_detail' pk=task_execution.pk %}"
+            >{{ task_execution.title }}</a
+          >
+        </h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">{{ task_execution.description }}</div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-3">Крайний срок выполнения</div>
+          <div class="col-md-9">
+            {{ task_execution.deadline|date:"d.m.Y H:i" }}
+          </div>
+          <div class="col-md-3">Создано:</div>
+          <div class="col-md-9">
+            {{ task_execution.created_at|date:"d.m.Y H:i" }}
+          </div>
+        </div>
+
+        <!-- Отображение файлов для каждого этапа выполнения -->
+        <div class="row mt-3">
+          <div class="col-md-3"><strong>Файлы:</strong></div>
+          <div class="col-md-9">
+            {% if task_execution.files %}
+            <ul>
+              {% for file in task_execution.files %}
+              <li>
+                <a href="{{ file.file.url }}" target="_blank"
+                  >{{ file.file.name }}</a
+                >
+              </li>
+              {% endfor %}
+            </ul>
+            {% else %} Нет загруженных файлов {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Отображаем форму создания этапа выполнения -->
+      <div class="card mt-3" id="create-task-execution-form">
         <div class="card-header">
-          <h4><a href="{% url 'tasks:task_execution_detail' pk=task_execution.pk %}">{{ task_execution.title }}</a></h4>
+          <h2>Добавить этап выполнения</h2>
         </div>
         <div class="card-body">
-          <div class="row">
-            <div class="col-md-12">{{ task_execution.description }}</div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-3">Крайний срок выполнения</div>
-            <div class="col-md-9">{{ task_execution.deadline|date:"d.m.Y H:i" }}</div>
-            <div class="col-md-3">Создано:</div>
-            <div class="col-md-9">{{ task_execution.created_at|date:"d.m.Y H:i" }}</div>
-          </div>
-          
-          <!-- Отображение файлов для каждого этапа выполнения -->
-          <div class="row mt-3">
-            <div class="col-md-3"><strong>Файлы:</strong></div>
-            <div class="col-md-9">
-              {% if task_execution.files %}
-                <ul>
-                  {% for file in task_execution.files %}
-                    <li><a href="{{ file.file.url }}" target="_blank">{{ file.file.name }}</a></li>
-                  {% endfor %}
-                </ul>
-              {% else %}
-                Нет загруженных файлов
-              {% endif %}
-            </div>
-          </div>
-    {% endfor %}
-  </div>
-  
-
-<!-- Отображаем форму создания этапа выполнения -->
-<div class="card mt-3" id="create-task-execution-form">
-  <div class="card-header">
-    <h2>Добавить этап выполнения</h2>
-  </div>
-  <div class="card-body">
-    <form method="post" action="{% url 'tasks:task_execution_create' task.id %}" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ task_execution_form.as_p }}
-      <input type="hidden" name="task" value="{{ task.id }}">
-      <button type="submit" class="btn btn-primary">Добавить</button>
-  </form>
+          <form
+            method="post"
+            action="{% url 'tasks:task_execution_create' task.id %}"
+            enctype="multipart/form-data"
+          >
+            {% csrf_token %} {{ task_execution_form.as_p }}
+            <input type="hidden" name="task" value="{{ task.id }}" />
+            <button type="submit" class="btn btn-primary">Добавить</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+</div>
 
-{% endblock %}
+    {% endblock %}
+
