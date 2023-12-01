@@ -1,4 +1,26 @@
 /* custom.css */
-.table {
-    background-color: #fff; /* Белый фон для всех таблиц с классом 'table' */
+.table,
+table {
+    background-color: #ffffff;  
+    width: 100%; 
+    font-size: 13px; 
+}
+
+.table-wrapper {
+    max-height: 600px;
+    overflow-y: auto;
+    position: relative;
+}
+
+.table thead th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    z-index: 1;
+}
+
+.body,
+body {
+    background-color: hsla(0, 0%, 32%, 0.063); 
 }
