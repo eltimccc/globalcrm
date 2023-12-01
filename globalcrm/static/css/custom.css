@@ -7,7 +7,7 @@ table {
 }
 
 .table-wrapper {
-    max-height: 600px;
+    max-height: 610px;
     overflow-y: auto;
     position: relative;
 }
@@ -23,4 +23,8 @@ table {
 .body,
 body {
     background-color: hsla(0, 0%, 32%, 0.063); 
+}
+
+a {
+    text-decoration: none;
 }
