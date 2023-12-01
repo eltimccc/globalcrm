@@ -135,4 +135,4 @@ my_database.db
 my_database1.db
 bot_logs.txt
 *.log
-.vscode
+.vscode/
