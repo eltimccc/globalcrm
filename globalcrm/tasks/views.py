@@ -58,7 +58,7 @@ class TaskDetailView(DetailView):
 class CreateTaskView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
-    template_name = "tasks/task_form.html"
+    template_name = "tasks/task_create.html"
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user

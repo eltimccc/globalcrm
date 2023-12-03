@@ -1,0 +1,19 @@
+<form action="" method="get" class="form-inline">
+    <div class="form-group mr-2">
+      <label for="sort_by" class="mr-2 btn-sm">Сортировать по:</label>
+      <select
+        name="sort_by"
+        id="sort_by"
+        class="form-control form-control-sm"
+      >
+        <option value="created_at">Дате создания</option>
+        <option value="completed">Статусу</option>
+        <option value="worker">Исполнитель</option>
+        <option value="created_by">Заказчик</option>
+        <option value="deadline">Дедлайн</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm ml-2">
+      Применить
+    </button>
+  </form>

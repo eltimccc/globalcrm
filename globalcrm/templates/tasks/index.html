@@ -1,66 +1,19 @@
 {% extends 'base.html' %} 
-{% block title %}Список задач{% endblock %}
-
+{% block title %}Список задач{% endblock %} 
 {% block content %}
-    <h1></h1>
 
-    <div class="row">
-        <div id="grid_area" class="col-xs-12 col-sm-2 no-right-padding static-position">
-            <!-- Дополнительное меню здесь -->
-            {% include 'includes/grid_area.html' %}
-        </div>
-        
-        <div class="col-xs-12 col-sm-10 no-right-padding static-position">
-            <div class="panel panel-default grid_search no-bottom-margin">
-                <div class="panel-body no-padding">
-                    <h5 class="card-title">Список задач</h5>
-                    <form action="" method="get" class="form-inline">
-                        <div class="form-group mr-2">
-                            <label for="sort_by" class="mr-2 btn-sm">Сортировать по:</label>
-                            <select name="sort_by" id="sort_by" class="form-control form-control-sm">
-                                <option value="created_at">Дате создания</option>
-                                <option value="completed">Статусу</option>
-                                <option value="worker">Исполнитель</option>
-                                <option value="created_by">Заказчик</option>
-                                <option value="deadline">Дедлайн</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-sm">Применить</button>
-                    </form>
-                    <div class="table-wrapper mt-2">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Дата создания</th>
-                                    <th scope="col">Исполнитель</th>
-                                    <th scope="col">Название задачи</th>
-                                    <th scope="col">Описание</th>
-                                    <th scope="col">Статус</th>
-                                    <th scope="col">Крайний срок</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for task in tasks %}
-                                <tr class="{% if task.completed %}table-success{% endif %}">
-                                    <td>{{ task.created_at|date:"Y-m-d H:i" }}</td>
-                                    <td>{{ task.worker }}</td>
-                                    <td>
-                                        <a href="{% url 'tasks:task_detail' task.pk %}">{{ task.title }}</a>
-                                    </td>
-                                    <td><a href="{% url 'tasks:task_detail' task.pk %}">{{ task.description|slice:":35" }}</a></td>
-                                    <td>{{ task.completed }}</td> <!-- Отображение булевого значения из БД -->
-                                    <td>{{ task.deadline|date:"Y-m-d H:i" }}</td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="6">Нет задач.</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+{% include 'includes/grid_area.html' %}
+
+
+<div class="col-xs-12 col-sm-10 no-right-padding static-position">
+  <div class="panel panel-default grid_search no-bottom-margin">
+    <div class="panel-body no-padding">
+      <h5 class="card-title">Список задач</h5>
+      {% include 'includes/sort_form.html' %}
+      {% include 'includes/tasks_table.html' %}
     </div>
+  </div>
+</div>
+
 {% endblock %}
+

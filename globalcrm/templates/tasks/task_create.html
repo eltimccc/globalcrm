@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <h1>Create Task</h1>
+
+  {% include 'includes/grid_area.html' %}
+
+  <div class="col-xs-12 col-sm-10 no-right-padding static-position">
+    <div class="panel panel-default grid_search no-bottom-margin">
+      <div class="panel-body no-padding">
+        <form method="post" enctype="multipart/form-data" id="taskForm" class="form">
+          {% csrf_token %}
+          
+          <div class="form-group">
+            <label for="{{ form.worker.id_for_label }}">Исполнитель</label>
+            {{ form.worker }}
+
+          <div class="form-group">
+            <label for="{{ form.title.id_for_label }}">Title:</label>
+            {{ form.title }}
+          </div>
+          
+          <div class="form-group">
+            <label for="{{ form.description.id_for_label }}">Description:</label>
+            {{ form.description }}
+          </div>
+          
+          <div class="form-group" id="fileInputs">
+            <!-- Здесь будут добавляться дополнительные поля для файлов -->
+          </div>
+          
+          <div class="form-group">
+            <button type="button" id="addFileInput" class="btn btn-secondary">Добавить файл</button>
+          </div>
+          
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Create</button>
+          </div>
+        </form>
+        
+  {% load static %}
+  <script src="{% static 'js/file_input_script.js' %}"></script>
+</div>
+</div>
+</div>
+{% endblock %}

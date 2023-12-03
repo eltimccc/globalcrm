@@ -22,9 +22,37 @@ table {
 
 .body,
 body {
-    background-color: hsla(0, 0%, 32%, 0.063); 
+    background-color: hsla(0, 0%, 32%, 0.063);
 }
 
 a {
     text-decoration: none;
 }
+
+.form {
+    background-color: white;
+    padding: 20px; /* Вы можете регулировать отступы по своему усмотрению */
+  }
+
+.card-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+.card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+  }
+  
+.form-inline {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f5f5f5;
+  }

@@ -1,0 +1,37 @@
+<!-- tasks_table.html -->
+
+<div class="table-wrapper mt-2">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Дата создания</th>
+          <th scope="col">Исполнитель</th>
+          <th scope="col">Название задачи</th>
+          <th scope="col">Описание</th>
+          <th scope="col">Статус</th>
+          <th scope="col">Крайний срок</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in tasks %}
+        <tr class="{% if task.completed %}table-success{% endif %}">
+          <td>{{ task.created_at|date:"Y-m-d H:i" }}</td>
+          <td>{{ task.worker }}</td>
+          <td>
+            <a href="{% url 'tasks:task_detail' task.pk %}">{{ task.title }}</a>
+          </td>
+          <td>
+            <a href="{% url 'tasks:task_detail' task.pk %}">{{ task.description|slice:":35" }}</a>
+          </td>
+          <td>{{ task.completed }}</td>
+          <!-- Отображение булевого значения из БД -->
+          <td>{{ task.deadline|date:"Y-m-d H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6">Нет задач.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>

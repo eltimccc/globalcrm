@@ -1,51 +1,16 @@
-{% extends 'base.html' %} {% block content %}
-<div class="card mb-3">
-  <div class="card-body">
-    <h1>Задачи для меня</h1>
+{% extends 'base.html' %} {% block title %}Задачи для меня{% endblock %} 
+{% block content %}
 
-    <form action="" method="get">
-      <div class="form-group">
-        <label for="sort_by">Сортировать по:</label>
-        <select name="sort_by" id="sort_by" class="form-control">
-          <option value="created_at">Дате создания</option>
-          <option value="completed">Статусу</option>
-          <option value="worker">Исполнитель</option>
-          <option value="created_by">Заказчик</option>
-          <option value="deadline">Дедлайн</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Применить</button>
-    </form>
-    {% if tasks %}
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Название</th>
-          <th scope="col">Описание</th>
-          <th scope="col">Дата создания</th>
-          <th scope="col">Крайний срок</th>
-          <th scope="col">Статус</th>
-          <th scope="col">Дата завершения</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for task in tasks %}
-        <tr class="{% if task.completed %}table-success{% endif %}">
-          <td>
-            <a href="{% url 'tasks:task_detail' task.pk %}">{{ task.title }}</a>
-          </td>
-          <td>{{ task.description }}</td>
-          <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
-          <td>{{ task.deadline|date:"d.m.Y H:i" }}</td>
-          <td>{{ task.completed }}</td>
-          <td>{{ task.completed_at|date:"d.m.Y H:i" }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-    <p>У вас нет задач.</p>
-    {% endif %}
+{% include 'includes/grid_area.html' %}
+
+<div class="col-xs-12 col-sm-10 no-right-padding static-position">
+  <div class="panel panel-default grid_search no-bottom-margin">
+    <div class="panel-body no-padding">
+      <h5 class="card-title">Задачи для меня</h5>
+      {% include 'includes/sort_form.html' %} 
+      {% include 'includes/tasks_table.html' %}
+    </div>
   </div>
 </div>
+
 {% endblock %}
