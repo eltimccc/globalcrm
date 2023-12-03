@@ -1,47 +1,57 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-  <h1>Create Task</h1>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-xs-12 col-sm-2 no-right-padding static-position">
+        {% include 'includes/grid_area.html' %}
+      </div>
+      <div class="col-xs-12 col-sm-10">
+        <div class="panel panel-default grid_search no-bottom-margin">
+          <div class="panel-body no-padding">
+            <h2 class="mb-4">Создание задачи</h2>
+            <form method="post" enctype="multipart/form-data" id="taskForm" class="form">
+              {% csrf_token %}
+          
+              {% load static %}
 
-  {% include 'includes/grid_area.html' %}
+              <div class="form-group">
+                  <label for="exampleFormControlSelect1">Выбрать исполнителя</label>
+                  {{ form.worker }}
+              </div>
+              <script src="{% static 'js/choice_worker.js' %}"></script>
 
-  <div class="col-xs-12 col-sm-10 no-right-padding static-position">
-    <div class="panel panel-default grid_search no-bottom-margin">
-      <div class="panel-body no-padding">
-        <form method="post" enctype="multipart/form-data" id="taskForm" class="form">
-          {% csrf_token %}
-          
-          <div class="form-group">
-            <label for="{{ form.worker.id_for_label }}">Исполнитель</label>
-            {{ form.worker }}
 
-          <div class="form-group">
-            <label for="{{ form.title.id_for_label }}">Title:</label>
-            {{ form.title }}
-          </div>
+              <div class="form-group">
+                <label for="id_title">Заголовок:</label>
+                <textarea class="form-control" id="id_title" name="title" rows="1"></textarea>
+              </div>
+
+
+              <div class="form-group">
+                  <label for="id_description" class="col-form-label">Описание:</label>
+                  <textarea class="form-control" id="id_description" name="description" rows="3"></textarea>
+              </div>
           
-          <div class="form-group">
-            <label for="{{ form.description.id_for_label }}">Description:</label>
-            {{ form.description }}
-          </div>
+              <div class="form-group" id="fileInputs">
+                  <!-- Здесь будут добавляться дополнительные поля для файлов -->
+              </div>
           
-          <div class="form-group" id="fileInputs">
-            <!-- Здесь будут добавляться дополнительные поля для файлов -->
-          </div>
+              <div class="form-group">
+                  <button type="button" id="addFileInput" class="btn btn-secondary">Добавить файл</button>
+              </div>
           
-          <div class="form-group">
-            <button type="button" id="addFileInput" class="btn btn-secondary">Добавить файл</button>
-          </div>
+              <div class="form-group text-right">
+                  <button type="submit" class="btn btn-primary">Создать</button>
+              </div>
+          </form>
           
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary">Create</button>
           </div>
-        </form>
-        
+        </div>
+      </div>
+    </div>
+  </div>
+
   {% load static %}
   <script src="{% static 'js/file_input_script.js' %}"></script>
-</div>
-</div>
-</div>
 {% endblock %}
