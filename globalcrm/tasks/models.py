@@ -41,8 +41,11 @@ class Task(models.Model):
 
 
 class TaskExecutionFile(models.Model):
-    task_execution = models.ForeignKey('TaskExecution', related_name='xfiles', on_delete=models.CASCADE)
-    file = models.FileField(upload_to='uploads/')
+    task_execution = models.ForeignKey(
+        "TaskExecution", related_name="xfiles", on_delete=models.CASCADE
+    )
+    file = models.FileField(upload_to="uploads/")
+
 
 class TaskExecution(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
@@ -53,6 +56,11 @@ class TaskExecution(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.task.title}"
+    
+    def save(self, *args, **kwargs):
+        # При сохранении TaskExecution, устанавливаем title из названия связанной задачи
+        self.title = self.task.title
+        super().save(*args, **kwargs)
 
     @property
     def files(self):

@@ -72,7 +72,7 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
 class UpdateTaskView(UpdateView):
     model = Task
     form_class = UpdateTaskForm
-    template_name = "tasks/task_form.html"
+    template_name = "tasks/task_create.html"
 
     def get_success_url(self):
         return reverse("tasks:index")
@@ -166,7 +166,9 @@ class TaskExecutionCreateView(LoginRequiredMixin, CreateView):
         context["task"] = self.get_task()
         context["xfiles"] = context["task"].files.all()
         if context["task"].deadline:
-            context["form"].fields["deadline"].initial = context["task"].deadline.strftime("%Y-%m-%dT%H:%M")
+            context["form"].fields["deadline"].initial = context[
+                "task"
+            ].deadline.strftime("%Y-%m-%dT%H:%M")
         return context
 
     def form_valid(self, form):
@@ -176,14 +178,13 @@ class TaskExecutionCreateView(LoginRequiredMixin, CreateView):
         task.deadline = form.instance.deadline
         task.save()
 
-        for each in self.request.FILES.getlist('xfiles'):
+        for each in self.request.FILES.getlist("xfiles"):
             TaskExecutionFile.objects.create(task_execution=self.object, file=each)
 
         return response
 
     def get_success_url(self):
         return reverse("tasks:task_detail", kwargs={"pk": self.get_task().pk})
-    
 
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
@@ -197,7 +198,7 @@ class TaskExecutionDetailView(DetailView):
 class UpdateTaskExecution(UpdateView):
     model = TaskExecution
     form_class = UpdateTaskExecutionForm
-    template_name = "tasks/task_form.html"
+    template_name = "tasks/task_create.html"
 
     def form_valid(self, form):
         task_execution = form.instance

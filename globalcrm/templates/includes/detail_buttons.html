@@ -1,0 +1,20 @@
+
+<div class="d-flex">
+    <form method="post" action="{% url 'tasks:task_detail' task.id %}" class="d-flex mr-2">
+      {% csrf_token %} 
+      {% if task.completed %}
+        <button type="submit" class="btn btn-danger">
+          Отменить выполнение
+        </button>
+      {% else %}
+        <button type="submit" class="btn btn-success">Завершить задачу</button>
+      {% endif %}
+    </form>
+    <a href="{% url 'tasks:update_task' task.pk %}" class="btn btn-primary mr-2">Редактировать</a>
+    {% if task.created_by == user %}
+      <form method="GET" action="{% url 'tasks:delete_task' task.id %}" class="d-flex">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить</button>
+      </form>
+    {% endif %}
+  </div>

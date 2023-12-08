@@ -6,6 +6,10 @@ table {
     font-size: 13px; 
 }
 
+.card-body {
+  font-size: 13px;
+}
+
 .table-wrapper {
     max-height: 610px;
     overflow-y: auto;
