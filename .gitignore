@@ -136,4 +136,4 @@ my_database1.db
 bot_logs.txt
 *.log
 .vscode/
-media/uploads
+/media/uploads
