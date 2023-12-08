@@ -1,5 +1,8 @@
 import os
+from dotenv import load_dotenv
 from pathlib import Path
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,12 +12,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-hz2xhua15lq6br#s62b!67v&mqcq%dibre0(q$h0n&xt8=d7v1"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -81,6 +85,17 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.getenv('DB_ENGINE', default="django.db.backends.postgresql"),
+#         'NAME': os.getenv('DB_NAME', default="postgres"),
+#         'USER': os.getenv('DB_USER', default="postgres"),
+#         'PASSWORD': os.getenv('DB_PASSWORD', default="postgres"),
+#         'HOST': os.getenv('DB_HOST', default="db"),
+#         'PORT': os.getenv('DB_PORT', default="5432")
+#     }
+# }
 
 LOGIN_URL = "/users/login/"
 LOGIN_REDIRECT_URL = "/"
