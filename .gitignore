@@ -137,3 +137,4 @@ bot_logs.txt
 *.log
 .vscode/
 /media/uploads
+globalcrm/media/uploads
