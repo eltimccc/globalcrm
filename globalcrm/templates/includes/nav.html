@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   {% load static %}  
   <div class="container px-5">
-    <a class="navbar-brand" href="{% url 'tasks:index' %}">CRM</a>
+    <a class="navbar-brand" href="{% url 'tasks:index' %}">GLOBAL CRM</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -20,36 +20,49 @@
         >
           <a class="nav-link" href="{% url 'tasks:index' %}">Главная</a>
         </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Задачи
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a
+              class="dropdown-item {% if request.resolver_match.url_name == 'for_me_tasks' %}active{% endif %}"
+              href="{% url 'tasks:for_me_tasks' %}"
+            >
+              Мои дела
+            </a>
+            <a
+              class="dropdown-item {% if request.resolver_match.url_name == 'create_task' %}active{% endif %}"
+              href="{% url 'tasks:create_task' %}"
+            >
+              Создать задачу
+            </a>
+            <a
+              class="dropdown-item {% if request.resolver_match.url_name == 'from_me_tasks' %}active{% endif %}"
+              href="{% url 'tasks:from_me_tasks' %}"
+            >
+              Исходящие поручения
+            </a>
+          </div>
+        </li>
       </ul>
       {% if user.is_authenticated %}
       <ul class="navbar-nav ml-auto">
-        <li
-          class="nav-item {% if request.resolver_match.url_name == 'for_me_tasks' %}active{% endif %}"
-        >
-          <a class="nav-link" href="{% url 'tasks:for_me_tasks' %}"
-            >Задачи мне</a
-          >
-        </li>
-        <li
-          class="nav-item {% if request.resolver_match.url_name == 'create_task' %}active{% endif %}"
-        >
-          <a class="nav-link" href="{% url 'tasks:create_task' %}"
-            >Создать задачу</a
-          >
-        </li>
-        <li
-          class="nav-item {% if request.resolver_match.url_name == 'from_me_tasks' %}active{% endif %}"
-        >
-          <a class="nav-link" href="{% url 'tasks:from_me_tasks' %}"
-            >Мои задачи</a
-          >
-        </li>
+        <!-- ... остальной код ... -->
         <li
           class="nav-item ml-3 {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
         >
-          <a class="nav-link" href="{% url 'users:profile' %}"
-            >Профиль {{ user.username }}</a
-          >
+          <a class="nav-link" href="{% url 'users:profile' %}">
+            Профиль {{ user.username }}
+          </a>
         </li>
         <li class="nav-item">
           <form method="post" action="{% url 'users:logout' %}">
@@ -60,20 +73,13 @@
       </ul>
       {% else %}
       <ul class="navbar-nav ml-auto">
-        <li
-          class="nav-item {% if request.resolver_match.url_name == 'login' %}active{% endif %}"
-        >
-          <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
-        </li>
-        <li
-          class="nav-item {% if request.resolver_match.url_name == 'register' %}active{% endif %}"
-        >
-          <a class="nav-link" href="{% url 'users:register' %}"
-            >Зарегистрироваться</a
-          >
-        </li>
+        <!-- ... остальной код ... -->
       </ul>
       {% endif %}
     </div>
   </div>
 </nav>
+
+
+
+

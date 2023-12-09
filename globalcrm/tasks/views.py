@@ -1,8 +1,6 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import View
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
