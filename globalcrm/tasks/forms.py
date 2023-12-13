@@ -49,7 +49,7 @@ class UpdateTaskForm(TaskForm):
 class TaskExecutionForm(forms.ModelForm):
     class Meta:
         model = TaskExecution
-        fields = ["task", "description", "deadline", "created_at"]
+        fields = ["title", "task", "description", "deadline", "created_at"]
         widgets = {
             "deadline": forms.DateTimeInput(
                 attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"

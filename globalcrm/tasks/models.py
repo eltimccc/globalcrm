@@ -7,7 +7,7 @@ from django.dispatch import receiver
 
 
 class TaskFile(models.Model):
-    task = models.ForeignKey("Task", related_name="files", on_delete=models.CASCADE)
+    task = models.ForeignKey("Task", related_name="file", on_delete=models.PROTECT)
     file = models.FileField(upload_to="uploads/")
 
 
@@ -49,7 +49,7 @@ class TaskExecutionFile(models.Model):
 
 class TaskExecution(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255, default="Default Title")
+    title = models.CharField(max_length=255, blank=True)
     description = models.TextField()
     deadline = models.DateTimeField()
     created_at = models.DateTimeField(default=timezone.now)
@@ -58,9 +58,10 @@ class TaskExecution(models.Model):
         return f"{self.title} - {self.task.title}"
     
     def save(self, *args, **kwargs):
-        # При сохранении TaskExecution, устанавливаем title из названия связанной задачи
-        self.title = self.task.title
+        if not self.title:
+            self.title = self.task.title
         super().save(*args, **kwargs)
+        
 
     @property
     def files(self):

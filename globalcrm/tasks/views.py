@@ -53,6 +53,18 @@ class TaskDetailView(DetailView):
         return redirect("tasks:task_detail", pk=task.pk)
 
 
+# class CreateTaskView(LoginRequiredMixin, CreateView):
+#     model = Task
+#     form_class = TaskForm
+#     template_name = "tasks/task_create.html"
+
+#     def form_valid(self, form):
+#         form.instance.created_by = self.request.user
+#         return super().form_valid(form)
+
+#     def get_success_url(self):
+#         return reverse("tasks:index")
+
 class CreateTaskView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
@@ -60,6 +72,9 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
+        file = self.request.FILES.get("file")  # получаем загруженный файл, если он есть
+        if file:
+            form.instance.file = file  # присваиваем файлу значение
         return super().form_valid(form)
 
     def get_success_url(self):
