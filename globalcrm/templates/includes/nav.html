@@ -34,6 +34,12 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a
+              class="dropdown-item {% if request.resolver_match.url_name == 'all_tasks' %}active{% endif %}"
+              href="{% url 'tasks:all_tasks' %}"
+            >
+              Все задания
+            </a>
+            <a
               class="dropdown-item {% if request.resolver_match.url_name == 'for_me_tasks' %}active{% endif %}"
               href="{% url 'tasks:for_me_tasks' %}"
             >

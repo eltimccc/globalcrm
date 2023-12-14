@@ -1,7 +1,22 @@
 <div id="grid_area" class="col-xs-12 col-sm-2 no-right-padding static-position">
-    <div class="panel panel-default grid_search no-bottom-margin">
-        <!-- Ваш дополнительный контент здесь -->
-        <h1> Тут будет менюшка grid_area </h1><br>
-
-    </div>
+  <div class="panel panel-default grid_search no-bottom-margin">
+    <!-- Ваш дополнительный контент здесь -->
+    <h1>Тут будет менюшка grid_area</h1>
+    <br />
+    <a class="link" href="{% url 'tasks:all_tasks' %}">
+      Все задания {{ tasks.all_tasks }}
+    </a>
+    <br />
+    <a class="link" href="{% url 'tasks:for_me_tasks' %}"> Мои дела </a><br />
+    <a class="link" href="{% url 'tasks:from_me_tasks' %}">
+      Исходящие поручения
+    </a>
+    <br />
+    <a
+              class="link"
+              href="{% url 'tasks:create_task' %}"
+            >
+              Создать
+            </a>
+  </div>
 </div>

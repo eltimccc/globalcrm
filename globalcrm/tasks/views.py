@@ -53,18 +53,6 @@ class TaskDetailView(DetailView):
         return redirect("tasks:task_detail", pk=task.pk)
 
 
-# class CreateTaskView(LoginRequiredMixin, CreateView):
-#     model = Task
-#     form_class = TaskForm
-#     template_name = "tasks/task_create.html"
-
-#     def form_valid(self, form):
-#         form.instance.created_by = self.request.user
-#         return super().form_valid(form)
-
-#     def get_success_url(self):
-#         return reverse("tasks:index")
-
 class CreateTaskView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
@@ -136,7 +124,36 @@ class FromMeTasks(LoginRequiredMixin, ListView):
         return context
 
 
-@method_decorator(login_required(login_url="/users/login/"), name="dispatch")
+# @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
+class AllTasks(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = "tasks/all_tasks.html"
+    context_object_name = "tasks"
+
+    def get_queryset(self):
+        return Task.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        sort_by = self.request.GET.get(
+            "sort_by", "created_at"
+        )  # По умолчанию сортировка по дате создания
+
+        if sort_by == "completed":
+            context["tasks"] = context["tasks"].order_by("-completed", "created_at")
+        elif sort_by == "created_at":
+            context["tasks"] = context["tasks"].order_by("created_at")
+        elif sort_by == "worker":
+            context["tasks"] = context["tasks"].order_by("worker")
+        elif sort_by == "created_by":
+            context["tasks"] = context["tasks"].order_by("created_by")
+        elif sort_by == "deadline":
+            context["tasks"] = context["tasks"].order_by("deadline")
+
+        return context
+
+
+# @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
 class ForMeTasks(LoginRequiredMixin, ListView):
     model = Task
     template_name = "tasks/for_me_tasks.html"
