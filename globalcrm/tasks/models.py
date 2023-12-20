@@ -42,7 +42,7 @@ class Task(models.Model):
 
 class TaskExecutionFile(models.Model):
     task_execution = models.ForeignKey(
-        "TaskExecution", related_name="xfiles", on_delete=models.CASCADE
+        "TaskExecution", related_name="xfiles", on_delete=models.PROTECT
     )
     file = models.FileField(upload_to="uploads/")
 
