@@ -59,10 +59,35 @@
             </a>
           </div>
         </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdownClients"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Клиенты
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownClients">
+            <a
+              class="dropdown-item {% if request.resolver_match.url_name == 'clients:index' %}active{% endif %}"
+              href="{% url 'clients:index' %}"
+            >
+              Все клиенты
+            </a>
+            <a
+              class="dropdown-item {% if request.resolver_match.url_name == 'clients:create_client' %}active{% endif %}"
+              href="{% url 'clients:create_client' %}"
+            >
+              Новый клиент
+            </a>
+            
       </ul>
       {% if user.is_authenticated %}
       <ul class="navbar-nav ml-auto">
-        <!-- ... остальной код ... -->
         <li
           class="nav-item ml-3 {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
         >
@@ -79,9 +104,9 @@
       </ul>
       {% else %}
       <ul class="navbar-nav ml-auto">
-        <!-- ... остальной код ... -->
       </ul>
       {% endif %}
+      
     </div>
   </div>
 </nav>

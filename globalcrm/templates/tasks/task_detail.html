@@ -67,15 +67,15 @@
       </div>
 
     
-      {% include 'includes/detail_buttons.html' %} 
+      {% include 'includes/tasks/detail_buttons.html' %} 
     </div>
   </div>
       {% with task.taskexecution_set.all as task_executions %} 
         {% if task_executions %} 
-          {% include 'includes/task_history_detail.html' %} 
+          {% include 'includes/tasks/task_history_detail.html' %} 
         {% endif %} 
       {% endwith %} 
-      {% include 'includes/task_execution_form_create.html' %}
+      {% include 'includes/tasks/task_execution_form_create.html' %}
     
   </div>
 {% endblock %}

@@ -1,0 +1,22 @@
+<div class="table-wrapper mt-2">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Имя</th>
+                <th scope="col">Фамилия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+                <tr>
+                    <td style="width: 100px;">{{ client.name }}</td>
+                    <td style="width: 100px;">{{ client.surname }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">Нет клиентов.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

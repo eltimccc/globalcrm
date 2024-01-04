@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
-
-
+{% block title %}Клиенты{% endblock %} 
 {% block content %}
 
+{% include 'includes/grid_area.html' %}
+
+<div class="col-xs-12 col-sm-10 no-right-padding static-position">
+    <div class="panel panel-default grid_search no-bottom-margin">
+      <div class="panel-body no-padding">
+        <h5 class="card-title">Все задания</h5>
+        {% include 'includes/tasks/sort_form.html' %} 
+        {% include 'includes/clients/clients_table.html' %}
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

@@ -60,3 +60,11 @@ a {
   .table tbody tr:hover {
     background-color: #f5f5f5;
   }
+  .form-container {
+    height: 100vh /* Фиксированная высота вьюпорта (100% от высоты экрана) */
+  }
+  
+  .form-container-scroll {
+    height: 100%;
+    overflow-y: auto; /* Разрешение вертикальной прокрутки внутри контейнера */
+  }
