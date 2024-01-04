@@ -1,6 +1,7 @@
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
@@ -12,34 +13,74 @@ from django.utils.decorators import method_decorator
 
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class IndexView(TemplateView):
+class IndexView(View):
     template_name = "tasks/index.html"
+
+    def get(self, request, *args, **kwargs):
+        sort_by = request.GET.get("sort_by", "created_at")
+        ordering = self.get_ordering(sort_by)
+        tasks = Task.objects.all().order_by(*ordering)
+        return render(request, self.template_name, {"tasks": tasks})
+
+    def get_ordering(self, sort_by):
+        ordering_mapping = {
+            "completed": ("-completed", "created_at"),
+            "created_at": ("created_at",),
+            "worker": ("worker",),
+            "created_by": ("created_by",),
+            "deadline": ("deadline",),
+        }
+        return ordering_mapping.get(sort_by, ("created_at",))
+
+
+class TaskListViewBase(ListView):
+    model = Task
+    template_name = None
+    context_object_name = "tasks"
+
+    def get_queryset(self):
+        return self.model.objects.all()
+
+    def apply_sorting(self, queryset, sort_by):
+        sort_mapping = {
+            "completed": ("-completed", "created_at"),
+            "created_at": ("created_at",),
+            "worker": ("worker",),
+            "created_by": ("created_by",),
+            "deadline": ("deadline",),
+        }
+        return queryset.order_by(*sort_mapping.get(sort_by, ("created_at",)))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        sort_by = self.request.GET.get(
-            "sort_by", "created_at"
-        )  # По умолчанию сортировка по дате создания
-
-        if sort_by == "completed":
-            context["tasks"] = Task.objects.all().order_by("-completed", "created_at")
-        elif sort_by == "created_at":
-            context["tasks"] = Task.objects.all().order_by("created_at")
-        elif sort_by == "worker":
-            context["tasks"] = Task.objects.all().order_by("worker")
-        elif sort_by == "created_by":
-            context["tasks"] = Task.objects.all().order_by("created_by")
-        elif sort_by == "deadline":
-            context["tasks"] = Task.objects.all().order_by("deadline")
-
+        sort_by = self.request.GET.get("sort_by", "created_at")
+        context["tasks"] = self.apply_sorting(context["tasks"], sort_by)
         return context
+
+
+class AllTasks(LoginRequiredMixin, TaskListViewBase):
+    template_name = "tasks/all_tasks.html"
+
+
+class TasksFromMe(LoginRequiredMixin, TaskListViewBase):
+    template_name = "tasks/from_me_tasks.html"
+
+    def get_queryset(self):
+        return Task.objects.filter(created_by=self.request.user)
+
+
+class TasksForMe(LoginRequiredMixin, TaskListViewBase):
+    template_name = "tasks/for_me_tasks.html"
+
+    def get_queryset(self):
+        return Task.objects.filter(worker=self.request.user)
 
 
 # @method_decorator(login_required(login_url='/users/login/'), name='dispatch')
 class TaskDetailView(DetailView):
     model = Task
     template_name = "tasks/task_detail.html"
+    context_object_name = "task"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -53,16 +94,16 @@ class TaskDetailView(DetailView):
         return redirect("tasks:task_detail", pk=task.pk)
 
 
-class CreateTaskView(LoginRequiredMixin, CreateView):
+class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = "tasks/task_create.html"
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
-        file = self.request.FILES.get("file")  # получаем загруженный файл, если он есть
+        file = self.request.FILES.get("file")
         if file:
-            form.instance.file = file  # присваиваем файлу значение
+            form.instance.file = file
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -70,7 +111,7 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
 
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class UpdateTaskView(UpdateView):
+class TaskUpdateView(UpdateView):
     model = Task
     form_class = UpdateTaskForm
     template_name = "tasks/task_create.html"
@@ -80,7 +121,7 @@ class UpdateTaskView(UpdateView):
 
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class DeleteTaskView(DeleteView):
+class TaskDeleteView(DeleteView):
     model = Task
     template_name = "tasks/delete_task.html"
     success_url = reverse_lazy("tasks:index")
@@ -92,94 +133,6 @@ class DeleteTaskView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy("tasks:index")
-
-
-@method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class FromMeTasks(LoginRequiredMixin, ListView):
-    model = Task
-    template_name = "tasks/from_me_tasks.html"
-    context_object_name = "tasks"
-
-    def get_queryset(self):
-        return Task.objects.filter(created_by=self.request.user)
-
-    # Сортировка задач в профиле
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        sort_by = self.request.GET.get(
-            "sort_by", "created_at"
-        )  # По умолчанию сортировка по дате создания
-
-        if sort_by == "completed":
-            context["tasks"] = context["tasks"].order_by("-completed", "created_at")
-        elif sort_by == "created_at":
-            context["tasks"] = context["tasks"].order_by("created_at")
-        elif sort_by == "worker":
-            context["tasks"] = context["tasks"].order_by("worker")
-        elif sort_by == "created_by":
-            context["tasks"] = context["tasks"].order_by("created_by")
-        elif sort_by == "deadline":
-            context["tasks"] = context["tasks"].order_by("deadline")
-
-        return context
-
-
-# @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class AllTasks(LoginRequiredMixin, ListView):
-    model = Task
-    template_name = "tasks/all_tasks.html"
-    context_object_name = "tasks"
-
-    def get_queryset(self):
-        return Task.objects.all()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        sort_by = self.request.GET.get(
-            "sort_by", "created_at"
-        )  # По умолчанию сортировка по дате создания
-
-        if sort_by == "completed":
-            context["tasks"] = context["tasks"].order_by("-completed", "created_at")
-        elif sort_by == "created_at":
-            context["tasks"] = context["tasks"].order_by("created_at")
-        elif sort_by == "worker":
-            context["tasks"] = context["tasks"].order_by("worker")
-        elif sort_by == "created_by":
-            context["tasks"] = context["tasks"].order_by("created_by")
-        elif sort_by == "deadline":
-            context["tasks"] = context["tasks"].order_by("deadline")
-
-        return context
-
-
-# @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class ForMeTasks(LoginRequiredMixin, ListView):
-    model = Task
-    template_name = "tasks/for_me_tasks.html"
-    context_object_name = "tasks"
-
-    def get_queryset(self):
-        return Task.objects.filter(worker=self.request.user)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        sort_by = self.request.GET.get(
-            "sort_by", "created_at"
-        )  # По умолчанию сортировка по дате создания
-
-        if sort_by == "completed":
-            context["tasks"] = context["tasks"].order_by("-completed", "created_at")
-        elif sort_by == "created_at":
-            context["tasks"] = context["tasks"].order_by("created_at")
-        elif sort_by == "worker":
-            context["tasks"] = context["tasks"].order_by("worker")
-        elif sort_by == "created_by":
-            context["tasks"] = context["tasks"].order_by("created_by")
-        elif sort_by == "deadline":
-            context["tasks"] = context["tasks"].order_by("deadline")
-
-        return context
 
 
 # @method_decorator(login_required(login_url='/users/login/'), name='dispatch')
@@ -262,7 +215,7 @@ class DeleteTaskExecutionView(DeleteView):
 
         return task_execution
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):  
         context = super().get_context_data(**kwargs)
         context["task_execution"] = self.get_object()
         return context
