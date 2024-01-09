@@ -58,18 +58,18 @@ class TaskListViewBase(ListView):
         return context
 
 
-class AllTasks(LoginRequiredMixin, TaskListViewBase):
+class AllTasksView(LoginRequiredMixin, TaskListViewBase):
     template_name = "tasks/all_tasks.html"
 
 
-class TasksFromMe(LoginRequiredMixin, TaskListViewBase):
+class TasksFromMeView(LoginRequiredMixin, TaskListViewBase):
     template_name = "tasks/from_me_tasks.html"
 
     def get_queryset(self):
         return Task.objects.filter(created_by=self.request.user)
 
 
-class TasksForMe(LoginRequiredMixin, TaskListViewBase):
+class TasksForMeView(LoginRequiredMixin, TaskListViewBase):
     template_name = "tasks/for_me_tasks.html"
 
     def get_queryset(self):
@@ -178,7 +178,7 @@ class TaskExecutionDetailView(DetailView):
 
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class UpdateTaskExecution(UpdateView):
+class TaskExecutionUpdateView(UpdateView):
     model = TaskExecution
     form_class = UpdateTaskExecutionForm
     template_name = "tasks/task_create.html"
@@ -197,7 +197,7 @@ class UpdateTaskExecution(UpdateView):
 
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class DeleteTaskExecutionView(DeleteView):
+class TaskExecutionDeleteView(DeleteView):
     model = TaskExecution
     template_name = "tasks/delete_task_execution.html"
 

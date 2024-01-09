@@ -2,14 +2,12 @@ from .models import Profile
 from .forms import CreationForm, RegisterUserForm
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from schedule.models import Calendar
 from tasks.models import Task
 from tasks.forms import TaskForm
-from django.views.generic import DetailView
 
 
 class RegisterUser(CreateView):
@@ -33,13 +31,6 @@ class SignUp(CreateView):
     template_name = "users/login.html"
 
 
-# @login_required
-# def profile(request):
-#     user = request.user
-#     profile = Profile.objects.get(user=user)
-#     return render(request, 'profile.html', {'profile': profile})
-
-
 class ProfileView(LoginRequiredMixin, View):
     template_name = "users/profile.html"
 
@@ -47,7 +38,7 @@ class ProfileView(LoginRequiredMixin, View):
         return reverse("tasks:task_detail", kwargs={"pk": task.pk})
 
     def get(self, request):
-        profile = Profile.objects.get(user=request.user)
+        profile = get_object_or_404(Profile, user=request.user)
         tasks = Task.objects.filter(worker=request.user)
         form = TaskForm()
         context = {"profile": profile, "tasks": tasks, "form": form}
