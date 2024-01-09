@@ -39,6 +39,7 @@ class Task(BaseTask):
 
 
 class TaskExecution(BaseTask):
+    title = models.CharField(max_length=200, blank=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
 
