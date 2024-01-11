@@ -1,12 +1,20 @@
 version: '3.8'
 
 services:
+  
   db:
-      image: postgres:latest
-      volumes:
-        - /var/lib/postgresql/data/
-      env_file:
-        - ./.env
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
   web:
     build: .
     volumes:
@@ -17,3 +25,6 @@ services:
       - ./.env
     depends_on:
       - db
+
+volumes:
+  postgres_data:

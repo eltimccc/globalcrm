@@ -1,0 +1,23 @@
+<!-- clients/client_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ client.name }} {{ client.surname }}</h1>
+  <ul>
+    <li>Имя: {{ client.name }}</li>
+    <li>Фамилия: {{ client.surname }}</li>
+    <li>Отчество: {{ client.patronomic }}</li>
+    <li>Дата рождения: {{ client.birth_date }}</li>
+    <li>Серия и номер паспорта: {{ client.passport_series_number }}</li>
+    <li>Дата выдачи паспорта: {{ client.passport_issue_date }}</li>
+    <li>Кем выдан паспорт: {{ client.passport_issued_by }}</li>
+    <li>Адрес: {{ client.address }}</li>
+    <li>Номер водительского удостоверения: {{ client.driving_number }}</li>
+    <li>Дата выдачи водительского удостоверения: {{ client.driver_license_issue_date }}</li>
+    <li>Действителен до: {{ client.driver_license_valid_until }}</li>
+    <li>Email: {{ client.email }}</li>
+    <li>Дата создания: {{ client.created_at }}</li>
+  </ul>
+  <a href="{% url 'clients:edit_client' client_id=client.pk %}">Изменить</a>
+{% endblock %}

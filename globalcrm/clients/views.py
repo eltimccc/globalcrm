@@ -12,9 +12,9 @@ from django.contrib.auth.decorators import login_required
 from clients.forms import ClientForm
 from .models import Client
 
-# from .forms import TaskForm, UpdateTaskForm
 from django.utils import timezone
 from django.utils.timezone import make_aware
+from django.views.generic.edit import FormView
 
 
 class IndexView(TemplateView):
@@ -26,18 +26,37 @@ class IndexView(TemplateView):
         return context
 
 
-class CreateClientView(View):
+class CreateClientView(FormView):
+    template_name = 'clients/create_client.html'
+    form_class = ClientForm
+    success_url = reverse_lazy('clients:index')
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    
+
+class EditClientView(View):
     template_name = 'clients/create_client.html'
 
-    def get(self, request, *args, **kwargs):
-        form = ClientForm()
-        return render(request, self.template_name, {'form': form})
+    def get(self, request, client_id, *args, **kwargs):
+        return render(
+            request, self.template_name,
+                      {'form': ClientForm(instance=Client.objects.get(pk=client_id))}
+                      )
 
-    def post(self, request, *args, **kwargs):
-        form = ClientForm(request.POST)
+    def post(self, request, client_id, *args, **kwargs):
+        client = Client.objects.get(pk=client_id)
+        form = ClientForm(request.POST, instance=client)
 
         if form.is_valid():
             form.save()
             return redirect('clients:index')
 
         return render(request, self.template_name, {'form': form})
+    
+
+class ClientDetailView(DetailView):
+    model = Client
+    template_name = 'clients/client_detail.html'
+    context_object_name = 'client'

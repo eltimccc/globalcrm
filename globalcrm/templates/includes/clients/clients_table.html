@@ -9,7 +9,9 @@
         <tbody>
             {% for client in clients %}
                 <tr>
-                    <td style="width: 100px;">{{ client.name }}</td>
+                    <td style="width: 100px;">
+                        <a href="{% url 'clients:client_detail' pk=client.pk %}">{{ client.name }}</a>
+                    </td>
                     <td style="width: 100px;">{{ client.surname }}</td>
                 </tr>
             {% empty %}
