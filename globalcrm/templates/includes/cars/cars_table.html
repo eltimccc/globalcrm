@@ -1,0 +1,24 @@
+<div class="table-wrapper mt-2">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Марка</th>
+                <th scope="col">Регистрационный знак</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in cars %}
+                <tr>
+                    <td style="width: 100px;">
+                        <a href="">{{ car.model }}</a>
+                    </td>
+                    <td style="width: 100px;">{{ car.license_plate }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">Нет машин.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

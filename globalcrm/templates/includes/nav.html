@@ -85,6 +85,34 @@
               Новый клиент
             </a>
             
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownClients"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Автомобили
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownClients">
+              <a
+                class="dropdown-item {% if request.resolver_match.url_name == 'cars:cars_index' %}active{% endif %}"
+                href="{% url 'cars:cars_index' %}"
+              >
+                Список автомобилей
+              </a>
+              <a
+                class="dropdown-item {% if request.resolver_match.url_name == 'clients:create_client' %}active{% endif %}"
+                href="{% url 'clients:create_client' %}"
+              >
+                Новый автомобиль
+              </a>
+
+
       </ul>
       {% if user.is_authenticated %}
       <ul class="navbar-nav ml-auto">

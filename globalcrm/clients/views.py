@@ -1,23 +1,15 @@
-import datetime
-from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.urls import reverse, reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import FormView
 
 from clients.forms import ClientForm
 from .models import Client
 
-from django.utils import timezone
-from django.utils.timezone import make_aware
-from django.views.generic.edit import FormView
 
-
-class IndexView(TemplateView):
+class ClientIndexView(TemplateView):
     template_name = "clients/index.html"
 
     def get_context_data(self, **kwargs):
@@ -26,7 +18,7 @@ class IndexView(TemplateView):
         return context
 
 
-class CreateClientView(FormView):
+class ClientCreateView(FormView):
     template_name = 'clients/create_client.html'
     form_class = ClientForm
     success_url = reverse_lazy('clients:index')
@@ -36,7 +28,7 @@ class CreateClientView(FormView):
         return super().form_valid(form)
     
 
-class EditClientView(View):
+class ClientEditView(View):
     template_name = 'clients/create_client.html'
 
     def get(self, request, client_id, *args, **kwargs):

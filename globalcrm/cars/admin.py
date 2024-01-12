@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import *
+from cars.models import *
 
 admin.site.register(Car)

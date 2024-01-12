@@ -9,7 +9,7 @@ urlpatterns = [
     path("", include("tasks.urls")),
     path("users/", include("users.urls")),
     path("clients/", include("clients.urls")),
-    # path("uploads/", include("uploads.urls")),
+    path("cars/", include("cars.urls")),
 ]
 
 if settings.DEBUG:

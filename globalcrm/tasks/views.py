@@ -13,7 +13,7 @@ from django.utils.decorators import method_decorator
 
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class IndexView(View):
+class TaskIndexView(View):
     template_name = "tasks/index.html"
 
     def get(self, request, *args, **kwargs):
