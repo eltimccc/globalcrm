@@ -4,6 +4,7 @@ from django.views import View
 from django.views.generic import TemplateView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import FormView
+from django.views.generic.edit import UpdateView
 
 from clients.forms import ClientForm
 from .models import Client
@@ -28,24 +29,13 @@ class ClientCreateView(FormView):
         return super().form_valid(form)
     
 
-class ClientEditView(View):
-    template_name = 'clients/create_client.html'
+class ClientEditView(UpdateView):
+    template_name = 'clients/edit_client.html'
+    form_class = ClientForm
+    queryset = Client.objects.all()
 
-    def get(self, request, client_id, *args, **kwargs):
-        return render(
-            request, self.template_name,
-                      {'form': ClientForm(instance=Client.objects.get(pk=client_id))}
-                      )
-
-    def post(self, request, client_id, *args, **kwargs):
-        client = Client.objects.get(pk=client_id)
-        form = ClientForm(request.POST, instance=client)
-
-        if form.is_valid():
-            form.save()
-            return redirect('clients:index')
-
-        return render(request, self.template_name, {'form': form})
+    def get_success_url(self):
+        return reverse_lazy('clients:index')
     
 
 class ClientDetailView(DetailView):

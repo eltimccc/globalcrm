@@ -106,8 +106,8 @@
                 Список автомобилей
               </a>
               <a
-                class="dropdown-item {% if request.resolver_match.url_name == 'clients:create_client' %}active{% endif %}"
-                href="{% url 'clients:create_client' %}"
+                class="dropdown-item {% if request.resolver_match.url_name == 'cars:create_car' %}active{% endif %}"
+                href="{% url 'cars:create_car' %}"
               >
                 Новый автомобиль
               </a>

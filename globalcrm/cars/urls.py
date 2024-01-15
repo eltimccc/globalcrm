@@ -1,12 +1,12 @@
 from django.urls import path
-from cars.views import CarIndexView
+from cars.views import CarCreateView, CarEditView, CarIndexView, CarDetailView
 
 
 app_name = "cars"
 
 urlpatterns = [
     path("", CarIndexView.as_view(), name="cars_index"),
-    # path('create/', ClientCreateView.as_view(), name='create_client'),
-    # path('edit/<int:client_id>/', ClientEditView.as_view(), name='edit_client'),
-    # path('<int:pk>/', ClientDetailView.as_view(), name='client_detail'),
+    path('create/', CarCreateView.as_view(), name='create_car'),
+    path('edit/<int:pk>/', CarEditView.as_view(), name='edit_car'),
+    path('<int:pk>/', CarDetailView.as_view(), name='car_detail'),
 ]

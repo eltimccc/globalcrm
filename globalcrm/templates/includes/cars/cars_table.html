@@ -10,7 +10,7 @@
             {% for car in cars %}
                 <tr>
                     <td style="width: 100px;">
-                        <a href="">{{ car.model }}</a>
+                        <a href="{% url 'cars:car_detail' pk=car.pk %}">{{ car.model }}</a>
                     </td>
                     <td style="width: 100px;">{{ car.license_plate }}</td>
                 </tr>

@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+{% block content %} 
+{% include 'includes/grid_area.html' %}
+<div class="col-xs-12 col-sm-10">
+  <h2>Информация об автомобиле</h2>
+  <div class="scrollable-container">
+    <div class="panel-body no-padding">
+      <dl class="dl-horizontal">
+        <dt>Название</dt>
+        <dd>{{ car.name }}</dd>
+        <dt>Марка</dt>
+        <dd>{{ car.brand }}</dd>
+        <dt>Модель</dt>
+        <dd>{{ car.model }}</dd>
+        <dt>Год выпуска</dt>
+        <dd>{{ car.year }}</dd>
+        <dt>Номер</dt>
+        <dd>{{ car.number }}</dd>
+        <dt>Цвет</dt>
+        <dd>{{ car.color }}</dd>
+      </dl>
+    </div>
+  </div>
+  <a href="{% url 'cars:edit_car' pk=car.pk %}">Изменить</a>
+</div>
+
+{% endblock content %}
