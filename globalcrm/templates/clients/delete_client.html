@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Удаление клиента</h2>
+<h2>Вы уверены, что хотите удалить клиента "{{ client.name }} {{ client.surname }}"?</h2>
+
+<form action="{% url 'clients:delete_client' client.pk %}" method="post">
+  {% csrf_token %}
+  <input type="submit" value="Да, удалить" class="btn btn-danger" />
+  <a href="{% url 'clients:index' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

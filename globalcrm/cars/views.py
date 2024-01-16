@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic.edit import FormView
-from django.views.generic import TemplateView, DetailView, UpdateView
+from django.views.generic import TemplateView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from cars.models import Car
@@ -38,3 +38,17 @@ class CarDetailView(DetailView):
     model = Car
     template_name = 'cars/car_detail.html'
     context_object_name = 'car'
+
+
+class CarDeleteView(DeleteView):
+    model = Car
+    template_name = "cars/delete_car.html"
+    success_url = reverse_lazy("cars:cars_index")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["car"] = self.get_object()
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy("cars:cars_index")

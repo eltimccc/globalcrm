@@ -2,7 +2,7 @@
 {% block content %} 
 {% include 'includes/grid_area.html' %}
 <div class="col-xs-12 col-sm-10">
-  <h2>Информация об автомобиле</h2>
+  <h5>Информация об автомобиле</h5>
   <div class="scrollable-container">
     <div class="panel-body no-padding">
       <dl class="dl-horizontal">
@@ -22,6 +22,10 @@
     </div>
   </div>
   <a href="{% url 'cars:edit_car' pk=car.pk %}">Изменить</a>
+  <form method="GET" action="{% url 'cars:delete_car' car.id %}" class="d-flex">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Удалить</button>
+  </form>
 </div>
 
 {% endblock content %}

@@ -4,7 +4,7 @@ from django.views import View
 from django.views.generic import TemplateView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import FormView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, DeleteView
 
 from clients.forms import ClientForm
 from .models import Client
@@ -42,3 +42,17 @@ class ClientDetailView(DetailView):
     model = Client
     template_name = 'clients/client_detail.html'
     context_object_name = 'client'
+
+
+class ClientDeleteView(DeleteView):
+    model = Client
+    template_name = "clients/delete_client.html"
+    success_url = reverse_lazy("clients:index")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["client"] = self.get_object()
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy("clients:index")
