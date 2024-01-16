@@ -7,6 +7,6 @@ class CarCreateForm(forms.ModelForm):
         model = Car
         fields = '__all__'
         widgets = {
-            'registration_date': forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD'}),
+            'registration_date': forms.TextInput(attrs={'placeholder': 'DD-MM-YYYY'}),
         }
         input_formats = ['%d.%m.%Y']
