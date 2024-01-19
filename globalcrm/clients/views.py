@@ -32,7 +32,7 @@ class ClientCreateView(FormView):
 class ClientEditView(UpdateView):
     template_name = 'clients/edit_client.html'
     form_class = ClientForm
-    queryset = Client.objects.all()
+    model = Client
 
     def get_success_url(self):
         return reverse_lazy('clients:index')

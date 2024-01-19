@@ -1,6 +1,7 @@
 <!-- clients/client_detail.html -->
 
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
+{% block content %} 
 {% include 'includes/grid_area.html' %}
 <div class="col-xs-12 col-sm-10">
   <h5>Информация о клиенте</h5>
@@ -31,11 +32,21 @@
       </dl>
     </div>
   </div>
-  <a href="{% url 'clients:edit_client' pk=client.pk %}">Изменить</a>
-  <form method="GET" action="{% url 'clients:delete_client' client.id %}" class="d-flex">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Удалить</button>
-  </form>
+  <div class="d-flex">
+    <a
+      href="{% url 'clients:edit_client' pk=client.pk %}"
+      class="btn btn-primary mr-2"
+      >Изменить</a
+    >
+    <form
+      method="GET"
+      action="{% url 'clients:delete_client' client.id %}"
+      class="d-flex"
+    >
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+  </div>
 </div>
 
 {% endblock %}

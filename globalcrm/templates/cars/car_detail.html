@@ -1,31 +1,44 @@
 {% extends 'base.html' %} 
 {% block content %} 
 {% include 'includes/grid_area.html' %}
-<div class="col-xs-12 col-sm-10">
-  <h5>Информация об автомобиле</h5>
-  <div class="scrollable-container">
-    <div class="panel-body no-padding">
-      <dl class="dl-horizontal">
-        <dt>Название</dt>
-        <dd>{{ car.name }}</dd>
-        <dt>Марка</dt>
-        <dd>{{ car.brand }}</dd>
-        <dt>Модель</dt>
-        <dd>{{ car.model }}</dd>
-        <dt>Год выпуска</dt>
-        <dd>{{ car.year }}</dd>
-        <dt>Номер</dt>
-        <dd>{{ car.number }}</dd>
-        <dt>Цвет</dt>
-        <dd>{{ car.color }}</dd>
-      </dl>
+<div class="card w-75">
+  <div class="card-body">
+    <h5>
+      Информация об автомобиле {{ car.model }}, номер {{ car.license_plate }}
+    </h5>
+    <div class="scrollable-container">
+      <div class="panel-body no-padding">
+        <dl class="dl-horizontal">
+          <dt>Название</dt>
+          <dd>{{ car.model }}</dd>
+          <dt>Регистрационный знак</dt>
+          <dd>{{ car.license_plate }}</dd>
+          <dt>Год выпуска</dt>
+          <dd>{{ car.year }}</dd>
+          <dt>Номер СТС</dt>
+          <dd>{{ car.registration_number }}</dd>
+          <dt>Дата регистрации</dt>
+          <dd>{{ car.registration_date }}</dd>
+          <dt>Цвет</dt>
+          <dd>{{ car.color }}</dd>
+          <dt>Тариф</dt>
+          <dd>{{ car.tariff }}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="d-flex">
+      <a href="{% url 'cars:edit_car' pk=car.pk %}" class="btn btn-primary mr-2"
+        >Изменить</a
+      >
+      <form
+        method="GET"
+        action="{% url 'cars:delete_car' car.id %}"
+        class="d-flex"
+      >
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить</button>
+      </form>
     </div>
   </div>
-  <a href="{% url 'cars:edit_car' pk=car.pk %}">Изменить</a>
-  <form method="GET" action="{% url 'cars:delete_car' car.id %}" class="d-flex">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Удалить</button>
-  </form>
 </div>
-
 {% endblock content %}

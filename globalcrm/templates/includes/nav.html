@@ -111,8 +111,31 @@
               >
                 Новый автомобиль
               </a>
-
-
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdownClients"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Тарифы
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownClients">
+                  <a
+                    class="dropdown-item {% if request.resolver_match.url_name == 'prices:prices_index' %}active{% endif %}"
+                    href="{% url 'prices:prices_index' %}"
+                  >
+                    Список Тарифов
+                  </a>
+                  <a
+                    class="dropdown-item {% if request.resolver_match.url_name == 'prices:create_price' %}active{% endif %}"
+                    href="{% url 'prices:create_price' %}"
+                  >
+                    Добавить тариф
+                  </a>
       </ul>
       {% if user.is_authenticated %}
       <ul class="navbar-nav ml-auto">

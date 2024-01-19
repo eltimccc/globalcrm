@@ -1,0 +1,24 @@
+<div class="table-wrapper mt-2">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Тариф</th>
+                <th scope="col">Залог</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for price in prices %}
+                <tr>
+                    <td style="width: 100px;">
+                        <a href="{% url 'prices:detail_price' pk=price.pk %}">{{ price.tarif_name }}</a>
+                    </td>
+                    <td style="width: 100px;">{{ price.deposit }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">Нет тарифов.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block content %}
+<style>
+  /* Стили для фиксации высоты страницы и прокрутки */
+  body,
+  html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .scrollable-container {
+    max-height: calc(100% - 60px);
+    overflow-y: 100%;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+</style>
+{% include 'includes/grid_area.html' %}
+<div class="col-xs-12 col-sm-10">
+  <h5>Новый Тариф</h5>
+  <div class="scrollable-container">
+    <div class="panel-body no-padding">
+      <form method="post" action="{% url 'prices:create_price' %}" class="form">
+        {% csrf_token %} {{ form.as_p }}
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-lg">
+            Добавить тариф
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
