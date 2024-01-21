@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "clients",
     "cars",
     "contracts",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
