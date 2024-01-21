@@ -136,6 +136,35 @@
                   >
                     Добавить тариф
                   </a>
+                  
+                  <li class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="#"
+                      id="navbarDropdownClients"
+                      role="button"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Договоры проката
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownClients">
+                      <a
+                        class="dropdown-item {% if request.resolver_match.url_name == 'contracts:contract_index' %}active{% endif %}"
+                        href="{% url 'contracts:contract_index' %}"
+                      >
+                        Все договоры
+                      </a>
+                      <a
+                        class="dropdown-item {% if request.resolver_match.url_name == 'contracts:contract_create' %}active{% endif %}"
+                        href="{% url 'contracts:contract_create' %}"
+                      >
+                        Создать договор
+                      </a>
+
+
+
       </ul>
       {% if user.is_authenticated %}
       <ul class="navbar-nav ml-auto">

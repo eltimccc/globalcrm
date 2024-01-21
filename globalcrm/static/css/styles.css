@@ -90,7 +90,9 @@
     scroll-behavior: smooth;
   }
 }
-
+.hover:hover .dropdown-menu {
+  display: block;
+}
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  /* Стили для фиксации высоты страницы и прокрутки */
+  body,
+  html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .scrollable-container {
+    max-height: calc(100% - 60px);
+    overflow-y: 100%;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+</style>
+{% include 'includes/grid_area.html' %}
+<div class="col-xs-12 col-sm-10">
+  <h5>Новый Договор</h5>
+  <div class="scrollable-container">
+    <div class="panel-body no-padding">
+      <form method="post" action="{% url 'contracts:contract_create' %}" class="form">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.client.label_tag }}
+          {{ form.client }}
+        </div>
+        <div class="form-group">
+          {{ form.car.label_tag }}
+          {{ form.car }}
+        </div>
+        <div class="form-group">
+          {{ form.tariff.label_tag }}
+          {{ form.tariff }}
+        </div>
+        <div class="form-group">
+            {{ form.rental_days.label_tag }}
+            {{ form.rental_days }}
+          </div>
+        <div class="form-group">
+            {{ form.amount.label_tag }}
+            {{ form.amount }}
+          </div>
+        <div class="form-group">
+          {{ form.start_date.label_tag }}
+          {{ form.start_date }}
+        </div>
+        <div class="form-group">
+          {{ form.end_date.label_tag }}
+          {{ form.end_date }}
+        </div>
+
+        <!-- Добавьте другие поля формы, если это необходимо -->
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-lg">
+            Создать договор
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

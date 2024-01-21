@@ -30,8 +30,10 @@ class CarCreateView(FormView):
 class CarEditView(UpdateView):
     model = Car
     form_class = CarCreateForm
-    template_name = 'cars/create_car.html'
-    success_url = reverse_lazy('cars:cars_index')
+    template_name = 'cars/car_edit.html'
+
+    def get_success_url(self):
+        return reverse_lazy('cars:cars_index')
 
 
 class CarDetailView(DetailView):
