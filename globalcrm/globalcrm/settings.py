@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "cars",
     "contracts",
     "crispy_forms",
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -113,3 +114,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 DATE_FORMAT = 'd.m.Y'
+
+# Django crispy forms
+
+# CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# end

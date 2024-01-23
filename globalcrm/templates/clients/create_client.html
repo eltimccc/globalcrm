@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block content %}
+{% load crispy_forms_tags %}
 <style>
   /* Стили для фиксации высоты страницы и прокрутки */
   body,
@@ -9,7 +10,7 @@
   }
 
   .scrollable-container {
-    max-height: calc(100% - 80px);
+    max-height: calc(100% - 220px);
     overflow-y: auto;
     border: 1px solid #ccc;
     padding: 10px;
@@ -27,6 +28,7 @@
         class="form"
       >
         {% csrf_token %}
+        {% crispy form %}
         <div class="form-group">{{ form.name.label_tag }} {{ form.name }}</div>
         <div class="form-group">
           {{ form.surname.label_tag }} {{ form.surname }}

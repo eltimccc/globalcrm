@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block content %}
+{% load crispy_forms_tags %}
 <style>
   /* Стили для фиксации высоты страницы и прокрутки */
   body,
@@ -19,17 +20,13 @@
 <div class="col-xs-12 col-sm-10">
   <h5>Новый Тариф</h5>
   <div class="scrollable-container">
-    <div class="panel-body no-padding">
-      <form method="post" action="{% url 'prices:create_price' %}" class="form">
-        {% csrf_token %} {{ form.as_p }}
-
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-lg">
-            Добавить тариф
-          </button>
-        </div>
-      </form>
-    </div>
+      <div class="panel-body no-padding">
+          <form method="post" action="{% url 'prices:create_price' %}" class="form">
+              {% csrf_token %}
+              {% crispy form %}
+          </form>
+      </div>
   </div>
 </div>
 {% endblock content %}
+

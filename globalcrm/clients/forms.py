@@ -1,5 +1,7 @@
 from django import forms
 from .models import Client
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 
 class ClientForm(forms.ModelForm):
@@ -22,3 +24,11 @@ class ClientForm(forms.ModelForm):
             'driver_license_valid_until': 'Действительно до',
             'email': 'Электронная почта',
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-10'
+        self.helper.add_input(Submit('submit', 'Добавить автомобиль'))

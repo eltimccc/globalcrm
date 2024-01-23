@@ -5,7 +5,7 @@ from django.views.generic import TemplateView, DetailView, UpdateView, DeleteVie
 from django.urls import reverse_lazy
 
 from cars.models import Car
-from cars.forms import CarCreateForm
+from cars.forms import CarCreateForm, CarEditForm
 
 
 class CarIndexView(TemplateView):
@@ -29,7 +29,7 @@ class CarCreateView(FormView):
 
 class CarEditView(UpdateView):
     model = Car
-    form_class = CarCreateForm
+    form_class = CarEditForm
     template_name = 'cars/car_edit.html'
 
     def get_success_url(self):

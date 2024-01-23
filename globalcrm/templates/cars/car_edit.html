@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block content %}
+{% load crispy_forms_tags %}
 <style>
   /* Стили для фиксации высоты страницы и прокрутки */
   body,
@@ -9,7 +10,7 @@
   }
 
   .scrollable-container {
-    max-height: calc(100% - 60px);
+    max-height: calc(100% - 150px);
     overflow-y: auto;
     border: 1px solid #ccc;
     padding: 10px;
@@ -21,13 +22,7 @@
   <div class="scrollable-container">
     <div class="panel-body no-padding">
       <form method="post" action="{% url 'cars:car_edit' pk=form.instance.pk %}" class="form">
-        {% csrf_token %} {{ form.as_p }}
-
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">
-            Сохранить изменения
-          </button>
-        </div>  
+        {% csrf_token %} {% crispy form %} 
       </form>
     </div>
   </div>

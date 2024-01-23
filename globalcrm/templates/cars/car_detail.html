@@ -1,12 +1,12 @@
 {% extends 'base.html' %} 
 {% block content %} 
 {% include 'includes/grid_area.html' %}
+
 <div class="card w-75">
   <div class="card-body">
     <h5>
       Информация об автомобиле {{ car.model }}, номер {{ car.license_plate }}
     </h5>
-    <div class="scrollable-container">
       <div class="panel-body no-padding">
         <dl class="dl-horizontal">
           <dt>Название</dt>
@@ -24,7 +24,6 @@
           <dt>Тариф</dt>
           <dd>{{ car.tariff }}</dd>
         </dl>
-      </div>
     </div>
     <div class="d-flex">
       <a href="{% url 'cars:car_edit' pk=car.pk %}" class="btn btn-primary mr-2"
