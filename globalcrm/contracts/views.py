@@ -23,7 +23,6 @@ class ContractCreateView(FormView):
     def form_valid(self, form):
         contract = form.save(commit=False)
 
-        # Вычисляем стоимость и обновляем end_date
         contract.amount, contract.end_date = self.calculate_price(contract)
         print('дада форме', contract.end_date)
         
@@ -31,11 +30,9 @@ class ContractCreateView(FormView):
         return super().form_valid(form)
     
     def calculate_price(self, contract):
-        # Получаем информацию о тарифе
         tariff = contract.tariff
         rental_days = contract.rental_days
 
-        # Вычисляем стоимость в зависимости от количества дней аренды
         price_per_day = getattr(tariff, 'price_per_day', 0)
         price_2_3_days = getattr(tariff, 'price_2_3_days', 0)
         price_4_7_days = getattr(tariff, 'price_4_7_days', 0)
@@ -53,7 +50,6 @@ class ContractCreateView(FormView):
         else:
             amount = price_per_day * rental_days
 
-        # Обновляем end_date с учетом точного времени
         end_date = contract.start_date + timedelta(days=rental_days)
         print('перед ретюрн', end_date)
 
