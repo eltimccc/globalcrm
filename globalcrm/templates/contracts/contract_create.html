@@ -41,6 +41,30 @@ $(document).ready(function() {
     });
   });
 });
+
+$(document).ready(function() {
+  // Обработчик события изменения поля rental_days
+  $('#id_rental_days').change(function() {
+    var rentalDays = $(this).val(); // Получаем значение выбранного количества суток аренды
+    var contractId = $('#id_contract').val(); // Получаем значение id договора (или используйте свой способ получения)
+    var start_date_str = $('#id_start_date').val(); // Получаем значение начальной даты (вы можете использовать свой собственный способ получения)
+
+    // Отправляем AJAX-запрос на сервер для получения end_date
+    $.ajax({
+      url: '/contracts/get_end_date/', // URL для получения end_date
+      data: {'rental_days': rentalDays, 'contract_id': contractId, 'start_date': start_date_str}, // Параметры запроса
+      type: 'GET',
+      success: function(response) {
+        // Обновляем поле end_date в форме с полученным значением
+        $('#id_end_date').val(response.end_date);
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        console.error(xhr.responseText);
+        alert('Произошла ошибка при получении end_date. Подробности в консоли браузера.');
+      }
+    });
+  });
+});
 </script>
 
 

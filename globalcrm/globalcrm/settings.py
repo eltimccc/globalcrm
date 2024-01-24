@@ -102,7 +102,9 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en-us"
 USE_TZ = True
 TIME_ZONE = "Europe/Moscow"
-DATETIME_FORMAT = "d.m.Y H:i"
+DATETIME_FORMAT = "m.d.Y H:i"
+DATE_FORMAT = "m.d.Y H:i"
+DATE_INPUT_FORMATS = ['%d.%m.%Y %H:%M']
 
 USE_I18N = True
 
@@ -113,7 +115,7 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-DATE_FORMAT = 'd.m.Y'
+
 
 # Django crispy forms
 

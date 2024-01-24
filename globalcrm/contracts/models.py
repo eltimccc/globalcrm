@@ -20,12 +20,8 @@ class Contract(models.Model):
     def __str__(self):
         return f"{self.start_date} {self.client} {self.car}"
     
-    # @property
-    # def end_date(self):
-    #     return self.start_date + timezone.timedelta(days=self.rental_days-1)
 
     def save(self, *args, **kwargs):
-        self.end_date = self.start_date + timezone.timedelta(days=self.rental_days-1)
         super().save(*args, **kwargs)
 
 
