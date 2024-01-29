@@ -1,0 +1,34 @@
+<div class="table-wrapper mt-2">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Клиент</th>
+                <th scope="col">Автомобиль</th>
+                <th scope="col">Тариф</th>
+                <th scope="col">Начало аренды</th>
+                <th scope="col">Окончание аренды</th>
+                <th scope="col">Длительность (дни)</th>
+                <th scope="col">Сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contract in contracts %}
+                <tr>
+                    <td>{{ contract.id }}</td>
+                    <td>{{ contract.client }}</td>
+                    <td>{{ contract.car }}</td>
+                    <td>{{ contract.tariff }}</td>
+                    <td>{{ contract.start_date|date:"d.m.Y H:i" }}</td>
+                    <td>{{ contract.end_date|date:"d.m.Y H:i" }}</td>
+                    <td>{{ contract.rental_days }}</td>
+                    <td>{{ contract.amount }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="8">Нет договоров.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

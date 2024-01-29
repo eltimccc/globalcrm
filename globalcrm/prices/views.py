@@ -25,13 +25,7 @@ class PriceCreateView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
-    
 
-# class PriceEditView(UpdateView):
-#     model = Tariff
-#     form_class = PriceCreateForm
-#     template_name = 'prices/create_price.html'
-#     success_url = reverse_lazy('prices:prices_index')
 
 class PriceEditView(UpdateView):
     template_name = 'prices/edit_price.html'

@@ -22,17 +22,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-  // Обработчик события выбора автомобиля
   $('#id_car').change(function() {
-    var carId = $(this).val(); // Получаем значение выбранного автомобиля
+    var carId = $(this).val();
 
-    // Отправляем AJAX-запрос на сервер для получения тарифа машины
     $.ajax({
-      url: '/contracts/get_car_tariff/', // URL для получения тарифа машины
-      data: {'car_id': carId}, // Параметры запроса
+      url: '/contracts/get_car_tariff/',
+      data: {'car_id': carId},
       type: 'GET',
       success: function(response) {
-        // Обновляем поле тарифа в форме с полученным значением
         $('#id_tariff').val(response.tariff);
       },
       error: function() {
@@ -43,19 +40,16 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-  // Обработчик события изменения поля rental_days
   $('#id_rental_days').change(function() {
-    var rentalDays = $(this).val(); // Получаем значение выбранного количества суток аренды
-    var contractId = $('#id_contract').val(); // Получаем значение id договора (или используйте свой способ получения)
-    var start_date_str = $('#id_start_date').val(); // Получаем значение начальной даты (вы можете использовать свой собственный способ получения)
+    var rentalDays = $(this).val();
+    var contractId = $('#id_contract').val();
+    var start_date_str = $('#id_start_date').val();
 
-    // Отправляем AJAX-запрос на сервер для получения end_date
     $.ajax({
-      url: '/contracts/get_end_date/', // URL для получения end_date
-      data: {'rental_days': rentalDays, 'contract_id': contractId, 'start_date': start_date_str}, // Параметры запроса
+      url: '/contracts/get_end_date/',
+      data: {'rental_days': rentalDays, 'start_date': start_date_str},
       type: 'GET',
       success: function(response) {
-        // Обновляем поле end_date в форме с полученным значением
         $('#id_end_date').val(response.end_date);
       },
       error: function(xhr, textStatus, errorThrown) {
@@ -63,6 +57,37 @@ $(document).ready(function() {
         alert('Произошла ошибка при получении end_date. Подробности в консоли браузера.');
       }
     });
+
+    $.ajax({
+      url: '/contracts/calculate_price/',
+      data: {'tariff_id': $('#id_tariff').val(), 'rental_days': rentalDays},
+      type: 'GET',
+      success: function(response) {
+        $('#id_amount').val(response.amount);
+      },
+      error: function() {
+        alert('Произошла ошибка при расчете стоимости.');
+      }
+    });
+  });
+});
+
+$(document).ready(function() {
+  $('#id_start_date, #id_end_date, #id_rental_days').change(function() {
+    var start_date_str = $('#id_start_date').val();
+    var end_date_str = $('#id_end_date').val();
+    var rentalDays = $('#id_rental_days').val();
+
+    if (start_date_str && end_date_str && rentalDays) {
+      var start_date = new Date(start_date_str);
+      var end_date = new Date(end_date_str);
+      var calculated_rental_days = Math.round((end_date - start_date) / (24 * 60 * 60 * 1000));
+
+      if (calculated_rental_days !== parseInt(rentalDays)) {
+        end_date = new Date(start_date.getTime() + (parseInt(rentalDays) * 24 * 60 * 60 * 1000));
+        $('#id_end_date').val(end_date.toISOString().slice(0, 19).replace('T', ' '));
+      }
+    }
   });
 });
 </script>

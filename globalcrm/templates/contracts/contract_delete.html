@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Удаление договора</h2>
+<h2>Вы уверены, что хотите удалить договор "{{ contract.id }} "?</h2>
+
+<form action="{% url 'contracts:contract_delete' contract.pk %}" method="post">
+  {% csrf_token %}
+  <input type="submit" value="Да, удалить" class="btn btn-danger" />
+  <a href="{% url 'contracts:contract_index' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

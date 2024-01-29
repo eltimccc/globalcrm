@@ -14,8 +14,8 @@ class Contract(models.Model):
     tariff = models.ForeignKey(Tariff, on_delete=models.CASCADE)
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(default=timezone.now)
-    rental_days = models.IntegerField()
-    amount = models.IntegerField(blank=True, null=True)
+    rental_days = models.PositiveIntegerField()
+    amount = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.start_date} {self.client} {self.car}"

@@ -2,7 +2,6 @@
 
 {% block content %}
 <style>
-  /* Стили для фиксации высоты страницы и прокрутки */
   body,
   html {
     height: 100%;
@@ -33,24 +32,22 @@
             <th>Окончание</th>
             <th>Длительность (дни)</th>
             <th>Сумма</th>
-            <!-- Добавьте другие заголовки, если это необходимо -->
           </tr>
         </thead>
         <tbody>
           {% for contract in contracts %}
           <tr>
-            <td>{{ contract.id }}</td>
-            <td>{{ contract.client }}</td>
-            <td>{{ contract.car }}</td>
-            <td>{{ contract.tariff }}</td>
-            <td>{{ contract.start_date }}</td>
-            <td>{{ contract.end_date }}</td>
-            <td>{{ contract.rental_days }}</td>
-            <td>{{ contract.amount }}</td>
-            <!-- Добавьте другие поля, если это необходимо -->
+              <td><a href="{% url 'contracts:contract_detail' pk=contract.id %}">{{ contract.id }}</a></td>
+              <td>{{ contract.client }}</td>
+              <td>{{ contract.car }}</td>
+              <td>{{ contract.tariff }}</td>
+              <td>{{ contract.start_date|date:"d.m.Y H:i" }}</td>
+              <td>{{ contract.end_date|date:"d.m.Y H:i" }}</td>
+              <td>{{ contract.rental_days }}</td>
+              <td>{{ contract.amount }}</td>
           </tr>
           {% endfor %}
-        </tbody>
+      </tbody>
       </table>
     </div>
   </div>
