@@ -27,9 +27,13 @@
   </head>
   <body>
     {% load static %} {% include 'includes/nav.html' %}
-
     <div class="container-fluid">
-      <div class="row">{% block content %} {% endblock %}</div>
+      <div class="row">
+        {% include 'includes/grid_area.html' %}
+        <div class="col-xs-12 col-sm-10" style="overflow-y: auto; max-height: calc(100vh - 60px);">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
     </div>
   </body>
 </html>

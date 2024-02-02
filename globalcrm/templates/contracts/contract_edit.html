@@ -1,16 +1,40 @@
-{% extends 'base.html' %} 
-{% block content %} 
-{% include 'includes/grid_area.html' %}
-<div class="card w-75">
-  <div class="card-body">
-    <h5>
-      Редактирование договора №{{ contract.id }}
-    </h5>
-    <form method="post" action="{% url 'contracts:contract_edit' pk=contract.id %}">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">Сохранить</button>
-    </form>
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+{%load static %}
+<style>
+  /* Стили для фиксации высоты страницы и прокрутки */
+  body,
+  html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .scrollable-container {
+    max-height: calc(100% - 60px);
+    overflow-y: 100%;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/ajax_car_tariff.js' %}"></script>
+<script src="{% static 'js/ajax_end_date_and_price.js' %}"></script>
+<script src="{% static 'js/ajax_update_end_date.js' %}"></script>
+
+<div class="col-xs-12 col-sm-10">
+  <h5>Редактирование договора №{{ contract.id }}</h5>
+  <div class="scrollable-container">
+    <div class="panel-body no-padding">
+      <form
+        method="post"
+        action="{% url 'contracts:contract_edit' pk=contract.id %}"
+        class="form"
+      >
+        {% csrf_token %} {% crispy form %}
+      </form>
+    </div>
   </div>
 </div>
 {% endblock content %}

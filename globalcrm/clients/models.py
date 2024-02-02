@@ -16,7 +16,7 @@ class Client(models.Model):
     driving_number = models.CharField(max_length=20)
     driver_license_issue_date = models.DateTimeField(default=datetime(1990, 1, 1))
     driver_license_valid_until = models.DateTimeField(default=datetime(1990, 1, 1))
-    email = models.EmailField()
+    email = models.EmailField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

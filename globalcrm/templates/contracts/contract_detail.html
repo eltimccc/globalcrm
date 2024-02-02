@@ -1,6 +1,6 @@
 {% extends 'base.html' %} 
 {% block content %} 
-{% include 'includes/grid_area.html' %}
+
 <div class="card w-75">
   <div class="card-body">
     <h5>
@@ -16,9 +16,9 @@
           <dt>Тариф</dt>
           <dd>{{ contract.tariff }}</dd>
           <dt>Начальная дата</dt>
-          <dd>{{ contract.start_date }}</dd>
+          <dd>{{ contract.start_date|date:"d.m.Y H:i" }}<dd>
           <dt>Конечная дата</dt>
-          <dd>{{ contract.end_date }}</dd>
+          <dd>{{ contract.end_date|date:"d.m.Y H:i" }}<dd>
           <dt>Длительность (дни)</dt>
           <dd>{{ contract.rental_days }}</dd>
           <dt>Сумма</dt>

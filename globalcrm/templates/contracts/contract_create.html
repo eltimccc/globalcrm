@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-
 {% block content %}
 {% load crispy_forms_tags %}
+{%load static %}
 <style>
   /* Стили для фиксации высоты страницы и прокрутки */
   body,
@@ -15,94 +15,27 @@
     max-height: calc(100% - 60px);
     overflow-y: 100%;
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 0px;
   }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-  $('#id_car').change(function() {
-    var carId = $(this).val();
+<script src="{% static 'js/ajax_car_tariff.js' %}"></script>
+<script src="{% static 'js/ajax_end_date_and_price.js' %}"></script>
+<script src="{% static 'js/ajax_update_end_date.js' %}"></script>
 
-    $.ajax({
-      url: '/contracts/get_car_tariff/',
-      data: {'car_id': carId},
-      type: 'GET',
-      success: function(response) {
-        $('#id_tariff').val(response.tariff);
-      },
-      error: function() {
-        alert('Произошла ошибка при получении тарифа машины.');
-      }
-    });
-  });
-});
-
-$(document).ready(function() {
-  $('#id_rental_days').change(function() {
-    var rentalDays = $(this).val();
-    var contractId = $('#id_contract').val();
-    var start_date_str = $('#id_start_date').val();
-
-    $.ajax({
-      url: '/contracts/get_end_date/',
-      data: {'rental_days': rentalDays, 'start_date': start_date_str},
-      type: 'GET',
-      success: function(response) {
-        $('#id_end_date').val(response.end_date);
-      },
-      error: function(xhr, textStatus, errorThrown) {
-        console.error(xhr.responseText);
-        alert('Произошла ошибка при получении end_date. Подробности в консоли браузера.');
-      }
-    });
-
-    $.ajax({
-      url: '/contracts/calculate_price/',
-      data: {'tariff_id': $('#id_tariff').val(), 'rental_days': rentalDays},
-      type: 'GET',
-      success: function(response) {
-        $('#id_amount').val(response.amount);
-      },
-      error: function() {
-        alert('Произошла ошибка при расчете стоимости.');
-      }
-    });
-  });
-});
-
-$(document).ready(function() {
-  $('#id_start_date, #id_end_date, #id_rental_days').change(function() {
-    var start_date_str = $('#id_start_date').val();
-    var end_date_str = $('#id_end_date').val();
-    var rentalDays = $('#id_rental_days').val();
-
-    if (start_date_str && end_date_str && rentalDays) {
-      var start_date = new Date(start_date_str);
-      var end_date = new Date(end_date_str);
-      var calculated_rental_days = Math.round((end_date - start_date) / (24 * 60 * 60 * 1000));
-
-      if (calculated_rental_days !== parseInt(rentalDays)) {
-        end_date = new Date(start_date.getTime() + (parseInt(rentalDays) * 24 * 60 * 60 * 1000));
-        $('#id_end_date').val(end_date.toISOString().slice(0, 19).replace('T', ' '));
-      }
-    }
-  });
-});
-</script>
-
-
-{% include 'includes/grid_area.html' %}
 <div class="col-xs-12 col-sm-10">
-  <h5>Добавить автомобиль</h5>
+  <h5>Подготовка договора</h5>
   <div class="scrollable-container">
-      <div class="panel-body no-padding">
-          <form method="post" action="{% url 'contracts:contract_create' %}" class="form">
-              {% csrf_token %}
-              {% crispy form %}
-          </form>
-      </div>
+    <div class="panel-body no-padding">
+      <form
+        method="post"
+        action="{% url 'contracts:contract_create' %}"
+        class="form"
+      >
+        {% csrf_token %} {% crispy form %}
+      </form>
+    </div>
   </div>
 </div>
 {% endblock content %}

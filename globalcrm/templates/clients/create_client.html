@@ -16,7 +16,7 @@
     padding: 10px;
   }
 </style>
-{% include 'includes/grid_area.html' %}
+
 <div class="col-xs-12 col-sm-10">
   <h5>Добавить клиента</h5>
   <div class="scrollable-container">
@@ -29,45 +29,7 @@
       >
         {% csrf_token %}
         {% crispy form %}
-        <div class="form-group">{{ form.name.label_tag }} {{ form.name }}</div>
-        <div class="form-group">
-          {{ form.surname.label_tag }} {{ form.surname }}
-        </div>
-        <div class="form-group">
-          {{ form.patronomic.label_tag }} {{ form.patronomic }}
-        </div>
-        <div class="form-group">
-          {{ form.birth_date.label_tag }} {{ form.birth_date }}
-        </div>
-        <div class="form-group">
-          {{ form.passport_series_number.label_tag }} {{ form.passport_series_number }}
-        </div>
-        <div class="form-group">
-          {{ form.passport_issue_date.label_tag }} {{ form.passport_issue_date }}
-        </div>
-        <div class="form-group">
-          {{ form.passport_issued_by.label_tag }} {{ form.passport_issued_by }}
-        </div>
-        <div class="form-group">
-          {{ form.address.label_tag }} {{ form.address }}
-        </div>
-        <div class="form-group">
-          {{ form.driving_number.label_tag }} {{ form.driving_number }}
-        </div>
-        <div class="form-group">
-          {{ form.driver_license_issue_date.label_tag }} {{ form.driver_license_issue_date }}
-        </div>
-        <div class="form-group">
-          {{ form.driver_license_valid_until.label_tag }} {{ form.driver_license_valid_until }}
-        </div>
-        <div class="form-group">
-          {{ form.email.label_tag }} {{ form.email }}
-        </div>
-        <div class="form-group">
-          {{ form.created_at.label_tag }} {{ form.created_at }}
-        </div>
-        <button type="submit" class="btn btn-primary">Добавить клиента</button>
-      </form>
+        
     </div>
   </div>
 </div>
