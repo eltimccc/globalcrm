@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Task, TaskExecution, TaskExecutionFile
 from .forms import TaskExecutionForm, TaskForm, UpdateTaskExecutionForm, UpdateTaskForm
 from django.utils.decorators import method_decorator
+from notifications.models import Notification
 
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
@@ -86,13 +87,21 @@ class TaskDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["task_execution_form"] = TaskExecutionForm()
         return context
+    
+    def get(self, request, *args, **kwargs):
+        task = self.get_object()
+
+        Notification.objects.filter(target_object_id=task.id, recipient=request.user, unread=True).mark_all_as_read()
+
+        return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         task = self.get_object()
         task.completed = not task.completed
         task.save()
-        return redirect("tasks:task_detail", pk=task.pk)
 
+        return redirect("tasks:task_detail", pk=task.pk)
+    
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
@@ -126,10 +135,11 @@ class TaskDeleteView(DeleteView):
     template_name = "tasks/delete_task.html"
     success_url = reverse_lazy("tasks:index")
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["task"] = self.get_object()
-        return context
+    def form_valid(self, form):
+        task = self.get_object()
+        Notification.objects.filter(target_object_id=task.id).delete()
+
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy("tasks:index")
@@ -218,8 +228,16 @@ class TaskExecutionDeleteView(DeleteView):
     def get_context_data(self, **kwargs):  
         context = super().get_context_data(**kwargs)
         context["task_execution"] = self.get_object()
+        
         return context
 
     def get_success_url(self):
         task_execution = self.get_object()
+        
         return reverse_lazy("tasks:task_detail", kwargs={"pk": task_execution.task.pk})
+
+
+def view_notifications(request):
+    notifications = Notification.objects.filter(recipient=request.user)
+
+    return render(request, 'notifications/view_notifications.html', {'notifications': notifications})

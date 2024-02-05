@@ -12,6 +12,7 @@ from .views import (
     TaskUpdateView,
     TasksFromMeView,
     TaskExecutionCreateView,
+    view_notifications,
 )
 from . import views
 
@@ -46,4 +47,5 @@ urlpatterns = [
         TaskExecutionDeleteView.as_view(),
         name="delete_task_execution",
     ),
+    path('view-notifications/', view_notifications, name='view_notifications'),
 ]

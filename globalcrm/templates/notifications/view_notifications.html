@@ -1,0 +1,11 @@
+
+  <head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+  </head>
+
+  {% for notification in notifications %}
+  <div class="{% if notification.unread %}unread-notification{% else %}read-notification{% endif %}">
+    <a href="{% url 'tasks:task_detail' notification.target_object_id %}">{{ notification }}</a>
+  </div>
+{% endfor %}

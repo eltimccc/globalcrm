@@ -64,3 +64,14 @@ a {
     height: 100vh /* Фиксированная высота вьюпорта (100% от высоты экрана) */
   }
   
+/* Цвет для непрочитанных уведомлений */
+.unread-notification {
+  background-color: #ffe6e6; 
+  color: red; 
+}
+
+/* Цвет для прочитанных уведомлений */
+.read-notification {
+  background-color: #f0f0f0; 
+  font-style: italic; 
+}

@@ -162,10 +162,11 @@
                       >
                         Создать договор
                       </a>
-
-
+                      </div>
 
       </ul>
+      <a class="nav-item" href="{% url 'tasks:view_notifications' %}">Уведомления</a>
+      
       {% if user.is_authenticated %}
       <ul class="navbar-nav ml-auto">
         <li
