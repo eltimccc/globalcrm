@@ -56,7 +56,9 @@ class TaskExecutionForm(forms.ModelForm):
             ),
         }
 
-    xfiles = MultiFileField(required=False, min_num=1, max_num=5, max_file_size=1024*1024*5)
+    xfiles = MultiFileField(
+        required=False, min_num=1, max_num=5, max_file_size=1024 * 1024 * 5
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "schedule",
     "django.contrib.staticfiles",
-    'notifications',
+    "notifications",
     "tasks.apps.TasksConfig",
     "users.apps.UsersConfig",
     "uploads.apps.UploadsConfig",
@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     "cars.apps.CarsConfig",
     "contracts.apps.ContractsConfig",
     "crispy_forms",
-    'crispy_bootstrap5',
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -72,13 +72,13 @@ WSGI_APPLICATION = "globalcrm.wsgi.application"
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'postgres'),
-        'USER': os.getenv('DB_USER', 'postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'postgres'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME", "postgres"),
+        "USER": os.getenv("DB_USER", "postgres"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "postgres"),
+        "HOST": os.getenv("DB_HOST", "localhost"),
+        "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
 
@@ -105,7 +105,7 @@ USE_TZ = True
 TIME_ZONE = "Europe/Moscow"
 DATETIME_FORMAT = "m.d.Y H:i"
 DATE_FORMAT = "m.d.Y H:i"
-DATE_INPUT_FORMATS = ['%d.%m.%Y %H:%M']
+DATE_INPUT_FORMATS = ["%d.%m.%Y %H:%M"]
 
 USE_I18N = True
 

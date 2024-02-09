@@ -47,5 +47,5 @@ urlpatterns = [
         TaskExecutionDeleteView.as_view(),
         name="delete_task_execution",
     ),
-    path('view-notifications/', view_notifications, name='view_notifications'),
+    path("view-notifications/", view_notifications, name="view_notifications"),
 ]

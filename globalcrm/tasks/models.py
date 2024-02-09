@@ -10,7 +10,7 @@ class BaseTask(models.Model):
     title = models.CharField(max_length=200, default="Название задачи")
     description = models.TextField(default="Описание задачи")
     deadline = models.DateTimeField(null=True, blank=True)
-    
+
     def __str__(self):
         return self.title
 
@@ -28,7 +28,6 @@ class Task(BaseTask):
     )
     completed = models.BooleanField(default=False)
     completed_at = models.DateTimeField(null=True, blank=True)
-
 
     def get_absolute_url(self):
         return reverse("tasks:task_detail", kwargs={"pk": self.pk})

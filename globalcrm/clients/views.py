@@ -20,28 +20,28 @@ class ClientIndexView(TemplateView):
 
 
 class ClientCreateView(FormView):
-    template_name = 'clients/create_client.html'
+    template_name = "clients/create_client.html"
     form_class = ClientForm
-    success_url = reverse_lazy('clients:index')
+    success_url = reverse_lazy("clients:index")
 
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
-    
+
 
 class ClientEditView(UpdateView):
-    template_name = 'clients/edit_client.html'
+    template_name = "clients/edit_client.html"
     form_class = ClientForm
     model = Client
 
     def get_success_url(self):
-        return reverse_lazy('clients:index')
-    
+        return reverse_lazy("clients:index")
+
 
 class ClientDetailView(DetailView):
     model = Client
-    template_name = 'clients/client_detail.html'
-    context_object_name = 'client'
+    template_name = "clients/client_detail.html"
+    context_object_name = "client"
 
 
 class ClientDeleteView(DeleteView):

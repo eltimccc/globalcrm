@@ -6,6 +6,10 @@
 
   {% for notification in notifications %}
   <div class="{% if notification.unread %}unread-notification{% else %}read-notification{% endif %}">
-    <a href="{% url 'tasks:task_detail' notification.target_object_id %}">{{ notification }}</a>
+      {% if notification.target_object_id %}
+          <a href="{% url 'tasks:task_detail' notification.target_object_id %}">{{ notification }}</a>
+      {% else %}
+          Удалено: {{ notification.description }}
+      {% endif %}
   </div>
 {% endfor %}

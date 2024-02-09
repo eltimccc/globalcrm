@@ -19,7 +19,6 @@ class Contract(models.Model):
 
     def __str__(self):
         return f"{self.start_date} {self.client} {self.car}"
-    
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

@@ -18,9 +18,9 @@ class PriceIndexView(TemplateView):
 
 
 class PriceCreateView(FormView):
-    template_name = 'prices/create_price.html'
+    template_name = "prices/create_price.html"
     form_class = PriceCreateForm
-    success_url = reverse_lazy('prices:prices_index')
+    success_url = reverse_lazy("prices:prices_index")
 
     def form_valid(self, form):
         form.save()
@@ -28,18 +28,18 @@ class PriceCreateView(FormView):
 
 
 class PriceEditView(UpdateView):
-    template_name = 'prices/edit_price.html'
+    template_name = "prices/edit_price.html"
     form_class = PriceCreateForm
     model = Tariff
 
     def get_success_url(self):
-        return reverse_lazy('prices:prices_index')
+        return reverse_lazy("prices:prices_index")
 
 
 class PriceDetailView(DetailView):
     model = Tariff
-    template_name = 'prices/price_detail.html'
-    context_object_name = 'price'
+    template_name = "prices/price_detail.html"
+    context_object_name = "price"
 
 
 class PriceDeleteView(DeleteView):

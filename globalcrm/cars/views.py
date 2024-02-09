@@ -18,28 +18,28 @@ class CarIndexView(TemplateView):
 
 
 class CarCreateView(FormView):
-    template_name = 'cars/create_car.html'
+    template_name = "cars/create_car.html"
     form_class = CarCreateForm
-    success_url = reverse_lazy('cars:cars_index')
+    success_url = reverse_lazy("cars:cars_index")
 
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
-    
+
 
 class CarEditView(UpdateView):
     model = Car
     form_class = CarEditForm
-    template_name = 'cars/car_edit.html'
+    template_name = "cars/car_edit.html"
 
     def get_success_url(self):
-        return reverse_lazy('cars:cars_index')
+        return reverse_lazy("cars:cars_index")
 
 
 class CarDetailView(DetailView):
     model = Car
-    template_name = 'cars/car_detail.html'
-    context_object_name = 'car'
+    template_name = "cars/car_detail.html"
+    context_object_name = "car"
 
 
 class CarDeleteView(DeleteView):

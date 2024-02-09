@@ -87,11 +87,13 @@ class TaskDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["task_execution_form"] = TaskExecutionForm()
         return context
-    
+
     def get(self, request, *args, **kwargs):
         task = self.get_object()
 
-        Notification.objects.filter(target_object_id=task.id, recipient=request.user, unread=True).mark_all_as_read()
+        Notification.objects.filter(
+            target_object_id=task.id, recipient=request.user, unread=True
+        ).mark_all_as_read()
 
         return super().get(request, *args, **kwargs)
 
@@ -101,7 +103,7 @@ class TaskDetailView(DetailView):
         task.save()
 
         return redirect("tasks:task_detail", pk=task.pk)
-    
+
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
@@ -225,19 +227,23 @@ class TaskExecutionDeleteView(DeleteView):
 
         return task_execution
 
-    def get_context_data(self, **kwargs):  
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["task_execution"] = self.get_object()
-        
+
         return context
 
     def get_success_url(self):
         task_execution = self.get_object()
-        
+
         return reverse_lazy("tasks:task_detail", kwargs={"pk": task_execution.task.pk})
 
 
 def view_notifications(request):
     notifications = Notification.objects.filter(recipient=request.user)
 
-    return render(request, 'notifications/view_notifications.html', {'notifications': notifications})
+    return render(
+        request,
+        "notifications/view_notifications.html",
+        {"notifications": notifications},
+    )
