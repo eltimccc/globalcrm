@@ -15,7 +15,7 @@ def task_notification(sender, instance, created, **kwargs):
         notification_text = instance.title
         notify.send(
             instance.created_by,
-            ecipient=recipient,
+            recipient=recipient,
             verb="created",
             description=notification_text,
             target=instance,

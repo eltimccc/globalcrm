@@ -20,11 +20,11 @@ class BaseTask(models.Model):
 
 class Task(BaseTask):
     created_by = models.ForeignKey(
-        User, on_delete=models.PROTECT, default=1, related_name="created_by"
+        User, on_delete=models.CASCADE, related_name="created_by"
     )
     created_at = models.DateTimeField(auto_now_add=True)
     worker = models.ForeignKey(
-        User, on_delete=models.PROTECT, default=None, related_name="worker"
+        User, on_delete=models.CASCADE, default=None, related_name="worker"
     )
     completed = models.BooleanField(default=False)
     completed_at = models.DateTimeField(null=True, blank=True)
@@ -53,13 +53,13 @@ class TaskExecution(BaseTask):
 
 
 class TaskFile(models.Model):
-    task = models.ForeignKey("Task", related_name="file", on_delete=models.PROTECT)
+    task = models.ForeignKey("Task", related_name="file", on_delete=models.CASCADE)
     file = models.FileField(upload_to="uploads/")
 
 
 class TaskExecutionFile(models.Model):
     task_execution = models.ForeignKey(
-        "TaskExecution", related_name="xfiles", on_delete=models.PROTECT
+        "TaskExecution", related_name="xfiles", on_delete=models.CASCADE
     )
     file = models.FileField(upload_to="uploads/")
 
