@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (
     AllTasksView,
+    CompletedTaskListView,
     TaskExecutionDeleteView,
     TaskDeleteView,
     TaskIndexView,
@@ -48,4 +49,5 @@ urlpatterns = [
         name="delete_task_execution",
     ),
     path("view-notifications/", view_notifications, name="view_notifications"),
+    path('completed/', CompletedTaskListView.as_view(), name='completed_tasks'),
 ]

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Выполненные задачи</h2>
+  <ul>
+    {% for task in completed_tasks %}
+      <li>
+        <a href="{{ task.get_absolute_url }}">{{ task.title }}</a>
+        <!-- Дополнительная информация о задаче, если нужно -->
+      </li>
+    {% empty %}
+      <li>Нет выполненных задач.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

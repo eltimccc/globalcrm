@@ -57,6 +57,13 @@
             >
               Исходящие поручения
             </a>
+            <a
+              class="dropdown-item {% if request.resolver_match.url_name == 'completed_tasks' %}active{% endif %}"
+              href="{% url 'tasks:completed_tasks' %}"
+            >
+              Выполненные задачи
+            </a>
+            
           </div>
         </li>
         <li class="nav-item dropdown">

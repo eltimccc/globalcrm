@@ -247,3 +247,11 @@ def view_notifications(request):
         "notifications/view_notifications.html",
         {"notifications": notifications},
     )
+
+
+class CompletedTaskListView(ListView):
+    template_name = 'tasks/completed_task_list.html'
+    context_object_name = 'completed_tasks'
+
+    def get_queryset(self):
+        return Task.objects.filter(worker=self.request.user, completed=True)
