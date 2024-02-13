@@ -1,4 +1,5 @@
 <!-- Отображаем форму создания этапа выполнения -->
+{% load crispy_forms_tags %} 
 <div class="card mt-3" id="create-task-execution-form">
   <div class="card-header">
     <h2>Добавить этап выполнения</h2>
@@ -10,7 +11,7 @@
       enctype="multipart/form-data"
       id="taskExecutionForm"
     >
-      {% csrf_token %} {{ task_execution_form.as_p }}
+      {% csrf_token %} {{ form|crispy }}
       <input type="hidden" name="task" value="{{ task.id }}" />
       <div id="fileInputs"></div>
       <button type="button" class="btn btn-secondary" id="addFileInput">Добавить файл</button>

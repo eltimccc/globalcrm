@@ -2,6 +2,8 @@ from django import forms
 
 from .models import Task, TaskExecution, TaskFile
 from multiupload.fields import MultiFileField
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit
 
 
 class TaskForm(forms.ModelForm):
@@ -52,6 +54,9 @@ class TaskExecutionForm(forms.ModelForm):
         fields = ["title", "task", "description", "deadline", "created_at"]
         widgets = {
             "deadline": forms.DateTimeInput(
+                attrs={"type": "datetime-local"},
+            ),
+            "created_at": forms.DateTimeInput(
                 attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"
             ),
         }
@@ -63,6 +68,14 @@ class TaskExecutionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["task"].widget = forms.HiddenInput()
+
+        # Определение FormHelper для Crispy Forms
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Добавить'))
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
 
 
 class UpdateTaskExecutionForm(TaskExecutionForm):

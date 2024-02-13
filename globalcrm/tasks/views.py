@@ -85,7 +85,7 @@ class TaskDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["task_execution_form"] = TaskExecutionForm()
+        context["form"] = TaskExecutionForm()
         return context
 
     def get(self, request, *args, **kwargs):

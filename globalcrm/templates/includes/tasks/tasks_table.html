@@ -24,7 +24,7 @@
           <a href="{% url 'tasks:task_detail' task.pk %}">{{ task.description|slice:":35" }}</a>
         </td>
         <td style="width: 50px;">{{ task.completed }}</td>
-        <td style="width: 90px;">{{ task.deadline|date:"Y-m-d H:i" }}</td>
+        <td style="width: 90px;">{{ task.deadline|date:"d.m.Y H:i" }}</td>
       </tr>
       {% empty %}
       <tr>
