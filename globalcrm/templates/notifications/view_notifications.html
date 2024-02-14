@@ -1,4 +1,5 @@
-
+{% extends 'base.html' %} {% block content %}
+  
   <head>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
@@ -13,3 +14,4 @@
       {% endif %}
   </div>
 {% endfor %}
+{% endblock %}
