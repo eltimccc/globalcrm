@@ -7,6 +7,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 
+from .filters import TaskFilter
+
 from .models import Task, TaskExecution, TaskExecutionFile
 from .forms import TaskExecutionForm, TaskForm, UpdateTaskExecutionForm, UpdateTaskForm
 from django.utils.decorators import method_decorator
@@ -14,48 +16,37 @@ from notifications.models import Notification
 
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class TaskIndexView(View):
+class TaskIndexView(ListView):
     template_name = "tasks/index.html"
-
-    def get(self, request, *args, **kwargs):
-        sort_by = request.GET.get("sort_by", "created_at")
-        ordering = self.get_ordering(sort_by)
-        tasks = Task.objects.all().order_by(*ordering)
-        return render(request, self.template_name, {"tasks": tasks})
-
-    def get_ordering(self, sort_by):
-        ordering_mapping = {
-            "completed": ("-completed", "created_at"),
-            "created_at": ("created_at",),
-            "worker": ("worker",),
-            "created_by": ("created_by",),
-            "deadline": ("deadline",),
-        }
-        return ordering_mapping.get(sort_by, ("created_at",))
-
-
-class TaskListViewBase(ListView):
     model = Task
-    template_name = None
     context_object_name = "tasks"
+    ordering = 'created_at'
 
     def get_queryset(self):
-        return self.model.objects.all()
-
-    def apply_sorting(self, queryset, sort_by):
-        sort_mapping = {
-            "completed": ("-completed", "created_at"),
-            "created_at": ("created_at",),
-            "worker": ("worker",),
-            "created_by": ("created_by",),
-            "deadline": ("deadline",),
-        }
-        return queryset.order_by(*sort_mapping.get(sort_by, ("created_at",)))
+        queryset = super().get_queryset()
+        filter = TaskFilter(self.request.GET, queryset=queryset)
+        return filter.qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        sort_by = self.request.GET.get("sort_by", "created_at")
-        context["tasks"] = self.apply_sorting(context["tasks"], sort_by)
+        context['sort_by'] = self.request.GET.get('sort_by', 'created_at')
+        return context
+
+
+class TaskListViewBase(ListView):
+    template_name = "tasks/index.html"
+    model = Task
+    context_object_name = "tasks"
+    ordering = 'created_at'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        filter = TaskFilter(self.request.GET, queryset=queryset)
+        return filter.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sort_by'] = self.request.GET.get('sort_by', 'created_at')
         return context
 
 
