@@ -20,7 +20,7 @@ class TaskIndexView(ListView):
     template_name = "tasks/index.html"
     model = Task
     context_object_name = "tasks"
-    ordering = 'created_at'
+    ordering = "created_at"
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -29,7 +29,7 @@ class TaskIndexView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['sort_by'] = self.request.GET.get('sort_by', 'created_at')
+        context["sort_by"] = self.request.GET.get("sort_by", "created_at")
         return context
 
 
@@ -37,7 +37,7 @@ class TaskListViewBase(ListView):
     template_name = "tasks/index.html"
     model = Task
     context_object_name = "tasks"
-    ordering = 'created_at'
+    ordering = "created_at"
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -46,7 +46,7 @@ class TaskListViewBase(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['sort_by'] = self.request.GET.get('sort_by', 'created_at')
+        context["sort_by"] = self.request.GET.get("sort_by", "created_at")
         return context
 
 
@@ -241,8 +241,8 @@ def view_notifications(request):
 
 
 class CompletedTaskListView(ListView):
-    template_name = 'tasks/completed_task_list.html'
-    context_object_name = 'completed_tasks'
+    template_name = "tasks/completed_task_list.html"
+    context_object_name = "completed_tasks"
 
     def get_queryset(self):
         return Task.objects.filter(worker=self.request.user, completed=True)

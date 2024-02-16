@@ -1,24 +1,41 @@
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+</head>
 <div class="table-wrapper mt-2">
+    <form action="{% url 'clients:index' %}" method="get" class="form-inline" id="sortForm">
+        {% csrf_token %}
+        <div class="form-group mr-2">
+            <label for="sort_by" class="mr-2 btn-sm">Сортировать по:</label>
+            <select name="sort_by" id="sort_by" class="form-control form-control-sm fixed-width">
+                <option value="surname" {% if sort_by == "surname" %}selected{% endif %}>Фамилии</option>
+                <option value="name" {% if sort_by == "name" %}selected{% endif %}>Имени</option>
+            </select>
+        </div>
+    </form>
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th scope="col">Имя</th>
                 <th scope="col">Фамилия</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Email</th>
             </tr>
         </thead>
         <tbody>
             {% for client in clients %}
                 <tr>
                     <td style="width: 100px;">
-                        <a href="{% url 'clients:client_detail' pk=client.pk %}">{{ client.name }}</a>
+                        <a href="{% url 'clients:client_detail' pk=client.pk %}">{{ client.surname }}</a>
                     </td>
-                    <td style="width: 100px;">{{ client.surname }}</td>
+                    <td>{{ client.name }}</td>
+                    <td>{{ client.email }}</td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="2">Нет клиентов.</td>
+                    <td colspan="4">Нет клиентов.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+<script src="{% static 'js/sort.js' %}"></script>

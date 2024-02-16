@@ -1,8 +1,28 @@
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+</head>
 <div class="table-wrapper mt-2">
+    <form action="{% url 'prices:prices_index' %}" method="get" class="form-inline" id="sortForm">
+        {% csrf_token %}
+        <div class="form-group mr-2">
+            <label for="sort_by" class="mr-2 btn-sm">Сортировать по:</label>
+            <select name="sort_by" id="sort_by" class="form-control form-control-sm fixed-width">
+                <option value="tarif_name" {% if sort_by == "tarif_name" %}selected{% endif %}>Тариф</option>
+                <option value="price_per_day" {% if sort_by == "price_per_day" %}selected{% endif %}>1 сутки</option>
+                <option value="price_15_30_days" {% if sort_by == "price_15_30_days" %}selected{% endif %}>15-30 суток</option>
+            </select>
+        </div>
+    </form>
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th scope="col">Тариф</th>
+                <th scope="col">1 сутки</th>
+                <th scope="col">2-3 суток</th>
+                <th scope="col">4-7 суток</th>
+                <th scope="col">8-14 суток</th>
+                <th scope="col">15-30 суток</th>
                 <th scope="col">Залог</th>
             </tr>
         </thead>
@@ -12,13 +32,21 @@
                     <td style="width: 100px;">
                         <a href="{% url 'prices:detail_price' pk=price.pk %}">{{ price.tarif_name }}</a>
                     </td>
-                    <td style="width: 100px;">{{ price.deposit }}</td>
+                    <td>{{ price.price_per_day }}</td>
+                    <td>{{ price.price_2_3_days }}</td>
+                    <td>{{ price.price_4_7_days }}</td>
+                    <td>{{ price.price_8_14_days }}</td>
+                    <td>{{ price.price_15_30_days }}</td>
+                    <td>{{ price.deposit }}</td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="2">Нет тарифов.</td>
+                    <td colspan="6">Нет тарифов.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+{% load static %}
+<script src="{% static 'js/sort.js' %}"></script>
+

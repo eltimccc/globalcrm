@@ -3,7 +3,7 @@
         {% csrf_token %}
         <div class="form-group mr-2">
             <label for="sort_by" class="mr-2 btn-sm">Сортировать по:</label>
-            <select name="sort_by" id="sort_by" class="form-control form-control-sm">
+            <select name="sort_by" id="sort_by" class="form-control form-control-sm fixed-width">
                 <option value="model" {% if sort_by == "model" %}selected{% endif %}>Марке</option>
                 <option value="license_plate" {% if sort_by == "license_plate" %}selected{% endif %}>Регистрационному знаку</option>
                 <option value="year" {% if sort_by == "year" %}selected{% endif %}>Году выпуска</option>
@@ -38,13 +38,5 @@
         </tbody>
     </table>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var sortForm = document.getElementById('sortForm');
-        var selectElement = document.getElementById('sort_by');
-  
-        selectElement.addEventListener('change', function() {
-            sortForm.submit();
-        });
-    });
-  </script>
+{% load static %}
+<script src="{% static 'js/sort.js' %}"></script>

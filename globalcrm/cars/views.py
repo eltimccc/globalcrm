@@ -1,7 +1,13 @@
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic.edit import FormView
-from django.views.generic import TemplateView, DetailView, UpdateView, DeleteView, ListView
+from django.views.generic import (
+    TemplateView,
+    DetailView,
+    UpdateView,
+    DeleteView,
+    ListView,
+)
 from django.urls import reverse_lazy
 
 from cars.models import Car
@@ -17,11 +23,12 @@ from .filters import CarFilter
 #         context["cars"] = Car.objects.all()
 #         return context
 
+
 class CarIndexView(ListView):
-    template_name = 'cars/cars_index.html'
+    template_name = "cars/cars_index.html"
     model = Car
-    context_object_name = 'cars'
-    ordering = 'model'
+    context_object_name = "cars"
+    ordering = "model"
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -30,9 +37,8 @@ class CarIndexView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['sort_by'] = self.request.GET.get('sort_by', 'model')
+        context["sort_by"] = self.request.GET.get("sort_by", "model")
         return context
-
 
 
 class CarCreateView(FormView):

@@ -35,7 +35,7 @@ a {
 
 .form {
     background-color: white;
-    padding: 20px; /* Вы можете регулировать отступы по своему усмотрению */
+    padding: 20px; /* Hегулировать отступы */
   }
 
 .card-title-container {
@@ -75,3 +75,9 @@ a {
   background-color: #f0f0f0; 
   font-style: italic; 
 }
+
+
+.fixed-width {
+  width: 200px !important;
+}
+

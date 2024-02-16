@@ -1,21 +1,30 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, ListView
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import FormView
 from django.views.generic.edit import UpdateView, DeleteView
 
 from clients.forms import ClientForm
+from .filters import ClientFilter
 from .models import Client
 
 
-class ClientIndexView(TemplateView):
+class ClientIndexView(ListView):
     template_name = "clients/index.html"
+    model = Client
+    context_object_name = "clients"
+    ordering = "surname"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        filter = ClientFilter(self.request.GET, queryset=queryset)
+        return filter.qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["clients"] = Client.objects.all()
+        context["sort_by"] = self.request.GET.get("sort_by", "surname")
         return context
 
 
