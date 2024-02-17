@@ -1,53 +1,14 @@
 {% extends 'base.html' %}
-
+{% block title %}Договоры{% endblock %} 
 {% block content %}
-<style>
-  body,
-  html {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-  }
 
-  .scrollable-container {
-    max-height: calc(100% - 60px);
-    overflow-y: 100%;
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
-</style>
-<h5>Список договоров</h5>
-<div class="col-xs-12 col-sm-10">
-    <div class="panel-body no-padding">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Клиент</th>
-            <th>Автомобиль</th>
-            <th>Тариф</th>
-            <th>Начало</th>
-            <th>Окончание</th>
-            <th>Длительность (дни)</th>
-            <th>Сумма</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for contract in contracts %}
-          <tr>
-              <td><a href="{% url 'contracts:contract_detail' pk=contract.id %}">{{ contract.id }}</a></td>
-              <td>{{ contract.client }}</td>
-              <td>{{ contract.car }}</td>
-              <td>{{ contract.tariff }}</td>
-              <td>{{ contract.start_date|date:"d.m.Y H:i" }}</td>
-              <td>{{ contract.end_date|date:"d.m.Y H:i" }}</td>
-              <td>{{ contract.rental_days }}</td>
-              <td>{{ contract.amount }}</td>
-          </tr>
-          {% endfor %}
-      </tbody>
-      </table>
+<div class="col-xs-12 col-sm-10 no-right-padding static-position">
+    <div class="panel panel-default grid_search no-bottom-margin">
+      <div class="panel-body no-padding">
+        <h5 class="card-title">Договоры проката</h5>
+        {% include 'includes/contracts/contracts_table.html' %}
+      </div>
     </div>
   </div>
-</div>
-{% endblock content %}
+
+{% endblock %}

@@ -14,6 +14,7 @@ from django.views.generic.edit import FormView
 from django.views.decorators.http import require_GET
 
 from cars.models import Car
+from .filters import ContractFilter
 from .models import Contract
 from .forms import ContractForm
 from prices.views import Tariff
@@ -23,6 +24,17 @@ class ContractListView(ListView):
     model = Contract
     template_name = "contracts/contract_index.html"
     context_object_name = "contracts"
+    ordering = "id"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        filter = ContractFilter(self.request.GET, queryset=queryset)
+        return filter.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["sort_by"] = self.request.GET.get("sort_by", "id")
+        return context
 
 
 def calculate_price(contract):
