@@ -1,60 +1,37 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %} {% load static %} 
+{% load crispy_forms_tags %}
+<div class="col-xs-12 col-sm-10">
+  <div class="panel panel-default grid_search no-bottom-margin">
+    <div class="panel-body no-padding">
+      <h5 class="mb-4">Создание задачи</h5>
+      <form
+        method="post"
+        enctype="multipart/form-data"
+        id="taskForm"
+        class="form"
+      >
+        {% csrf_token %} {{ form|crispy }}
 
-{% block content %}
+        <script src="{% static 'js/choice_worker.js' %}"></script>
 
-
-      <div class="col-xs-12 col-sm-10">
-        <div class="panel panel-default grid_search no-bottom-margin">
-          <div class="panel-body no-padding">
-            <h5 class="mb-4">Создание задачи</h5>
-            <form method="post" enctype="multipart/form-data" id="taskForm" class="form">
-              {% csrf_token %}
-          
-              {% load static %}
-
-              <div class="form-group">
-                  <label for="exampleFormControlSelect1">Выбрать исполнителя</label>
-                  {{ form.worker }}
-              </div>
-              <script src="{% static 'js/choice_worker.js' %}"></script>
-
-
-              <div class="form-group">
-                <label for="id_title">Заголовок:</label>
-                <textarea class="form-control" id="id_title" name="title" rows="1"></textarea>
-              </div>
-
-
-              <div class="form-group">
-                  <label for="id_description" class="col-form-label">Описание:</label>
-                  <textarea class="form-control" id="id_description" name="description" rows="3"></textarea>
-              </div>
-              
-            <div class="form-group">
-              <label for="id_deadline">Дата и время завершения:</label>
-              <input class="form-control" type="datetime-local" id="id_deadline" name="deadline">
-          </div>
-
-
-              <div class="form-group" id="fileInputs">
-                  <!-- Здесь будут добавляться дополнительные поля для файлов -->
-              </div>
-          
-              <div class="form-group">
-                  <button type="button" id="addFileInput" class="btn btn-secondary">Добавить файл</button>
-              </div>
-          
-              <div class="form-group text-right">
-                  <button type="submit" class="btn btn-primary">Создать</button>
-              </div>
-          </form>
-          
-          </div>
+        <div class="form-group" id="fileInputs">
+          <!-- Дополнительные поля для файлов -->
         </div>
-      </div>
+
+        <div class="form-group">
+          <button type="button" id="addFileInput" class="btn btn-secondary">
+            Добавить файл
+          </button>
+        </div>
+
+        <div class="form-group text-right">
+          <button type="submit" class="btn btn-primary">Создать</button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 
-  {% load static %}
-  <script src="{% static 'js/file_input_script.js' %}"></script>
+{% load static %}
+<script src="{% static 'js/file_input_script.js' %}"></script>
 {% endblock %}

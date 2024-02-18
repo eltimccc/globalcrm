@@ -19,12 +19,19 @@ class TaskForm(forms.ModelForm):
             "completed",
             "uploaded_file",
         ]
-
         widgets = {
-            "deadline": forms.DateTimeInput(
-                attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"
-            ),
+            "deadline": forms.DateTimeInput(attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(TaskForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.form_enctype = 'multipart/form-data'
+        self.helper.layout = Layout(
+            *self.Meta.fields,
+            Submit('submit', 'Создать', css_class='btn-primary')
+        )
 
     def save(self, commit=True):
         task = super(TaskForm, self).save(commit=False)
