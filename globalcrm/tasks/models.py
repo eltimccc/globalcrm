@@ -5,11 +5,13 @@ from django.utils import timezone
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
+from .validators import validate_future_date
+
 
 class BaseTask(models.Model):
     title = models.CharField(max_length=200, default="Название задачи")
     description = models.TextField(default="Описание задачи")
-    deadline = models.DateTimeField(null=True, blank=True)
+    deadline = models.DateTimeField(validators=[validate_future_date])
 
     def __str__(self):
         return self.title

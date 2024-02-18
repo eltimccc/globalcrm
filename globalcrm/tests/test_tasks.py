@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from tasks.models import Task, TaskExecution
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.core.exceptions import ValidationError
+
 
 class TaskModelTest(TestCase):
     def setUp(self):
@@ -62,17 +64,17 @@ class TaskModelTest(TestCase):
         self.assertTrue(execution.deadline > timezone.now(), "Дедлайн выполнения задачи находится в прошлом")
 
     def test_deadline_cannot_be_set_before_today(self):
-        today = timezone.now().date()
+        today = timezone.now()
         yesterday = today - timezone.timedelta(days=1)
 
-        with self.assertRaises(ValueError, msg="Дедлайн задачи был установлен на прошедшую дату"):
-            Task.objects.create(
+        with self.assertRaisesMessage(ValidationError, 'Дата выполнения не может быть установлена на прошедшую дату!'):
+            Task(
                 title="Test Task",
                 description="This is a test task",
                 deadline=yesterday,
                 created_by=self.user,
                 worker=self.user
-            )
+            ).full_clean()
 
 def set_completed_at(instance, **kwargs):
     if instance.completed and not instance.completed_at:
