@@ -11,7 +11,7 @@ from .validators import validate_future_date
 class BaseTask(models.Model):
     title = models.CharField(max_length=200, default="Название задачи")
     description = models.TextField(default="Описание задачи")
-    deadline = models.DateTimeField(validators=[validate_future_date])
+    deadline = models.DateTimeField(default=timezone.now().replace(second=0), validators=[validate_future_date])
 
     def __str__(self):
         return self.title
@@ -48,6 +48,10 @@ class TaskExecution(BaseTask):
         if not self.title:
             self.title = self.task.title
         super().save(*args, **kwargs)
+    
+    def set_parent_task_deadline(self):
+        if not self.deadline:
+            self.deadline = self.task.deadline
 
     @property
     def files(self):

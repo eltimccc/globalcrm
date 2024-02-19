@@ -1,3 +1,4 @@
+from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -111,26 +112,44 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse("tasks:index")
 
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib import messages
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(UserPassesTestMixin, UpdateView):
     model = Task
     form_class = UpdateTaskForm
     template_name = "tasks/task_create.html"
+
+    def test_func(self):
+        task = self.get_object()
+        return self.request.user == task.created_by or self.request.user.is_superuser
+
+    def handle_no_permission(self):
+        messages.error(self.request, "Вы не можете изменить эту задачу.")
+        return super().handle_no_permission()
 
     def get_success_url(self):
         return reverse("tasks:index")
 
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class TaskDeleteView(DeleteView):
+class TaskDeleteView(UserPassesTestMixin, DeleteView):
     model = Task
     template_name = "tasks/delete_task.html"
     success_url = reverse_lazy("tasks:index")
 
+    def test_func(self):
+        task = self.get_object()
+        return self.request.user == task.created_by or self.request.user.is_superuser
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden("403 Forbidden")
+
     def form_valid(self, form):
         task = self.get_object()
         Notification.objects.filter(target_object_id=task.id).delete()
+        return super().form_valid(form)
 
         return super().form_valid(form)
 
@@ -142,7 +161,7 @@ class TaskDeleteView(DeleteView):
 class TaskExecutionCreateView(LoginRequiredMixin, CreateView):
     model = TaskExecution
     form_class = TaskExecutionForm
-    template_name = "tasks/task_ex_create.html"
+    template_name = "tasks/task_detail.html"
 
     def get_task(self):
         return get_object_or_404(Task, pk=self.kwargs["task_id"])

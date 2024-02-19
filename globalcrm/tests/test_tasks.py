@@ -1,10 +1,14 @@
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 from django.utils import timezone
 from django.contrib.auth.models import User
+from tasks.views import TaskDeleteView, TaskUpdateView
 from tasks.models import Task, TaskExecution
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.core.exceptions import ValidationError
+from django.urls import reverse
+from django.contrib.messages.storage.fallback import FallbackStorage
+from django.core.exceptions import PermissionDenied
 
 
 class TaskModelTest(TestCase):
@@ -101,3 +105,62 @@ class SignalTest(TestCase):
         task.save()
         self.assertIsNone(task.completed_at, "Дата завершения задачи не была удалена")
 
+
+class TaskViewTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        self.task = Task.objects.create(
+            title="Test Task",
+            description="This is a test task",
+            deadline=timezone.now() + timezone.timedelta(days=1),
+            created_by=self.user,
+            worker=self.user
+        )
+        self.request_factory = RequestFactory()
+
+    def test_task_update_view_allowed(self):
+        request = self.request_factory.get(reverse('tasks:update_task', kwargs={'pk': self.task.pk}))
+        request.user = self.user
+        # Эмулируем сессию с сообщениями
+        setattr(request, 'session', 'session')
+        messages = FallbackStorage(request)
+        setattr(request, '_messages', messages)
+        response = TaskUpdateView.as_view()(request, pk=self.task.pk)
+        self.assertEqual(response.status_code, 200, "Доступ к странице редактирования задачи запрещен")
+
+    def test_task_update_view_denied(self):
+        another_user = User.objects.create_user(username='anotheruser', password='12345')
+        request = self.request_factory.get(reverse('tasks:update_task', kwargs={'pk': self.task.pk}))
+        request.user = another_user
+        # Эмулируем сессию с сообщениями
+        setattr(request, 'session', 'session')
+        messages = FallbackStorage(request)
+        setattr(request, '_messages', messages)
+        try:
+            response = TaskUpdateView.as_view()(request, pk=self.task.pk)
+        except PermissionDenied:
+            # Ожидаемый случай - обработка PermissionDenied
+            pass
+        else:
+            self.fail("PermissionDenied не было вызвано")
+
+    def test_task_delete_view_allowed(self):
+        request = self.request_factory.post(reverse('tasks:delete_task', kwargs={'pk': self.task.pk}))
+        request.user = self.user
+        # Эмулируем сессию с сообщениями
+        setattr(request, 'session', 'session')
+        messages = FallbackStorage(request)
+        setattr(request, '_messages', messages)
+        response = TaskDeleteView.as_view()(request, pk=self.task.pk)
+        self.assertEqual(response.status_code, 302, "Доступ к странице удаления задачи запрещен")
+
+    def test_task_delete_view_denied(self):
+        another_user = User.objects.create_user(username='anotheruser', password='12345')
+        request = self.request_factory.post(reverse('tasks:delete_task', kwargs={'pk': self.task.pk}))
+        request.user = another_user
+        # Эмулируем сессию с сообщениями
+        setattr(request, 'session', 'session')
+        messages = FallbackStorage(request)
+        setattr(request, '_messages', messages)
+        response = TaskDeleteView.as_view()(request, pk=self.task.pk)
+        self.assertEqual(response.status_code, 403, "Доступ к странице удаления задачи разрешен недопустимому пользователю")
