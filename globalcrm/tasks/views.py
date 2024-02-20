@@ -25,19 +25,17 @@ class TaskIndexView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        search_query = self.request.GET.get('search')
+        search_query = self.request.GET.get("search")
 
-        # Применяем фильтр
         filter = TaskFilter(self.request.GET, queryset=queryset)
         queryset = filter.qs
 
         if search_query:
-            # Применяем дополнительный поиск по заданным полям
             queryset = queryset.filter(
-                Q(title__icontains=search_query) |
-                Q(description__icontains=search_query) |
-                Q(created_by__username__icontains=search_query) |
-                Q(worker__username__icontains=search_query)
+                Q(title__icontains=search_query)
+                | Q(description__icontains=search_query)
+                | Q(created_by__username__icontains=search_query)
+                | Q(worker__username__icontains=search_query)
             )
 
         return queryset
@@ -126,8 +124,10 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse("tasks:index")
 
+
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
+
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
 class TaskUpdateView(UserPassesTestMixin, UpdateView):

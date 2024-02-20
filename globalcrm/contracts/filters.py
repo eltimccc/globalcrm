@@ -1,6 +1,7 @@
 import django_filters
 from .models import Contract
 
+
 class ContractFilter(django_filters.FilterSet):
     SORT_CHOICES = (
         ("id", "ID"),
@@ -15,7 +16,6 @@ class ContractFilter(django_filters.FilterSet):
         choices=SORT_CHOICES,
         method="sort_by_filter",
     )
-
 
     def sort_by_filter(self, queryset, name, value):
         if value == "start_date":
