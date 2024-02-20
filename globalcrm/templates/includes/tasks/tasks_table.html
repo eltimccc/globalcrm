@@ -10,6 +10,8 @@
               <option value="created_by" {% if sort_by == "created_by" %}selected{% endif %}>Заказчик</option>
               <option value="deadline" {% if sort_by == "deadline" %}selected{% endif %}>Дедлайн</option>
           </select>
+          <label for="search" class="mr-2 btn-sm">Поиск:</label>
+            <input type="text" name="search" id="search" class="form-control form-control-sm" placeholder="Слово для поиска">
       </div>
   </form>
   <table class="table table-bordered">

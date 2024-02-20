@@ -2,11 +2,11 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import View
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from .filters import TaskFilter
 
@@ -16,7 +16,7 @@ from django.utils.decorators import method_decorator
 from notifications.models import Notification
 
 
-@method_decorator(login_required(login_url="/users/login/"), name="dispatch")
+# @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
 class TaskIndexView(ListView):
     template_name = "tasks/index.html"
     model = Task
@@ -25,8 +25,22 @@ class TaskIndexView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        search_query = self.request.GET.get('search')
+
+        # Применяем фильтр
         filter = TaskFilter(self.request.GET, queryset=queryset)
-        return filter.qs
+        queryset = filter.qs
+
+        if search_query:
+            # Применяем дополнительный поиск по заданным полям
+            queryset = queryset.filter(
+                Q(title__icontains=search_query) |
+                Q(description__icontains=search_query) |
+                Q(created_by__username__icontains=search_query) |
+                Q(worker__username__icontains=search_query)
+            )
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
