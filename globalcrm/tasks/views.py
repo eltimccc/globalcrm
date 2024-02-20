@@ -34,7 +34,6 @@ class TaskIndexView(ListView):
             queryset = queryset.filter(
                 Q(title__icontains=search_query)
                 | Q(description__icontains=search_query)
-                | Q(created_by__username__icontains=search_query)
                 | Q(worker__username__icontains=search_query)
             )
 
