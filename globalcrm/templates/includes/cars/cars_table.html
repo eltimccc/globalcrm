@@ -8,10 +8,9 @@
                 <option value="license_plate" {% if sort_by == "license_plate" %}selected{% endif %}>Регистрационному знаку</option>
                 <option value="year" {% if sort_by == "year" %}selected{% endif %}>Году выпуска</option>
             </select>
+            <label for="search" class="mr-2 btn-sm">Поиск:</label>
+            <input type="text" name="search" id="search" class="form-control form-control-sm" placeholder="Госномер авто">
         </div>
-        <button type="submit" class="btn btn-primary btn-sm ml-2">
-            Применить
-        </button>
     </form>
     <table class="table table-bordered">
         <thead>

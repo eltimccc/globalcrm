@@ -16,7 +16,7 @@ from django.utils.decorators import method_decorator
 from notifications.models import Notification
 
 
-# @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
+@method_decorator(login_required(login_url="/users/login/"), name="dispatch")
 class TaskIndexView(ListView):
     template_name = "tasks/index.html"
     model = Task

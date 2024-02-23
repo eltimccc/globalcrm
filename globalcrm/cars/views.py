@@ -9,19 +9,11 @@ from django.views.generic import (
     ListView,
 )
 from django.urls import reverse_lazy
+from django.db.models import Q
 
 from cars.models import Car
 from cars.forms import CarCreateForm, CarEditForm
 from .filters import CarFilter
-
-
-# class CarIndexView(TemplateView):
-#     template_name = "cars/cars_index.html"
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context["cars"] = Car.objects.all()
-#         return context
 
 
 class CarIndexView(ListView):
@@ -32,8 +24,18 @@ class CarIndexView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        search_query = self.request.GET.get("search")
+
         filter = CarFilter(self.request.GET, queryset=queryset)
-        return filter.qs
+        queryset = filter.qs
+
+        if search_query:
+            queryset = queryset.filter(
+                Q(license_plate__icontains=search_query)
+            )
+
+        return queryset
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

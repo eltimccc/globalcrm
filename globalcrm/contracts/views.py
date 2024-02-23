@@ -12,14 +12,18 @@ from django.views.generic import (
 )
 from django.views.generic.edit import FormView
 from django.views.decorators.http import require_GET
+from django.db.models import Q
 
 from cars.models import Car
 from .filters import ContractFilter
 from .models import Contract
 from .forms import ContractForm
 from prices.views import Tariff
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
+@method_decorator(login_required(login_url="/users/login/"), name="dispatch")
 class ContractListView(ListView):
     model = Contract
     template_name = "contracts/contract_index.html"
@@ -28,8 +32,20 @@ class ContractListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        search_query = self.request.GET.get("search")
+
         filter = ContractFilter(self.request.GET, queryset=queryset)
-        return filter.qs
+        queryset = filter.qs
+
+        if search_query:
+            queryset = queryset.filter(
+                Q(id__icontains=search_query)
+                | Q(client__name__icontains=search_query)
+                | Q(client__surname__icontains=search_query)
+            )
+
+        return queryset
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

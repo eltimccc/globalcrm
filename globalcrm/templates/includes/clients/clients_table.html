@@ -11,6 +11,8 @@
                 <option value="surname" {% if sort_by == "surname" %}selected{% endif %}>Фамилии</option>
                 <option value="name" {% if sort_by == "name" %}selected{% endif %}>Имени</option>
             </select>
+            <label for="search" class="mr-2 btn-sm">Поиск:</label>
+            <input type="text" name="search" id="search" class="form-control form-control-sm" placeholder="Слово для поиска">
         </div>
     </form>
     <table class="table table-bordered">
@@ -24,7 +26,7 @@
         <tbody>
             {% for client in clients %}
                 <tr>
-                    <td style="width: 100px;">
+                    <td>
                         <a href="{% url 'clients:client_detail' pk=client.pk %}">{{ client.surname }}</a>
                     </td>
                     <td>{{ client.name }}</td>

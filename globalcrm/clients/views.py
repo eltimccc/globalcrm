@@ -5,6 +5,7 @@ from django.views.generic import TemplateView, DetailView, ListView
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import FormView
 from django.views.generic.edit import UpdateView, DeleteView
+from django.db.models import Q
 
 from clients.forms import ClientForm
 from .filters import ClientFilter
@@ -19,8 +20,18 @@ class ClientIndexView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        search_query = self.request.GET.get("search")
+        
         filter = ClientFilter(self.request.GET, queryset=queryset)
-        return filter.qs
+        queryset = filter.qs
+        
+        if search_query:
+            queryset = queryset.filter(
+                Q(name__icontains=search_query)
+                | Q(surname__icontains=search_query)
+            )
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

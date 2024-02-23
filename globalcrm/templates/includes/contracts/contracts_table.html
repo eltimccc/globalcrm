@@ -13,6 +13,8 @@
                 <option value="car" {% if sort_by == "car" %}selected{% endif %}>Автомобилю</option>
                 <option value="start_date" {% if sort_by == "start_date" %}selected{% endif %}>Началу аренды</option>
             </select>
+            <label for="search" class="mr-2 btn-sm">Поиск:</label>
+            <input type="text" name="search" id="search" class="form-control form-control-sm" placeholder="Слово для поиска">
         </div>
     </form>
     <table class="table table-bordered">
@@ -31,7 +33,9 @@
         <tbody>
             {% for contract in contracts %}
                 <tr>
-                    <td>{{ contract.id }}</td>
+                    <td>
+                        <a href="{% url 'contracts:contract_detail' pk=contract.pk %}">{{ contract.id }}</a>
+                    </td>
                     <td>{{ contract.client }}</td>
                     <td>{{ contract.car }}</td>
                     <td>{{ contract.tariff }}</td>
