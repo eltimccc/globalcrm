@@ -1,22 +1,33 @@
-<div id="grid_area" class="col-xs-12 col-sm-2 no-right-padding static-position">
-  <div class="panel panel-default grid_search no-bottom-margin">
-    <!-- Ваш дополнительный контент здесь -->
-    <h1>Тут будет менюшка grid_area</h1>
-    <br />
-    <a class="link" href="{% url 'tasks:all_tasks' %}">
-      Все задания {{ tasks.all_tasks }}
+<div id="grid_area" class="col-xs-12 col-sm-1 static-position">
+  {% load static %}
+  <!-- Столбец с иконками -->
+  <div class="icon-column">
+    <a href="{% url 'tasks:all_tasks' %}">
+      <img src="{% static 'ico/task_icon.png' %}" alt="Задачи">
     </a>
-    <br />
-    <a class="link" href="{% url 'tasks:for_me_tasks' %}"> Мои дела </a><br />
-    <a class="link" href="{% url 'tasks:from_me_tasks' %}">
-      Исходящие поручения
+    <a href="{% url 'clients:index' %}">
+      <img src="{% static 'ico/client_icon.png' %}" alt="Клиенты">
     </a>
-    <br />
-    <a
-              class="link"
-              href="{% url 'tasks:create_task' %}"
-            >
-              Создать
-            </a>
+    <a href="{% url 'cars:cars_index' %}">
+      <img src="{% static 'ico/car_icon.png' %}" alt="Cars">
+    </a>
+    <a href="{% url 'prices:prices_index' %}">
+      <img src="{% static 'ico/price_icon.png' %}" alt="Cars">
+    </a>
+    <a href="{% url 'contracts:contract_index' %}">
+      <img src="{% static 'ico/contract_icon.png' %}" alt="Contracts">
+    </a>
   </div>
 </div>
+
+<style>
+  .icon-column {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+  }
+
+  .icon-column a {
+    margin-bottom: 10px; /* Отступ между иконками */
+  }
+</style>
