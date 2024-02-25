@@ -24,10 +24,8 @@
 <script src="{% static 'js/ajax_end_date_and_price.js' %}"></script>
 <script src="{% static 'js/ajax_update_end_date.js' %}"></script>
 
-<div class="col-xs-12 col-sm-10">
-  <h5>Подготовка договора</h5>
+  <p><h5>Подготовка договора</h5></p>
   <div class="scrollable-container">
-    <div class="panel-body no-padding">
       <form
         method="post"
         action="{% url 'contracts:contract_create' %}"
@@ -35,7 +33,5 @@
       >
         {% csrf_token %} {% crispy form %}
       </form>
-    </div>
   </div>
-</div>
 {% endblock content %}

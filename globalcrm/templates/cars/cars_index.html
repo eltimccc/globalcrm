@@ -1,14 +1,10 @@
 {% extends 'base.html' %}
-{% block title %}Автомобили{% endblock %} 
+{% block title %}Автомобили{% endblock %}
 {% block content %}
 
-<div class="col-xs-12 col-sm-10 no-right-padding static-position">
-  <div class="panel panel-default grid_search no-bottom-margin">
-    <div class="panel-body no-padding">
-      <h5 class="card-title">Все автомобили</h5>
-      {% include 'includes/cars/cars_table.html' %}
-    </div>
-  </div>
-</div>
+<p>
+<h5>Все автомобили</h5>
+</p>
+{% include 'includes/cars/cars_table.html' %}
 
 {% endblock %}

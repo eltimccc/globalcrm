@@ -1,14 +1,7 @@
-{% extends 'base.html' %} {% block title %}Задачи для меня{% endblock %} 
+{% extends 'base.html' %} {% block title %}Все задания{% endblock %} 
 {% block content %}
 
-
-<div class="col-xs-12 col-sm-10 no-right-padding static-position">
-  <div class="panel panel-default grid_search no-bottom-margin">
-    <div class="panel-body no-padding">
-      <h5 class="card-title">Все задания</h5>
+<p><h5>Все задания</h5></p>
       {% include 'includes/tasks/tasks_table.html' %}
-    </div>
-  </div>
-</div>
 
 {% endblock %}

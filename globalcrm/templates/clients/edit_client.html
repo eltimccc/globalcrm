@@ -16,10 +16,8 @@
   }
 </style>
 
-<div class="col-xs-12 col-sm-10">
-  <h2>Редактировать клиента</h2>
+  <p><h5>Редактировать клиента</h5></p>
   <div class="scrollable-container">
-    <div class="panel-body no-padding">
       <form
         method="post"
         action="{% url 'clients:edit_client' pk=form.instance.pk %}"
@@ -69,6 +67,5 @@
         
       </form>
     </div>
-  </div>
-</div>
+
 {% endblock content %}

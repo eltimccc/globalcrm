@@ -1,11 +1,10 @@
 {% extends 'base.html' %} 
 {% block content %} 
-
+<p><h5>
+  Информация о тарифе {{ price.tarif_name }}
+</h5></p>
 <div class="card w-75">
   <div class="card-body">
-    <h5>
-      Информация о тарифе {{ price.tarif_name }}
-    </h5>
     <div class="scrollable-container">
       <div class="panel-body no-padding">
         <dl class="dl-horizontal">

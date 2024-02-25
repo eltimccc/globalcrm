@@ -1,6 +1,6 @@
-<div id="grid_area" class="col-xs-12 col-sm-1 static-position">
+<div id="grid_area" class="col-xs-12 col-sm-1 static-position" style="width: 50px;">
+  <p></p>
   {% load static %}
-  <!-- Столбец с иконками -->
   <div class="icon-column">
     <a href="{% url 'tasks:all_tasks' %}">
       <img src="{% static 'ico/task_icon.png' %}" alt="Задачи">
@@ -28,6 +28,6 @@
   }
 
   .icon-column a {
-    margin-bottom: 10px; /* Отступ между иконками */
+    margin-bottom: 10px;
   }
 </style>

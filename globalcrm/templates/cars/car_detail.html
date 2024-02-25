@@ -1,12 +1,10 @@
 {% extends 'base.html' %} 
 {% block content %} 
-
+<p><h5>
+  Информация об автомобиле {{ car.model }}, номер {{ car.license_plate }}
+</h5></p>
 <div class="card w-75">
   <div class="card-body">
-    <h5>
-      Информация об автомобиле {{ car.model }}, номер {{ car.license_plate }}
-    </h5>
-      <div class="panel-body no-padding">
         <dl class="dl-horizontal">
           <dt>Название</dt>
           <dd>{{ car.model }}</dd>
@@ -38,5 +36,4 @@
       </form>
     </div>
   </div>
-</div>
 {% endblock content %}

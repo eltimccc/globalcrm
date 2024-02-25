@@ -2,10 +2,9 @@
 
 {% extends 'base.html' %} 
 {% block content %} 
-<div class="col-xs-12 col-sm-10">
-  <h5>Информация о клиенте</h5>
+<p><h5>Информация о клиенте</h5></p>
+<div class="card w-75">
   <div class="scrollable-container">
-    <div class="panel-body no-padding">
       <dl class="dl-horizontal">
         <h1>{{ client.name }} {{ client.surname }}</h1>
         <ul>
@@ -21,16 +20,14 @@
             Номер водительского удостоверения: {{ client.driving_number }}
           </li>
           <li>
-            Дата выдачи водительского удостоверения: {{
-            client.driver_license_issue_date }}
+            Дата выдачи водительского удостоверения: {{ client.driver_license_issue_date }}
           </li>
           <li>Действителен до: {{ client.driver_license_valid_until }}</li>
           <li>Email: {{ client.email }}</li>
           <li>Дата создания: {{ client.created_at }}</li>
         </ul>
       </dl>
-    </div>
-  </div>
+
   <div class="d-flex">
     <a
       href="{% url 'clients:edit_client' pk=client.pk %}"
@@ -46,6 +43,7 @@
       <button type="submit" class="btn btn-danger">Удалить</button>
     </form>
   </div>
+</div>
 </div>
 
 {% endblock %}

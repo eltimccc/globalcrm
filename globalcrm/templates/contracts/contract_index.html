@@ -1,14 +1,10 @@
 {% extends 'base.html' %}
-{% block title %}Договоры{% endblock %} 
+{% block title %}Договоры{% endblock %}
 {% block content %}
 
-<div class="col-xs-12 col-sm-10 no-right-padding static-position">
-    <div class="panel panel-default grid_search no-bottom-margin">
-      <div class="panel-body no-padding">
-        <h5 class="card-title">Договоры проката</h5>
-        {% include 'includes/contracts/contracts_table.html' %}
-      </div>
-    </div>
-  </div>
+<p>
+<h5>Договоры проката</h5>
+</p>
+{% include 'includes/contracts/contracts_table.html' %}
 
 {% endblock %}

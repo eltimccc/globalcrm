@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
-<h2>Удаление автомобиля</h2>
-<h2>Вы уверены, что хотите удалить автомобиль "{{ car.model }} "?</h2>
+<p><h2>Удаление автомобиля</h2></p>
+<p>Вы уверены, что хотите удалить автомобиль "{{ car.model }} "?</p>
 
 <form action="{% url 'cars:delete_car' car.pk %}" method="post">
   {% csrf_token %}

@@ -16,16 +16,14 @@
     padding: 10px;
   }
 </style>
-<div class="col-xs-12 col-sm-10">
-  <h5>Новый Тариф</h5>
+
+  <p><h5>Новый Тариф</h5></p>
   <div class="scrollable-container">
-      <div class="panel-body no-padding">
           <form method="post" action="{% url 'prices:create_price' %}" class="form">
               {% csrf_token %}
               {% crispy form %}
           </form>
-      </div>
   </div>
-</div>
+
 {% endblock content %}
 

@@ -1,7 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 {% load crispy_forms_tags %}
 <style>
-  /* Стили для фиксации высоты страницы и прокрутки */
   body,
   html {
     height: 100%;
@@ -10,17 +9,15 @@
   }
 
   .scrollable-container {
-    max-height: calc(100% - 220px);
+    max-height: auto;
     overflow-y: auto;
     border: 1px solid #ccc;
     padding: 10px;
   }
 </style>
 
-<div class="col-xs-12 col-sm-10">
-  <h5>Добавить клиента</h5>
+  <p><h5>Добавить клиента</h5></p>
   <div class="scrollable-container">
-    <div class="panel-body no-padding">
       <form
         method="post"
         action="{% url 'clients:create_client' %}"
@@ -30,7 +27,6 @@
         {% csrf_token %}
         {% crispy form %}
         
-    </div>
   </div>
-</div>
+
 {% endblock content %}

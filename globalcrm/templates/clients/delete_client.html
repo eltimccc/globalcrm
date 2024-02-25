@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
-<h2>Удаление клиента</h2>
-<h2>Вы уверены, что хотите удалить клиента "{{ client.name }} {{ client.surname }}"?</h2>
+<p><h2>Удаление клиента</h2></p>
+<p>Вы уверены, что хотите удалить клиента "{{ client.name }} {{ client.surname }}"?</p>
 
 <form action="{% url 'clients:delete_client' client.pk %}" method="post">
   {% csrf_token %}

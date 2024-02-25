@@ -3,7 +3,6 @@
 {% load crispy_forms_tags %}
 {%load static %}
 <style>
-  /* Стили для фиксации высоты страницы и прокрутки */
   body,
   html {
     height: 100%;
@@ -13,7 +12,7 @@
 
   .scrollable-container {
     max-height: calc(100% - 60px);
-    overflow-y: 100%;
+    overflow-y: auto;
     border: 1px solid #ccc;
     padding: 10px;
   }
@@ -23,10 +22,8 @@
 <script src="{% static 'js/ajax_end_date_and_price.js' %}"></script>
 <script src="{% static 'js/ajax_update_end_date.js' %}"></script>
 
-<div class="col-xs-12 col-sm-10">
-  <h5>Редактирование договора №{{ contract.id }}</h5>
+  <p><h5>Редактирование договора №{{ contract.id }}</h5></p>
   <div class="scrollable-container">
-    <div class="panel-body no-padding">
       <form
         method="post"
         action="{% url 'contracts:contract_edit' pk=contract.id %}"
@@ -35,6 +32,4 @@
         {% csrf_token %} {% crispy form %}
       </form>
     </div>
-  </div>
-</div>
 {% endblock content %}

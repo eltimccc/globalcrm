@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Удаление выполнения задачи</h2>
-  <p>Вы уверены, что хотите удалить выполнение задачи "{{ task_execution.title }}"?</p>
+  <p><h2>Удаление выполнения задачи</h2></p>
+  <p>Вы уверены, что хотите удалить этап выполнения "{{ task_execution.title }}"?</p>
   <form method="post">
     {% csrf_token %}
     <button type="submit">Да, удалить</button>

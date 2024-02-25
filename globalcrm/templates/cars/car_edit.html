@@ -10,21 +10,17 @@
   }
 
   .scrollable-container {
-    max-height: calc(100% - 150px);
+    max-height: auto;
     overflow-y: auto;
     border: 1px solid #ccc;
     padding: 10px;
   }
 </style>
 
-<div class="col-xs-12 col-sm-10">
-  <h2>Редактировать автомобиль</h2>
+  <p><h5>Редактировать автомобиль</h5></p>
   <div class="scrollable-container">
-    <div class="panel-body no-padding">
       <form method="post" action="{% url 'cars:car_edit' pk=form.instance.pk %}" class="form">
         {% csrf_token %} {% crispy form %} 
       </form>
     </div>
-  </div>
-</div>
 {% endblock content %}
