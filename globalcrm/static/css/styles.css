@@ -10835,3 +10835,17 @@ textarea.form-control-lg {
   width: 4rem;
   font-size: 2rem;
 }
+
+/* это для показа выпадающего меню по наведению */
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+/* скрывает стрелки вниз */
+.dropdown-toggle::after {
+  display: none;
+}
+
+/* выпадающее меню при наведении */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
