@@ -16,7 +16,7 @@ def random_date(start_date, end_date):
     return start_date + datetime.timedelta(days=random_days)
 
 # Создаем 10000 задач
-for _ in range(10000):
+for _ in range(100):
     title = random_string(20)
     description = random_string(50)
     deadline = random_date(datetime.datetime.now(), datetime.datetime.now() + datetime.timedelta(days=365))
