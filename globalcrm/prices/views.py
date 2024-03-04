@@ -1,8 +1,6 @@
-from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic.edit import FormView
 from django.views.generic import (
-    TemplateView,
     DetailView,
     UpdateView,
     DeleteView,
@@ -12,15 +10,6 @@ from django.urls import reverse_lazy
 
 from prices.models import Tariff
 from prices.forms import PriceCreateForm
-
-
-# class PriceIndexView(TemplateView):
-#     template_name = "prices/prices_index.html"
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context["prices"] = Tariff.objects.all()
-#         return context
 
 
 class PriceIndexView(ListView):

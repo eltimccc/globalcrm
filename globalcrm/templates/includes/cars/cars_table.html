@@ -15,11 +15,11 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th scope="col">Марка</th>
-                <th scope="col">Регистрационный знак</th>
-                <th scope="col">Год выпуска</th>
+                <th scope="col" data-sort="model">Марка</th>
+                <th scope="col" data-sort="license_plate">Регистрационный знак</th>
+                <th scope="col" data-sort="year">Год выпуска</th>
             </tr>
-        </thead>
+</thead>
         <tbody>
             {% for car in cars %}
                 <tr>
@@ -39,3 +39,4 @@
 </div>
 {% load static %}
 <script src="{% static 'js/sort.js' %}"></script>
+<script src="{% static 'js/sort_table_heads.js' %}"></script>
