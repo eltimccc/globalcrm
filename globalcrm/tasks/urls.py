@@ -34,7 +34,7 @@ urlpatterns = [
         name="task_execution_detail",
     ),
     path(
-        "update-task-executon/<int:pk>/",
+        "update_task_execution/<int:pk>/",
         TaskExecutionUpdateView.as_view(),
         name="update_task_execution",
     ),
