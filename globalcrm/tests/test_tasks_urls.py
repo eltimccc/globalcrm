@@ -70,20 +70,3 @@ class UrlsTest(TestCase):
     #         ("tasks:view_notifications", "tasks:view_notifications is not accessible"),
     #         ("tasks:completed_tasks", "tasks:completed_tasks is not accessible"),
     #     ]
-    #     for url_name, error_message in urls:
-    #         if "detail" in url_name or "update" in url_name or "delete" in url_name or "task_execution_create" in url_name:
-    #             if "task_execution_create" in url_name:
-    #                 response = self.client.get(
-    #                     reverse(url_name, kwargs={"task_id": self.task.pk})
-    #                 )
-    #             else:
-    #                 response = self.client.get(
-    #                     reverse(url_name, kwargs={"pk": self.task.pk})
-    #                 )
-    #         elif "task_execution" in url_name:
-    #             response = self.client.get(
-    #                 reverse(url_name, kwargs={"pk": self.task_execution.pk})
-    #             )
-    #         else:
-    #             response = self.client.get(reverse(url_name))
-    #         self.assertIn(response.status_code, [200, 302], msg=error_message)
