@@ -27,46 +27,56 @@ class UrlsTest(TestCase):
 
     def test_index_url(self):
         response = self.client.get(reverse("tasks:index"))
-        self.assertIn(response.status_code, [200, 302], msg="tasks:index is not accessible")
+        self.assertIn(response.status_code, [200], msg="tasks:index is not accessible")
 
     def test_create_task_url(self):
         response = self.client.get(reverse("tasks:create_task"))
-        self.assertIn(response.status_code, [200, 302], msg="tasks:create_task is not accessible")
+        self.assertIn(response.status_code, [200], msg="tasks:create_task is not accessible")
 
     def test_task_detail_url(self):
         response = self.client.get(reverse("tasks:task_detail", kwargs={"pk": self.task.pk}))
-        self.assertIn(response.status_code, [200, 302], msg="tasks:task_detail is not accessible")
+        self.assertIn(response.status_code, [200], msg="tasks:task_detail is not accessible")
     
+    def test_update_task_accessibility(self):
+        response = self.client.get(reverse("tasks:update_task", kwargs={"pk": self.task.pk}))
+        self.assertIn(response.status_code, [200], msg="tasks:update_task is not accessible")
+
+    def test_delete_task_accessibility(self):
+        response = self.client.get(reverse("tasks:delete_task", kwargs={"pk": self.task.pk}))
+        self.assertIn(response.status_code, [200], msg="tasks:delete_task is not accessible")
+
+    def test_all_tasks_accessibility(self):
+        response = self.client.get(reverse("tasks:all_tasks"))
+        self.assertIn(response.status_code, [200], msg="tasks:all_tasks is not accessible")
+
+    def test_from_me_tasks_accessibility(self):
+        response = self.client.get(reverse("tasks:from_me_tasks"))
+        self.assertIn(response.status_code, [200], msg="tasks:from_me_tasks is not accessible")
+
+    def test_for_me_tasks_accessibility(self):
+        response = self.client.get(reverse("tasks:for_me_tasks"))
+        self.assertIn(response.status_code, [200], msg="tasks:for_me_tasks is not accessible")
+
     def test_task_execution_detail_url(self):
         response = self.client.get(reverse("tasks:task_execution_detail", kwargs={"pk": self.task_execution.pk}))
-        self.assertIn(response.status_code, [200, 302], msg="tasks:task_execution_detail is not accessible")
+        self.assertIn(response.status_code, [200], msg="tasks:task_execution_detail is not accessible")
 
-    # def test_urls(self):
-    #     urls = [
-    #         ("tasks:index", "tasks:index is not accessible"),
-    #         ("tasks:create_task", "tasks:create_task is not accessible"),
-    #         ("tasks:task_detail", "tasks:task_detail is not accessible"),
-    #         ("tasks:update_task", "tasks:update_task is not accessible"),
-    #         ("tasks:delete_task", "tasks:delete_task is not accessible"),
-    #         ("tasks:all_tasks", "tasks:all_tasks is not accessible"),
-    #         ("tasks:from_me_tasks", "tasks:from_me_tasks is not accessible"),
-    #         ("tasks:for_me_tasks", "tasks:for_me_tasks is not accessible"),
-    #         (
-    #             "tasks:task_execution_detail",
-    #             "tasks:task_execution_detail is not accessible",
-    #         ),
-    #         (
-    #             "tasks:update_task_execution",
-    #             "tasks:update_task_execution is not accessible",
-    #         ),
-    #         (
-    #             "tasks:task_execution_create",
-    #             "tasks:task_execution_create is not accessible",
-    #         ),
-    #         (
-    #             "tasks:delete_task_execution",
-    #             "tasks:delete_task_execution is not accessible",
-    #         ),
-    #         ("tasks:view_notifications", "tasks:view_notifications is not accessible"),
-    #         ("tasks:completed_tasks", "tasks:completed_tasks is not accessible"),
-    #     ]
+    def test_update_task_execution_accessibility(self):
+        response = self.client.get(reverse("tasks:update_task_execution", kwargs={"pk": self.task_execution.pk}))
+        self.assertIn(response.status_code, [200], msg="tasks:update_task_execution is not accessible")
+
+    def test_task_execution_create_accessibility(self):
+        response = self.client.get(reverse("tasks:task_execution_create", kwargs={"task_id": self.task.id}))
+        self.assertIn(response.status_code, [200], msg="tasks:task_execution_create is not accessible")
+
+    def test_delete_task_execution_accessibility(self):
+        response = self.client.get(reverse("tasks:delete_task_execution", kwargs={"pk": self.task_execution.pk}))
+        self.assertIn(response.status_code, [200], msg="tasks:delete_task_execution is not accessible")
+
+    def test_view_notifications_accessibility(self):
+        response = self.client.get(reverse("tasks:view_notifications"))
+        self.assertIn(response.status_code, [200], msg="tasks:view_notifications is not accessible")
+
+    def test_completed_tasks_accessibility(self):
+        response = self.client.get(reverse("tasks:completed_tasks"))
+        self.assertIn(response.status_code, [200], msg="tasks:completed_tasks is not accessible")
