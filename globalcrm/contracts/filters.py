@@ -23,7 +23,7 @@ class ContractFilter(django_filters.FilterSet):
         elif value == "id":
             return queryset.order_by("id")
         elif value == "client":
-            return queryset.order_by("client")
+            return queryset.order_by("client__surname", "client__name")
         elif value == "car":
             return queryset.order_by("car")
 
