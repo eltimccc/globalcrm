@@ -1,8 +1,4 @@
-<head>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
-</head>
-<div class="table-wrapper mt-2">
+<div class="table-wrapper mt-2" style="height: 87vh;">
     <form action="{% url 'prices:prices_index' %}" method="get" class="form-inline" id="sortForm">
         {% csrf_token %}
         <div class="form-group mr-2">

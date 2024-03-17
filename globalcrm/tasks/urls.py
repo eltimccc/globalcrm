@@ -13,6 +13,7 @@ from .views import (
     TaskUpdateView,
     TasksFromMeView,
     TaskExecutionCreateView,
+    TestTaskListView,
     view_notifications,
 )
 from . import views
@@ -50,4 +51,6 @@ urlpatterns = [
     ),
     path("view-notifications/", view_notifications, name="view_notifications"),
     path("completed/", CompletedTaskListView.as_view(), name="completed_tasks"),
+    path("test/", TestTaskListView.as_view(), name="test"),
+
 ]

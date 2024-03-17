@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Прокручиваемая таблица с Bootstrap{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+
+        /* Дополнительные стили для прокручиваемой таблицы */
+        .table-wrapper {
+            height: 300px !important; /* Высота контейнера таблицы */
+            overflow-y: auto !important; /* Включение вертикальной прокрутки */
+        }
+    </style>
+</head>
+<body>
+
+{% include 'includes/nav.html' %}
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <h5>Тест страницы</h5>
+
+      <div class="table-wrapper mt-2">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Дата создания</th>
+              <th scope="col">Исполнитель</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in tasks %}
+            <tr class="{% if task.completed %}table-success{% endif %}">
+              <td style="width: 80px;">{{ task.created_at|date:"d.m.Y H:i" }}</td>
+              <td style="width: 100px;">{{ task.worker }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -278,3 +278,8 @@ class CompletedTaskListView(ListView):
 
     def get_queryset(self):
         return Task.objects.filter(worker=self.request.user, completed=True)
+
+class TestTaskListView(TaskListViewBase):
+    template_name = "tasks/test_page.html"
+    
+    
