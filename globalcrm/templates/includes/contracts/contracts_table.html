@@ -1,18 +1,4 @@
-<div class="table-wrapper mt-2" style="height: 87vh;">
-    <form action="{% url 'contracts:contract_index' %}" method="get" class="form-inline" id="sortForm">
-        {% csrf_token %}
-        <div class="form-group mr-2">
-            <label for="sort_by" class="mr-2 btn-sm">Сортировать по:</label>
-            <select name="sort_by" id="sort_by" class="form-control form-control-sm fixed-width">
-                <option value="id" {% if sort_by == "id" %}selected{% endif %}>ID</option>
-                <option value="client" {% if sort_by == "client" %}selected{% endif %}>Клиенту</option>
-                <option value="car" {% if sort_by == "car" %}selected{% endif %}>Автомобилю</option>
-                <option value="start_date" {% if sort_by == "start_date" %}selected{% endif %}>Началу аренды</option>
-            </select>
-            <label for="search" class="mr-2 btn-sm">Поиск:</label>
-            <input type="text" name="search" id="search" class="form-control form-control-sm" placeholder="Слово для поиска">
-        </div>
-    </form>
+<div class="table-wrapper mt-2" style="height: 82vh;">
     <table class="table table-bordered">
         <thead>
             <tr>

@@ -1,15 +1,4 @@
-<div class="table-wrapper mt-2" style="height: 87vh;">
-    <form action="{% url 'prices:prices_index' %}" method="get" class="form-inline" id="sortForm">
-        {% csrf_token %}
-        <div class="form-group mr-2">
-            <label for="sort_by" class="mr-2 btn-sm">Сортировать по:</label>
-            <select name="sort_by" id="sort_by" class="form-control form-control-sm fixed-width">
-                <option value="tarif_name" {% if sort_by == "tarif_name" %}selected{% endif %}>Тариф</option>
-                <option value="price_per_day" {% if sort_by == "price_per_day" %}selected{% endif %}>1 сутки</option>
-                <option value="price_15_30_days" {% if sort_by == "price_15_30_days" %}selected{% endif %}>15-30 суток</option>
-            </select>
-        </div>
-    </form>
+<div class="table-wrapper mt-2" style="height: 82vh;">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -42,7 +31,7 @@
             {% endfor %}
         </tbody>
     </table>
-</div>
+    </div>
 {% load static %}
 <script src="{% static 'js/sort.js' %}"></script>
 

@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block content %}
-<p><h2>Удаление тарифа</h2></p>
+<p><h2>Удаление тарифа</h2>
 <p>Вы уверены, что хотите удалить тариф "{{ price.tarif_name }}"?</p>
 
 <form action="{% url 'prices:delete_price' price.pk %}" method="post">

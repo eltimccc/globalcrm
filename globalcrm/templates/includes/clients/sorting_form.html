@@ -1,0 +1,12 @@
+    <form action="{% url 'clients:index' %}" method="get" class="form-inline" id="sortForm">
+        {% csrf_token %}
+        <div class="form-group mr-2">
+            <label for="sort_by" class="mr-2 btn-sm">Сортировать по:</label>
+            <select name="sort_by" id="sort_by" class="form-control form-control-sm fixed-width">
+                <option value="surname" {% if sort_by == "surname" %}selected{% endif %}>Фамилии</option>
+                <option value="name" {% if sort_by == "name" %}selected{% endif %}>Имени</option>
+            </select>
+            <label for="search" class="mr-2 btn-sm">Поиск:</label>
+            <input type="text" name="search" id="search" class="form-control form-control-sm" placeholder="Слово для поиска">
+        </div>
+    </form>

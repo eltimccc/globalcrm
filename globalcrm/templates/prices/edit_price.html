@@ -16,7 +16,7 @@
   }
 </style>
 
-  <p><h2>Редактировать тариф</h2></p>
+  <p><h2>Редактировать тариф</h2>
   <div class="scrollable-container">
       <form method="post" action="{% url 'prices:edit_price' pk=form.instance.pk %}" class="form">
         {% csrf_token %} {{ form.as_p }}

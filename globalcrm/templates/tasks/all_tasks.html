@@ -1,7 +1,9 @@
-{% extends 'base.html' %} {% block title %}Все задания{% endblock %} 
+{% extends 'base.html' %} 
+{% block title %}Все задания{% endblock %} 
 {% block content %}
 
-<p><h5>Все задания</h5></p>
+<p><h5>Все задания</h5>
+      {% include 'includes/tasks/sorting_form.html' %}
       {% include 'includes/tasks/tasks_table.html' %}
 
 {% endblock %}

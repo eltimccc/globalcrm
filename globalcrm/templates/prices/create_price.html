@@ -1,23 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 {% load crispy_forms_tags %}
-<style>
-  /* Стили для фиксации высоты страницы и прокрутки */
-  body,
-  html {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-  }
 
-  .scrollable-container {
-    max-height: calc(100% - 60px);
-    overflow-y: 100%;
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
-</style>
-
-  <p><h5>Новый Тариф</h5></p>
+  <p><h5>Новый Тариф</h5>
   <div class="scrollable-container">
           <form method="post" action="{% url 'prices:create_price' %}" class="form">
               {% csrf_token %}

@@ -2,7 +2,8 @@
 {% block title %}Список задач{% endblock %} 
 {% block content %}
 
-<p><h5>Главная</h5></p>
+<p><h5>Главная</h5>
+      {% include 'includes/tasks/sorting_form.html' %}
       {% include 'includes/tasks/tasks_table.html' %}
 
 {% endblock %}
