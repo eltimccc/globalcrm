@@ -1,4 +1,4 @@
-<form action="{% url 'tasks:index' %}" method="get" class="form-inline" id="sortForm">
+<form action="{% url view_name %}" method="get" class="form-inline" id="sortForm">
     {% csrf_token %}
     <div class="form-group mr-2">
         <label for="sort_by" class="mr-2 btn-sm">Сортировать по:</label>

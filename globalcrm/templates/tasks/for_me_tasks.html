@@ -1,5 +1,8 @@
-{% extends 'base.html' %} {% block title %}Задачи для меня{% endblock %} 
-{%block content %}
-<p><h5>Задачи для меня</h5></p>
-{% include 'includes/tasks/tasks_table.html' %} 
+{% extends 'base.html' %} 
+{% block title %}Задачи для меня{% endblock %} 
+{% block content %}
+
+<p><h5>Задачи для меня</h5>
+    {% include 'includes/tasks/sorting_form.html' with view_name='tasks:for_me_tasks' %}
+    {% include 'includes/tasks/tasks_table.html' %} 
 {% endblock %}

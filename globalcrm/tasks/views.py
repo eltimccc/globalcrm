@@ -17,8 +17,7 @@ from notifications.models import Notification
 
 
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
-class TaskIndexView(ListView):
-    template_name = "tasks/index.html"
+class TaskListViewBase(ListView):
     model = Task
     context_object_name = "tasks"
     ordering = "created_at"
@@ -45,39 +44,28 @@ class TaskIndexView(ListView):
         return context
 
 
-class TaskListViewBase(ListView):
+class TaskIndexView(TaskListViewBase):
     template_name = "tasks/index.html"
-    model = Task
-    context_object_name = "tasks"
-    ordering = "-created_at"
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        filter = TaskFilter(self.request.GET, queryset=queryset)
-        return filter.qs
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["sort_by"] = self.request.GET.get("sort_by", "-created_at")
-        return context
 
 
-class AllTasksView(LoginRequiredMixin, TaskListViewBase):
+class AllTasksView(TaskListViewBase):
     template_name = "tasks/all_tasks.html"
 
 
-class TasksFromMeView(LoginRequiredMixin, TaskListViewBase):
+class TasksFromMeView(TaskListViewBase):
     template_name = "tasks/from_me_tasks.html"
 
     def get_queryset(self):
-        return Task.objects.filter(created_by=self.request.user)
+        queryset = super().get_queryset()
+        return queryset.filter(created_by=self.request.user)
 
 
-class TasksForMeView(LoginRequiredMixin, TaskListViewBase):
+class TasksForMeView(TaskListViewBase):
     template_name = "tasks/for_me_tasks.html"
 
     def get_queryset(self):
-        return Task.objects.filter(worker=self.request.user)
+        queryset = super().get_queryset()
+        return queryset.filter(worker=self.request.user)
 
 
 # @method_decorator(login_required(login_url='/users/login/'), name='dispatch')
@@ -108,7 +96,7 @@ class TaskDetailView(DetailView):
         return redirect("tasks:task_detail", pk=task.pk)
 
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(CreateView):
     model = Task
     form_class = TaskForm
     template_name = "tasks/task_create.html"

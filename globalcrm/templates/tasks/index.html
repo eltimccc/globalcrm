@@ -3,7 +3,7 @@
 {% block content %}
 
 <p><h5>Главная</h5>
-      {% include 'includes/tasks/sorting_form.html' %}
+      {% include 'includes/tasks/sorting_form.html' with view_name='tasks:index' %}
       {% include 'includes/tasks/tasks_table.html' %}
 
 {% endblock %}
