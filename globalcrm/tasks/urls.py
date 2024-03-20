@@ -6,6 +6,7 @@ from .views import (
     TaskDeleteView,
     TaskIndexView,
     TaskCreateView,
+    TaskModalView,
     TasksForMeView,
     TaskDetailView,
     TaskExecutionDetailView,
@@ -29,6 +30,7 @@ urlpatterns = [
     path("all_tasks/", AllTasksView.as_view(), name="all_tasks"),
     path("from_me_tasks/", TasksFromMeView.as_view(), name="from_me_tasks"),
     path("for_me_tasks/", TasksForMeView.as_view(), name="for_me_tasks"),
+    path('task_modal/<int:pk>/', TaskModalView.as_view(), name='task_modal'),
     path(
         "task_execution/<int:pk>/",
         TaskExecutionDetailView.as_view(),

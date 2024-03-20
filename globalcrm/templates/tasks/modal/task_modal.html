@@ -1,0 +1,36 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{ task.title }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p><strong>Описание задачи:</strong> {{ task.description }}</p>
+        <p><strong>Исполнитель:</strong> {{ task.worker }}</p>
+        <p><strong>Дата создания:</strong> {{ task.created_at }}</p>
+        <p><strong>Крайний срок:</strong> {{ task.deadline }}</p>
+        <p><strong>Статус:</strong> {% if task.completed %}Выполнено{% else %}Не выполнено{% endif %}</p>
+
+        {% if executions %}
+        <h6>Этапы выполнения ({{ executions.count }})</h6>
+        <ul style="list-style: none; padding-left: 0;">
+            {% for execution in executions %}
+            <li><a href="{% url 'tasks:task_detail' task.pk %}#execution-{{ execution.id }}">{{ execution.title }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if task_files_names or execution_files_names %}
+        <h6>Файлы</h6>
+        <ul style="list-style: none; padding-left: 0;">
+            {% for filename in task_files_names %}
+            <li><a href="{% url 'tasks:task_detail' task.pk %}#execution-{{ execution.id }}">{{ filename }}</a></li>
+            {% endfor %}
+            {% for file in execution_files_names %}
+            <li><a href="{{ file.file.url }}" target="_blank">{{ file }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
