@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.views import View
 from django.views.generic.edit import FormView
 from django.views.generic import (
@@ -7,6 +8,8 @@ from django.views.generic import (
     ListView,
 )
 from django.urls import reverse_lazy
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 from prices.models import Tariff
 from prices.forms import PriceCreateForm
@@ -65,3 +68,11 @@ class PriceDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy("prices:prices_index")
+
+
+class PriceModalView(View):
+    def get(self, request, pk):
+        tariff = get_object_or_404(Tariff, pk=pk)
+        data = {'tariff': tariff}
+        html_modal_content = render_to_string('prices/modal/price_modal.html', data)
+        return JsonResponse({'html_modal_content': html_modal_content})

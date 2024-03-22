@@ -1,0 +1,61 @@
+<style>
+  menu {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-text-size-adjust: 100%;
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    line-height: 1.4285em;
+    font-size: 12px;
+    color: #707478;
+    cursor: default;
+    box-sizing: inherit;
+    min-height: 50px;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    z-index: 222;
+    margin-bottom: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0 0 2px rgba(0,0,0,.3);
+    background: #fff;
+    display: flex; /* Добавляем flexbox для выравнивания элементов */
+    align-items: center; /* Центрируем элементы по вертикали */
+    margin: 0;
+  }
+
+  .container.px-5 {
+    max-width: 1140px; /* Примерное значение ширины панели навигации Bootstrap */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .navbar-brand {
+    margin-left: 0 !important;
+    margin-right: auto; /* Выравнивание левого края */
+}
+
+
+</style>
+
+
+<menu>
+  <div class="container px-5 d-flex justify-content-between align-items-center">
+    <div>
+      <a class="navbar-brand" href="{% url 'tasks:index' %}">GLOBAL CRM</a>
+    </div>
+    <div class="d-flex align-items-center">
+      <a class="nav-item" href="{% url 'tasks:view_notifications' %}">Уведомления</a>
+
+      {% if user.is_authenticated %}
+        <a class="nav-item ml-3 {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" href="{% url 'users:profile' %}">
+          Профиль {{ user.username }}
+        </a>
+        <form method="post" action="{% url 'users:logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-link nav-link ml-3">Выйти</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</menu>
+

@@ -1,59 +1,71 @@
-<div class="table-wrapper mt-2" style="height: 82vh;">
+<div class="table-wrapper mt-2" style="height: 82vh">
   <table class="table table-bordered">
-      <thead>
-          <tr>
-              <th scope="col">Дата создания</th>
-              <th scope="col">Исполнитель</th>
-              <th scope="col">Название задачи</th>
-              <th scope="col">Описание</th>
-              <th scope="col">Статус</th>
-              <th scope="col">Крайний срок</th>
-          </tr>
-      </thead>
-      <tbody>
-          {% for task in tasks %}
-          <tr class="{% if task.completed %}table-success{% endif %}">
-              <td style="width: 80px;">{{ task.created_at|date:"d.m.Y H:i" }}</td>
-              <td style="width: 100px;">{{ task.worker }}</td>
-              <td style="width: 200px;">
-                <a href="#" class="task-detail-link" data-task-pk="{{ task.pk }}">{{ task.title }}</a>
-            </td>
-
-            
-
-              <td style="width: 250px;">
-                  <a href="{% url 'tasks:task_detail' task.pk %}">{{ task.description|slice:":35" }}</a>
-              </td>
-              <td style="width: 50px;">{{ task.completed }}</td>
-              <td style="width: 90px;">{{ task.deadline|date:"d.m.Y H:i" }}</td>
-          </tr>
-          {% empty %}
-          <tr>
-              <td colspan="6">Нет задач.</td>
-          </tr>
-          {% endfor %}
-      </tbody>
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Дата создания</th>
+        <th scope="col">Исполнитель</th>
+        <th scope="col">Название задачи</th>
+        <th scope="col">Описание</th>
+        <th scope="col">Статус</th>
+        <th scope="col">Крайний срок</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in tasks %}
+      <tr class="{% if task.completed %}table-success{% endif %}">
+        <td style="width: 30px">{{ task.id }}</td>
+        <td style="width: 80px">{{ task.created_at|date:"d.m.Y H:i" }}</td>
+        <td style="width: 100px">{{ task.worker }}</td>
+        <td style="width: 200px">
+          <a href="#" class="task-detail-link" data-task-pk="{{ task.pk }}"
+            >{{ task.title }}</a
+          >
+        </td>
+        <td style="width: 250px">
+          <a href="{% url 'tasks:task_detail' task.pk %}"
+            >{{ task.description|slice:":35" }}</a
+          >
+        </td>
+        <td style="width: 50px">{{ task.completed }}</td>
+        <td style="width: 90px">{{ task.deadline|date:"d.m.Y H:i" }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="7">Нет задач.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
   </table>
 </div>
 
-
-<div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" style="background-color: #f8f9fa; border: none; border-radius: 0.5rem;">
-            <div class="modal-header" style="background-color: #007bff; color: #fff;">
-                <h5 class="modal-title" id="taskModalLabel">Информация о задаче</h5>
-            </div>
-            <div class="modal-body" style="padding: 1rem;">
-                <!-- Сюда будет подставляться информация о задаче -->
-            </div>
-            <div class="modal-footer" style="border-top: 1px solid #dee2e6;">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-            </div>
-        </div>
+<div
+  class="modal fade"
+  id="taskModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="taskModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div
+      class="modal-content"
+      style="background-color: #f8f9fa; border: none; border-radius: 0.5rem"
+    >
+      <div class="modal-header" style="background-color: #007bff; color: #fff">
+        <h5 class="modal-title" id="taskModalLabel">Информация о задаче</h5>
+      </div>
+      <div class="modal-body" style="padding: 1rem">
+        <!-- Сюда будет подставляться информация о задаче -->
+      </div>
+      <div class="modal-footer" style="border-top: 1px solid #dee2e6">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Закрыть
+        </button>
+      </div>
     </div>
+  </div>
 </div>
-
-
 
 {% load static %}
 <script src="{% static 'js/sort.js' %}"></script>

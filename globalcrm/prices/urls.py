@@ -5,6 +5,7 @@ from prices.views import (
     PriceEditView,
     PriceIndexView,
     PriceDetailView,
+    PriceModalView,
 )
 
 
@@ -16,4 +17,5 @@ urlpatterns = [
     path("edit/<int:pk>/", PriceEditView.as_view(), name="edit_price"),
     path("<int:pk>/", PriceDetailView.as_view(), name="detail_price"),
     path("delete/<int:pk>/", PriceDeleteView.as_view(), name="delete_price"),
+    path('price_modal/<int:pk>/', PriceModalView.as_view(), name='price_modal'),
 ]

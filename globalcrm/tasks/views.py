@@ -11,7 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.http import JsonResponse
-from itertools import chain
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib import messages
 
 from .filters import TaskFilter
 
@@ -117,10 +118,6 @@ class TaskCreateView(CreateView):
         return reverse("tasks:index")
 
 
-from django.contrib.auth.mixins import UserPassesTestMixin
-from django.contrib import messages
-
-
 @method_decorator(login_required(login_url="/users/login/"), name="dispatch")
 class TaskUpdateView(UserPassesTestMixin, UpdateView):
     model = Task
@@ -160,25 +157,14 @@ class TaskDeleteView(UserPassesTestMixin, DeleteView):
     def get_success_url(self):
         return reverse_lazy("tasks:index")
 
-
-# class TaskModalView(View):
-#     def get(self, request, pk):
-#         task = get_object_or_404(Task, pk=pk)
-#         data = {
-#             'task': task,
-#         }
-#         # Отрисовываем HTML-шаблон и возвращаем его в виде JSON-ответа
-#         html_modal_content = render_to_string('tasks/modal/task_modal.html', data)
-#         return JsonResponse({'html_modal_content': html_modal_content})
     
 class TaskModalView(View):
     def get(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
         executions = TaskExecution.objects.filter(task=task)
         execution_files = TaskExecutionFile.objects.filter(task_execution__in=executions)
-        task_files = task.files.all()  # Файлы, загруженные при создании самой задачи
-        
-        # Получаем имена файлов без пути
+        task_files = task.files.all()  
+
         task_files_names = [os.path.basename(file.file.name) for file in task_files]
         execution_files_names = [os.path.basename(file.file.name) for file in execution_files]
         

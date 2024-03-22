@@ -20,8 +20,7 @@ table {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    background-color: #ffffff;
-    z-index: 1;
+    background-color: #ffffff;   
 }
 
 .body,
@@ -83,4 +82,14 @@ a {
 .full-height {
   height: 94vh; /* Устанавливаем высоту контейнера на 100% высоты экрана браузера */
   overflow-y: auto; /* Включаем вертикальную прокрутку */
+}
+
+.container.px-5 {
+  max-width: 1140px; /* Примерное значение ширины панели навигации Bootstrap */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nav-spacer {
+  padding-top: 50px; /* Измените значение на то, которое соответствует нужному отступу */
 }
