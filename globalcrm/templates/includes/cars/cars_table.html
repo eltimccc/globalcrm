@@ -2,6 +2,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
+                <th scope="col">ID</th>
                 <th scope="col" data-sort="model">Марка</th>
                 <th scope="col" data-sort="license_plate">Регистрационный знак</th>
                 <th scope="col" data-sort="year">Год выпуска</th>
@@ -10,9 +11,16 @@
         <tbody>
             {% for car in cars %}
                 <tr>
+                    <td style="width: 30px">
+                        <a href="{% url 'cars:car_detail' car.pk %}"> {{ car.id }}</td>
+  
                     <td style="width: 100px;">
-                        <a href="{% url 'cars:car_detail' pk=car.pk %}">{{ car.model }}</a>
+                    <a href="#" class="modal-link"
+                    data-url="{% url 'cars:car_modal' car.pk %}"
+                    data-target="#carModal">{{ car.model }}</a>
                     </td>
+
+
                     <td style="width: 100px;">{{ car.license_plate }}</td>
                     <td style="width: 100px;">{{ car.year }}</td>
                 </tr>
@@ -24,6 +32,26 @@
         </tbody>
     </table>
 </div>
+
+<div class="modal fade" id="carModal" tabindex="-1" role="dialog" aria-labelledby="tariffModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" style="background-color: #f8f9fa; border: none; border-radius: 0.5rem">
+      <div class="modal-header" style="background-color: #007bff; color: #fff">
+        <h5 class="modal-title" id="tariffModalLabel">Информация о машине</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Сюда будет подставляться информация о тарифе -->
+      </div>
+      <div class="modal-footer" style="border-top: 1px solid #dee2e6">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% load static %}
 <script src="{% static 'js/sort.js' %}"></script>
-<script src="{% static 'js/sort_table_heads.js' %}"></script>
+<script src="{% static 'js/modal.js' %}"></script>

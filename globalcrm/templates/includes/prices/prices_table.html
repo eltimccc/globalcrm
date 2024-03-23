@@ -17,9 +17,13 @@
       <tr>
         <td style="width: 30px">
         <a href="{% url 'prices:detail_price' price.pk %}"> {{ price.id }}</td>
+
         <td style="width: 100px;">
-          <a href="#" class="price-detail-link" data-price-pk="{{ price.id }}">{{ price.tarif_name }}</a>
+          <a href="#" class="modal-link"
+          data-url="{% url 'prices:price_modal' price.pk %}"
+          data-target="#tariffModal">{{ price.tarif_name }}</a>
         </td>
+
         <td>{{ price.price_per_day }}</td>
         <td>{{ price.price_2_3_days }}</td>
         <td>{{ price.price_4_7_days }}</td>
@@ -57,4 +61,4 @@
 
 {% load static %}
 <script src="{% static 'js/sort.js' %}"></script>
-<script src="{% static 'js/prices_modal_script.js' %}"></script>
+<script src="{% static 'js/modal.js' %}"></script>

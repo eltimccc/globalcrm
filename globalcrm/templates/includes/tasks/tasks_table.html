@@ -18,14 +18,12 @@
         <td style="width: 80px">{{ task.created_at|date:"d.m.Y H:i" }}</td>
         <td style="width: 100px">{{ task.worker }}</td>
         <td style="width: 200px">
-          <a href="#" class="task-detail-link" data-task-pk="{{ task.pk }}"
-            >{{ task.title }}</a
-          >
+          <a href="#" class="modal-link" data-url="{% url 'tasks:task_modal' task.pk %}" data-target="#taskModal">{{ task.title }}</a>
         </td>
         <td style="width: 250px">
-          <a href="{% url 'tasks:task_detail' task.pk %}"
-            >{{ task.description|slice:":35" }}</a
-          >
+          <a href="{% url 'tasks:task_detail' task.pk %}">
+            {{ task.description|slice:":35" }}
+          </a>
         </td>
         <td style="width: 50px">{{ task.completed }}</td>
         <td style="width: 90px">{{ task.deadline|date:"d.m.Y H:i" }}</td>
@@ -69,4 +67,4 @@
 
 {% load static %}
 <script src="{% static 'js/sort.js' %}"></script>
-<script src="{% static 'js/task_modal_script.js' %}"></script>
+<script src="{% static 'js/modal.js' %}"></script>

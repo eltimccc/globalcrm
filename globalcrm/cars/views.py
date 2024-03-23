@@ -1,4 +1,5 @@
-from django.shortcuts import redirect, render
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic.edit import FormView
 from django.views.generic import (
@@ -8,6 +9,7 @@ from django.views.generic import (
     DeleteView,
     ListView,
 )
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.db.models import Q
 
@@ -80,3 +82,11 @@ class CarDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy("cars:cars_index")
+
+
+class CarModalView(View):
+    def get(self, request, pk):
+        car = get_object_or_404(Car, pk=pk)
+        data = {'car': car}
+        html_modal_content = render_to_string('cars/modal/car_modal.html', data)
+        return JsonResponse({'html_modal_content': html_modal_content})
