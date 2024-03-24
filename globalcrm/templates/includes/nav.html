@@ -22,7 +22,7 @@
     z-index: 223;
     -webkit-transform: translateZ(0);
     position: fixed;
-    width: 110px;
+    width: 100px;
 }
 
 .vertical-nav ul {
@@ -78,18 +78,18 @@
         <li><a href="{% url 'tasks:index' %}">Главная</a></li>
         <li><a href="#">Задачи</a>
           <ul class="dropdown">
-                  <li><a href="{% url 'tasks:create_task' %}">Новая задача</a></li>
                   <li><a href="{% url 'tasks:all_tasks' %}">Все задачи</a></li>
                   <li><a href="{% url 'tasks:for_me_tasks' %}">Мои дела</a></li>
                   <li><a href="{% url 'tasks:from_me_tasks' %}">Исходящие поручения</a></li>
                   <li><a href="{% url 'tasks:completed_tasks' %}">Выполнено</a></li>
+                  <li><a href="{% url 'tasks:create_task' %}">Новая задача</a></li>
                   
               </ul>
         
         <li><a href="#">Клиенты</a>
             <ul class="dropdown">
-                <li><a href="{% url 'clients:create_client' %}">Добавить клиента</a></li>
                 <li><a href="{% url 'clients:index' %}">Все клиенты</a></li>
+                <li><a href="{% url 'clients:create_client' %}">Добавить клиента</a></li>
             </ul>
         <li><a href="#">Автомобили</a>
             <ul class="dropdown">
