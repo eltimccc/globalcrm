@@ -1,8 +1,11 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
+{% block title %}Детали задачи{% endblock %} 
+
 {% block content %} 
 {% load static %} 
   
-<p><h5>Задача: {{ task.title }}</h5></p>
+<p><h5>Задача: {{ task.title }}</h5>
+{% include 'includes/back_button.html' %}
   <div class="card">
     <div class="card-body">
       <div class="row">

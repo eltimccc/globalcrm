@@ -1,11 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Автомобили{% endblock %}
+
 {% block content %}
-
-<p>
-<h5>Все автомобили</h5>
-
-{% include 'includes/cars/sorting_form.html' %}
+<p><h5>Все автомобили</h5>
 {% include 'includes/cars/cars_table.html' %}
-
 {% endblock %}

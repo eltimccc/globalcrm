@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% block title %}Удаление этапа{% endblock %} 
 
 {% block content %}
-  <p><h2>Удаление выполнения задачи</h2></p>
+  <p><h5>Удаление этапа</h5>
   <p>Вы уверены, что хотите удалить этап выполнения "{{ task_execution.title }}"?</p>
   <form method="post">
     {% csrf_token %}

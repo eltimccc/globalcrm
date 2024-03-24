@@ -1,8 +1,7 @@
 {% extends 'base.html' %} 
 {% block content %} 
-<p><h5>
-  Информация об автомобиле {{ car.model }}, номер {{ car.license_plate }}
-</h5></p>
+<p><h5>Информация об автомобиле {{ car.model }}, номер {{ car.license_plate }}</h5>
+{% include 'includes/back_button.html' %}
 <div class="card w-75">
   <div class="card-body">
         <dl class="dl-horizontal">

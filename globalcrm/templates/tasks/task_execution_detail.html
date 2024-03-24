@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% block title %}Детали этапа{% endblock %} 
 
 {% block content %}
-<div class="container">
-  <p><h5>{{ task_execution.title }}</h5></p>
+  <p><h5>{{ task_execution.title }}</h5>
+  {% include 'includes/back_button.html' %}
   <div class="card">
     <div class="card-body">
       <!-- Вывод информации о выполнении задачи -->
@@ -25,5 +26,5 @@
       </div>
     </div>
   </div>
-</div>
+
 {% endblock %}

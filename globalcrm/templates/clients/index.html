@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Клиенты{% endblock %} 
+
 {% block content %}
-
-        <p><h5>Все клиенты</h5>
-        {% include 'includes/clients/sorting_form.html' %}
-        {% include 'includes/clients/clients_table.html' %}
-
+<p><h5>Все клиенты</h5>
+{% include 'includes/clients/clients_table.html' %}
 {% endblock %}

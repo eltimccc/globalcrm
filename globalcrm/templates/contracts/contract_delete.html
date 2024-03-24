@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
+{% include 'includes/back_button.html' %}
 <p><h5>Удаление договора</h5></p>
 <p>Вы уверены, что хотите удалить договор "{{ contract.id }} "?</p>
 

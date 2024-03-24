@@ -1,7 +1,8 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
 {% load crispy_forms_tags %}
-
   <p><h5>Новый Тариф</h5>
+  {% include 'includes/back_button.html' %}
   <div class="scrollable-container">
           <form method="post" action="{% url 'prices:create_price' %}" class="form">
               {% csrf_token %}

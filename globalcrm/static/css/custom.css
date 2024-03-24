@@ -80,16 +80,21 @@ a {
 }
 
 .full-height {
-  height: 94vh; /* Устанавливаем высоту контейнера на 100% высоты экрана браузера */
-  overflow-y: auto; /* Включаем вертикальную прокрутку */
+  height: 94vh; /* Высота контейнера */
+  overflow-y: auto; /* Вертикальная прокрутка */
 }
 
 .container.px-5 {
-  max-width: 1140px; /* Примерное значение ширины панели навигации Bootstrap */
+  max-width: 1140px; /* Ширина панели навигации */
   margin-left: auto;
   margin-right: auto;
 }
 
 .nav-spacer {
-  padding-top: 50px; /* Измените значение на то, которое соответствует нужному отступу */
+  padding-top: 50px; /* отступы */
+}
+
+/* Кнопка назад острые углы */
+.sharp-corner {  
+  border-radius: 0;
 }

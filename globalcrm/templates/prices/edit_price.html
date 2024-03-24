@@ -16,7 +16,8 @@
   }
 </style>
 
-  <p><h2>Редактировать тариф</h2>
+  <p><h5>Редактировать тариф</h5>
+  {% include 'includes/back_button.html' %}
   <div class="scrollable-container">
       <form method="post" action="{% url 'prices:edit_price' pk=form.instance.pk %}" class="form">
         {% csrf_token %} {{ form.as_p }}

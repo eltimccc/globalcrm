@@ -17,7 +17,8 @@
   }
 </style>
 
-  <p><h5>Редактировать автомобиль</h5></p>
+  <p><h5>Редактировать автомобиль</h5>
+  {% include 'includes/back_button.html' %}
   <div class="scrollable-container">
       <form method="post" action="{% url 'cars:car_edit' pk=form.instance.pk %}" class="form">
         {% csrf_token %} {% crispy form %} 

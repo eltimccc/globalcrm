@@ -1,7 +1,12 @@
-{% extends 'base.html' %} {% block content %} {% load static %} 
+{% extends 'base.html' %} 
+{% block title %}Создание задачи{% endblock %} 
+
+{% block content %}
+{% load static %} 
 {% load crispy_forms_tags %}
 <p></p>
-<h5>Создание задачи</h5>
+<p><h5>Создание задачи</h5>
+{% include 'includes/back_button.html' %}
 <form method="post" enctype="multipart/form-data" id="taskForm" class="form">
   {% csrf_token %} {{ form|crispy }}
   

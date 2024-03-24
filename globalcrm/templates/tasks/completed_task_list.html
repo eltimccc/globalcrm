@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
+{% block title %}Выполненные задачи{% endblock %}
+
 {% block content %}
-  <p><h2>Выполненные задачи</h2></p>
+  <p><h5>Выполненные задачи</h5>
+  {% include 'includes/back_button.html' %}
   <ul>
     {% for task in completed_tasks %}
       <li>
         <a href="{{ task.get_absolute_url }}">{{ task.title }}</a>
-        <!-- Дополнительная информация о задаче, если нужно -->
+        <!-- Добавить остальное -->
       </li>
     {% empty %}
       <li>Нет выполненных задач.</li>
