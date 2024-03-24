@@ -8,8 +8,9 @@
 ## Технологии
 - Python 3.11.5
 - Django 4.2.7
-- PostgresSQL
+- PostgreSQL
 - Docker
+- Pytest
 
 ## Основные возможности
 
